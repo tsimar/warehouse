@@ -1,0 +1,21 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.wropper--div {
+  margin: 20px;
+}
+
+.form--add {
+  width: 250px;
+  line-height: 1.8rem;
+}
+.form--add label {
+  display: inline-block;
+  width: 70px;
+  margin-right: 10px;
+}
+.form--add input {
+  width: calc(100% - 120px);
+}

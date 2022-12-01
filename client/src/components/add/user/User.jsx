@@ -16,28 +16,36 @@ const User = () => {
   return (
     <div>
       <form onSubmit={handleAddSubmit}>
-        <label htmlFor="name_element">name</label>
+        <label htmlFor="name">imia</label>
         <input
-          id="name_element"
-          name="name_element"
+          id="name"
+          name="name"
           type="text"
-          value="hjtg"
+          value="name"
           onChange={handleChange}
         />
-        <label htmlFor="name_element">ilość</label>
+        <label htmlFor="last_name">nazwisko</label>
         <input
-          id="number"
-          name="number"
-          type="number"
-          value="1"
+          id="last_name"
+          name="last_name"
+          type="text"
+          value="last_name"
           onChange={handleChange}
         />
-        <label htmlFor="data">data</label>
+        <label htmlFor="login">login</label>
         <input
-          id="data"
-          name="data"
-          type="data"
-          value="20/11/22"
+          id="login"
+          name="login"
+          type="text"
+          value="login"
+          onChange={handleChange}
+        />
+        <label htmlFor="password">password</label>
+        <input
+          id="password"
+          name="password"
+          type="text"
+          value="password"
           onChange={handleChange}
         />
         <label htmlFor="position">stanowisko</label>

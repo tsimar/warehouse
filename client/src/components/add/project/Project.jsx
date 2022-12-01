@@ -16,10 +16,17 @@ const Project = () => {
           id="name"
           name="projectName"
           type="text"
-          value="name"
+          value="project"
           onChange={handleChange}
         />
-
+        <label htmlFor="code">code 112</label>
+        <input
+          id="code"
+          name="code"
+          type="text"
+          value="code 112"
+          onChange={handleChange}
+        />
         <button type="submit">add</button>
       </form>
     </div>

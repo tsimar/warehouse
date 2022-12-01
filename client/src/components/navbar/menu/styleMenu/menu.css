@@ -1,0 +1,10 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.ul__menu--pc {
+  display: flex;
+  justify-content: space-evenly;
+  gap: 10px;
+}

@@ -1,17 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
+// import "./stylePosition/position.css";
 
+const instrument = [
+  { id: 1, position: " koło zębate", permission: " mufta" },
+  { id: 2, position: " koło ", permission: " mufta" },
+  { id: 2, position: " zębate", permission: " mufta" },
+];
 const Position = () => {
+  const [nameProdukt, setNameProdukt] = useState("koło zębate");
+
   const handleAddSubmit = async (e) => {};
   const handleChange = (e) => {};
-  // const handleChangeSelect = (e) => {
-  //   console.log("Fruit Selected!!");
+  const handleChangeSelect = (e) => {
+    console.log("Fruit Selected!!");
 
-  //   // setNameProdukt(e.target.value);
-  // };
+    setNameProdukt(e.target.value);
+  };
   return (
     <div>
       <form onSubmit={handleAddSubmit}>
-        <label htmlFor="position">imia</label>
+        <label htmlFor="position">position</label>
         <input
           id="position"
           name="position"
@@ -19,33 +27,25 @@ const Position = () => {
           value="position"
           onChange={handleChange}
         />
-        <label htmlFor="permissions">nazwisko</label>
+        <label htmlFor="permission">permission</label>
         <input
-          id="permissions"
-          name="permissions"
+          id="permission"
+          name="permission"
           type="text"
           value="permission"
           onChange={handleChange}
         />
-        <label htmlFor="login">login</label>
-        <input
-          id="login"
-          name="login"
-          type="text"
-          value="login"
-          onChange={handleChange}
-        />
-        <label htmlFor="password">password</label>
-        <input
-          id="password"
-          name="password"
-          type="password"
-          value="password"
-          onChange={handleChange}
-        />
-
         <button type="submit">add</button>
       </form>
+      <div>
+        {instrument.map((item, index) => (
+          <div key={index}>
+            <label>{item.id}</label>
+            <label>{item.position}</label>
+            <label>{item.permission}</label>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

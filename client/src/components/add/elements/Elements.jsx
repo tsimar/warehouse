@@ -12,36 +12,12 @@ const Elements = () => {
   return (
     <div>
       <form onSubmit={handleAddSubmit}>
-        <label htmlFor="position">imia</label>
+        <label htmlFor="element">element</label>
         <input
-          id="position"
-          name="position"
+          id="element"
+          name="element"
           type="text"
-          value="position"
-          onChange={handleChange}
-        />
-        <label htmlFor="permissions">nazwisko</label>
-        <input
-          id="permissions"
-          name="permissions"
-          type="text"
-          value="permission"
-          onChange={handleChange}
-        />
-        <label htmlFor="login">login</label>
-        <input
-          id="login"
-          name="login"
-          type="text"
-          value="login"
-          onChange={handleChange}
-        />
-        <label htmlFor="password">password</label>
-        <input
-          id="password"
-          name="password"
-          type="password"
-          value="password"
+          value="element"
           onChange={handleChange}
         />
 
