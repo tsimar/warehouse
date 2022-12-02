@@ -1,10 +1,10 @@
-package com.unikat.warehouse;
+package warehouse.warehouse;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class WarehouseApplicationTests {
+class WarehouseCncApplicationTests {
 
 	@Test
 	void contextLoads() {
