@@ -1,4 +1,4 @@
-package warehouse.warehouse.repository;
+package warehouse.warehouse.repository.add;
 
 
 import org.springframework.data.jpa.repository.JpaRepository;
