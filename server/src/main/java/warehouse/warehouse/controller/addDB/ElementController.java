@@ -27,4 +27,18 @@ public class ElementController {
     public ResponseEntity<Element> save(@RequestBody Element element) {
         return ResponseEntity.ok(elementService.save(element));
     }
+
+    @DeleteMapping("/{id}")
+    public void deleteUser(@PathVariable Long id) {
+
+        if (id == null) {
+            throw new RuntimeException("You must define new user");
+        } else {
+            elementService.deleteElement(id);
+        }
+    }
+    @PutMapping()
+    public void editUser(@RequestBody Element element) {
+        elementService.editElement(element);
+    }
 }

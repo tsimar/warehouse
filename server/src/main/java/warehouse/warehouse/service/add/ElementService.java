@@ -22,7 +22,26 @@ public class ElementService {
         return elementRepository.findAll();
     }
 
-    public Element save(Element element){
+    public Element save(Element element) {
         return elementRepository.save(element);
+    }
+
+
+    public void editElement(Element element) {
+        try {
+            elementRepository.update
+                    (
+
+                            element.getElement(),
+                            element.getUrlPicture(),
+                            element.getId()
+                    );
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void deleteElement(Long id) {
+        elementRepository.deleteById(id);
     }
 }
