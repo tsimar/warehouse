@@ -20,7 +20,26 @@ public class PositionService {
         return positionRepository.findAll();
     }
 
-    public Position save(Position position){
+    public Position save(Position position) {
         return positionRepository.save(position);
+    }
+
+
+    public void deletePosition(Long id) {
+        positionRepository.deleteById(id);
+    }
+
+    public void editPosition(Position position) {
+        try {
+            positionRepository.update
+                    (
+
+                            position.getPosition(),
+                            position.getPermission(),
+                            position.getId()
+                    );
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

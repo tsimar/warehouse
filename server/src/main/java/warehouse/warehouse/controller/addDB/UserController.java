@@ -4,6 +4,7 @@ package warehouse.warehouse.controller.addDB;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import warehouse.warehouse.entity.addBD.Element;
 import warehouse.warehouse.entity.addBD.User;
 import warehouse.warehouse.service.add.UserService;
 
@@ -28,4 +29,19 @@ public class UserController {
     public ResponseEntity<User> save(@RequestBody User user){
         return ResponseEntity.ok(userService.save(user));
     }
+
+    @DeleteMapping("/{id}")
+    public void deleteUser(@PathVariable Long id) {
+
+        if (id == null) {
+            throw new RuntimeException("You must define new user");
+        } else {
+            userService.deleteUser(id);
+        }
+    }
+    @PutMapping()
+    public void editUser(@RequestBody User user) {
+        userService.editUser(user);
+    }
+
 }

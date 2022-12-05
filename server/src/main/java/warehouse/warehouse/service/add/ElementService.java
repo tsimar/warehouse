@@ -42,6 +42,7 @@ public class ElementService {
     }
 
     public void deleteElement(Long id) {
+
         elementRepository.deleteById(id);
     }
 }

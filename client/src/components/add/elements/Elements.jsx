@@ -1,7 +1,7 @@
 import React, { useEffect, useState, Fragment } from "react";
-import axios from "axios";
+// import axios from "axios";
 import "./styleElements/elements.css";
-import { apiElement, URL } from "../../../url/URL";
+import { apiElement } from "../../../url/URL";
 import { EditItem } from "./EditItem";
 import ReadItem from "./ReadItem";
 
@@ -145,24 +145,28 @@ const Elements = () => {
 
   return (
     <div>
-      <form onSubmit={handleAddSubmit}>
-        <label htmlFor="element">element</label>
-        <input
-          id="element"
-          name="element"
-          type="text"
-          placeholder="element"
-          onChange={handleChange}
-        />
-        <label htmlFor="urlPicture">plik</label>
-        <input
-          id="urlPicture"
-          name="urlPicture"
-          type="text"
-          // accept=".pdf"
-          // onChange={(e) => setAddElement({ urlPicture: e.target.files })}
-          onChange={handleChange}
-        />
+      <form className="form--wrapper" onSubmit={handleAddSubmit}>
+        <div className="div__add--wrapper">
+          <label htmlFor="element">element</label>
+          <input
+            id="element"
+            name="element"
+            type="text"
+            placeholder="element"
+            onChange={handleChange}
+          />
+        </div>
+        <div className="div__add--wrapper">
+          <label htmlFor="urlPicture">plik</label>
+          <input
+            id="urlPicture"
+            name="urlPicture"
+            type="text"
+            // accept=".pdf"
+            // onChange={(e) => setAddElement({ urlPicture: e.target.files })}
+            onChange={handleChange}
+          />
+        </div>
         <button type="submit">add</button>
       </form>
 

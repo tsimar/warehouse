@@ -1,5 +1,31 @@
-.div-get{
-    width: 500px;
-    height: 500px;
+.div-get {
+    width: 80%;
+    display: flex;
+    justify-content: start;
+    flex-wrap: wrap;
 
+}
+
+.form--wrapper {
+    width: 50%;
+    display: flex;
+    justify-content: flex-start;
+    margin: 20px;
+    gap: 10px;
+}
+
+.div__div-get {
+    width: 100%;
+    margin-left: 20px;
+    display: flex;
+    flex-grow: 20px;
+
+    & span,
+        & input {
+            gap: 20px;
+        }
+    }
+    
+    .size {
+        width: 50px;
 }

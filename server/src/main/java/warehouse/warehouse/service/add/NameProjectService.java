@@ -19,7 +19,25 @@ public class NameProjectService {
         return nameProjectRepository.findAll();
     }
 
-    public NameProject save (NameProject nameProject){
+    public NameProject save(NameProject nameProject) {
         return nameProjectRepository.save(nameProject);
+    }
+
+    public void deleteNameProject(Long id) {
+        nameProjectRepository.deleteById(id);
+    }
+
+    public void editNameProject(NameProject nameProject) {
+        try {
+            nameProjectRepository.update
+                    (
+
+                            nameProject.getNameProject(),
+                            nameProject.getCode112(),
+                            nameProject.getId()
+                    );
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

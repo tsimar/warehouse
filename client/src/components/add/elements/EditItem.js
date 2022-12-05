@@ -29,13 +29,23 @@ export const EditItem = ({
           onChange={handleEditFormChange}
           value={editValue.urlPicture}
         />
-        <button name="save" type="submit"></button>
+        <button className="size" name="save" type="submit">
+          save
+        </button>
         <button
+          className="size"
           type="button"
           name="cancel"
           onClick={handleCancelClick}
-        ></button>
-        <button type="button" onClick={() => handleDeleteClick(editValue.id)}>
+        >
+          {" "}
+          cancel
+        </button>
+        <button
+          className="size"
+          type="button"
+          onClick={() => handleDeleteClick(editValue.id)}
+        >
           Delete
         </button>
       </div>
