@@ -1,4 +1,4 @@
-package warehouse.warehouse.entity.addBD;
+package warehouse.warehouse.entity.add;
 
 
 
@@ -9,7 +9,7 @@ import lombok.Data;
 @Data
 @Entity
 
-public class NameProject {
+public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

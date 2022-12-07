@@ -2,7 +2,7 @@ package warehouse.warehouse.service.add;
 
 
 import org.springframework.stereotype.Service;
-import warehouse.warehouse.entity.addBD.Position;
+import warehouse.warehouse.entity.add.Position;
 import warehouse.warehouse.repository.add.PositionRepository;
 
 import java.util.List;

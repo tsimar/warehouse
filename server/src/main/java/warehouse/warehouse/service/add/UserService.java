@@ -1,7 +1,7 @@
 package warehouse.warehouse.service.add;
 
 import org.springframework.stereotype.Service;
-import warehouse.warehouse.entity.addBD.User;
+import warehouse.warehouse.entity.add.User;
 import warehouse.warehouse.repository.add.UserRepository;
 
 import java.util.List;

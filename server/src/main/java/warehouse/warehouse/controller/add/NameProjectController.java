@@ -1,11 +1,10 @@
-package warehouse.warehouse.controller.addDB;
+package warehouse.warehouse.controller.add;
 
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import warehouse.warehouse.entity.addBD.Element;
-import warehouse.warehouse.entity.addBD.NameProject;
+import warehouse.warehouse.entity.add.Project;
 import warehouse.warehouse.service.add.NameProjectService;
 
 import java.util.List;
@@ -21,12 +20,12 @@ public class NameProjectController {
     }
 
     @GetMapping
-    public ResponseEntity<List<NameProject>> getAll(){
+    public ResponseEntity<List<Project>> getAll(){
         return ResponseEntity.ok(nameProjectService.getAll());
     }
 
     @PostMapping
-    public ResponseEntity<NameProject> save(@RequestBody NameProject nameProject) {
+    public ResponseEntity<Project> save(@RequestBody Project nameProject) {
         return ResponseEntity.ok(nameProjectService.save(nameProject));
     }
 
@@ -40,7 +39,7 @@ public class NameProjectController {
         }
     }
     @PutMapping()
-    public void editUser(@RequestBody NameProject nameProject) {
+    public void editUser(@RequestBody Project nameProject) {
         nameProjectService.editNameProject(nameProject);
     }
 }

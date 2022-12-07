@@ -1,40 +1,42 @@
 package warehouse.warehouse.service.add;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import warehouse.warehouse.entity.addBD.NameProject;
-import warehouse.warehouse.repository.add.NameProjectRepository;
+import warehouse.warehouse.entity.add.Project;
+import warehouse.warehouse.repository.add.ProjectRepository;
 
 import java.util.List;
 
 
 @Service
+@RequiredArgsConstructor
 public class NameProjectService {
-    private final NameProjectRepository nameProjectRepository;
+    private final ProjectRepository projectRepository;
 
-    public NameProjectService(NameProjectRepository nameProjectRepository) {
-        this.nameProjectRepository = nameProjectRepository;
+//    public NameProjectService(NameProjectRepository nameProjectRepository) {
+//        this.nameProjectRepository = nameProjectRepository;
+//    }
+
+    public List<Project> getAll() {
+        return projectRepository.findAll();
     }
 
-    public List<NameProject> getAll() {
-        return nameProjectRepository.findAll();
-    }
-
-    public NameProject save(NameProject nameProject) {
-        return nameProjectRepository.save(nameProject);
+    public Project save(Project nameProject) {
+        return projectRepository.save(nameProject);
     }
 
     public void deleteNameProject(Long id) {
-        nameProjectRepository.deleteById(id);
+        projectRepository.deleteById(id);
     }
 
-    public void editNameProject(NameProject nameProject) {
+    public void editNameProject(Project project) {
         try {
-            nameProjectRepository.update
+            projectRepository.update
                     (
 
-                            nameProject.getNameProject(),
-                            nameProject.getCode112(),
-                            nameProject.getId()
+                            project.getNameProject(),
+                            project.getCode112(),
+                            project.getId()
                     );
         } catch (Exception e) {
             System.out.println(e.getMessage());

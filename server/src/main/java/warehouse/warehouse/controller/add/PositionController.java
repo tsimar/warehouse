@@ -1,10 +1,10 @@
-package warehouse.warehouse.controller.addDB;
+package warehouse.warehouse.controller.add;
 
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import warehouse.warehouse.entity.addBD.Position;
+import warehouse.warehouse.entity.add.Position;
 import warehouse.warehouse.service.add.PositionService;
 
 import java.util.List;

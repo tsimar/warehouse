@@ -8,7 +8,7 @@ const ReadItem = ({ item, handleEditClick }) => {
       onClick={(e) => handleEditClick(e, item)}
     >
       <span>{item.id}</span>
-      <span>{item.element}</span>
+      <span>{item.nameElement}</span>
       <span>{item.urlPicture}</span>
     </div>
   );

@@ -1,4 +1,4 @@
-package warehouse.warehouse.entity.addBD;
+package warehouse.warehouse.entity.add;
 
 
 import jakarta.persistence.Entity;
@@ -21,7 +21,7 @@ public class Element {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String element;
+    private String nameElement;
     private String urlPicture;
 
 }

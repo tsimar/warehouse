@@ -1,7 +1,7 @@
 .div-get {
     width: 80%;
     display: flex;
-    justify-content: start;
+    // justify-content: start;
     flex-wrap: wrap;
 
 }
@@ -19,9 +19,12 @@
     margin-left: 20px;
     display: flex;
     flex-grow: 20px;
+    display: flex;
+        justify-content: flex-start;
+        gap: 20px;
 
     & span,
-        & input {
+    & input {
             gap: 20px;
         }
     }

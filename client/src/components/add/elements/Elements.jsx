@@ -11,12 +11,12 @@ const Elements = () => {
   const [element, setElement] = useState([]);
   // const [idIndex, setIdIndex] = useState("0");
   const [addElement, setAddElement] = useState({
-    element: "",
+    nameElement: "",
     urlPicture: "",
   });
   const [editValue, setEditValue] = useState({
     editId: "",
-    element: "",
+    nameElement: "",
     urlPicture: "",
   });
   const fetchGET = async () => {
@@ -34,7 +34,7 @@ const Elements = () => {
   const handleAddSubmit = async (e) => {
     e.preventDefault();
     const newElement = {
-      element: addElement.element,
+      nameElement: addElement.nameElement,
       urlPicture: addElement.urlPicture,
     };
     apiElement
@@ -70,12 +70,12 @@ const Elements = () => {
 
     const editedContact = {
       id: editValue.id,
-      userName: editValue.element,
-      userPassword: editValue.urlPicture,
+      nameElement: editValue.nameElement,
+      urlPicture: editValue.urlPicture,
     };
 
     apiElement
-      .put(``, editedContact)
+      .put("", editedContact)
       .then((response) => {
         console.log(response);
         fetchGET();
@@ -102,7 +102,7 @@ const Elements = () => {
 
     const formValues = {
       id: edit.id,
-      element: edit.element,
+      nameElement: edit.nameElement,
       urlPicture: edit.urlPicture,
     };
     setEditValue(formValues);
@@ -134,6 +134,7 @@ const Elements = () => {
               handleEditFormChange={handleEditFormChange}
               handleEditFormSubmit={handleEditFormSubmit}
               handleDeleteClick={handleDeleteClick}
+              handleAddSubmit={handleAddSubmit}
             />
           ) : (
             <ReadItem item={item} handleEditClick={handleEditClick} />

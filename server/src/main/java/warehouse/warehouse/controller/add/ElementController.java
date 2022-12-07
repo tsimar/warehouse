@@ -1,20 +1,22 @@
-package warehouse.warehouse.controller.addDB;
+package warehouse.warehouse.controller.add;
+
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+
 import org.springframework.web.bind.annotation.*;
-import warehouse.warehouse.entity.addBD.Element;
+import warehouse.warehouse.entity.add.Element;
 import warehouse.warehouse.service.add.ElementService;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/element")
 @CrossOrigin
 public class ElementController {
     private final ElementService elementService;
 
-    public ElementController(ElementService elementService) {
+    public  ElementController(ElementService elementService) {
         this.elementService = elementService;
     }
 
@@ -29,7 +31,7 @@ public class ElementController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteUser(@PathVariable Long id) {
+    public void deleteElement(@PathVariable Long id) {
 
         if (id == null) {
             throw new RuntimeException("You must define new user");
@@ -38,7 +40,7 @@ public class ElementController {
         }
     }
     @PutMapping()
-    public void editUser(@RequestBody Element element) {
+    public void editElement(@RequestBody Element element) {
         elementService.editElement(element);
     }
 }

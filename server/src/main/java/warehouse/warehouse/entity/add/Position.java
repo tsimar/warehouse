@@ -1,4 +1,4 @@
-package warehouse.warehouse.entity.addBD;
+package warehouse.warehouse.entity.add;
 
 
 import jakarta.persistence.Entity;

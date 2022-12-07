@@ -6,6 +6,7 @@ export const EditItem = ({
   handleEditFormChange,
   handleEditFormSubmit,
   handleDeleteClick,
+  handleAddSubmit,
 }) => {
   return (
     <form onSubmit={handleEditFormSubmit}>
@@ -13,11 +14,11 @@ export const EditItem = ({
         <span>{editValue.id}</span>
         <input
           id="element"
-          name="element"
+          name="nameElement"
           type="text"
           placeholder="element"
           required
-          value={editValue.element}
+          value={editValue.nameElement}
           onChange={handleEditFormChange}
         />
         <input
@@ -38,7 +39,6 @@ export const EditItem = ({
           name="cancel"
           onClick={handleCancelClick}
         >
-          {" "}
           cancel
         </button>
         <button
