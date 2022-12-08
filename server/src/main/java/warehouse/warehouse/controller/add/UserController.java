@@ -9,7 +9,7 @@ import warehouse.warehouse.service.add.UserService;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/user")
 @CrossOrigin
 public class UserController {

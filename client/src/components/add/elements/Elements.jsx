@@ -1,19 +1,17 @@
-import React, { useEffect, useState, Fragment } from "react";
-// import axios from "axios";
+import React, { useReducer, useState, useEffect, Fragment } from "react";
 import "./styleElements/elements.css";
 import { apiElement } from "../../../url/URL";
-import { EditItem } from "./EditItem";
-import ReadItem from "./ReadItem";
+import { EditItem } from "../EditItem";
+import ReadItem from "../ReadItem";
 
 // let idIndex = "";
 
 const Elements = () => {
   const [element, setElement] = useState([]);
-  // const [idIndex, setIdIndex] = useState("0");
-  const [addElement, setAddElement] = useState({
-    nameElement: "",
-    urlPicture: "",
-  });
+  const [addElement, setAddElement] = useReducer(
+    (state, newState) => ({ ...state, ...newState }),
+    { nameElement: "", urlPicture: "" }
+  );
   const [editValue, setEditValue] = useState({
     editId: "",
     nameElement: "",
@@ -124,7 +122,7 @@ const Elements = () => {
 
   const handlGetElement = (data) => {
     // e.preventDefault();
-    return data.map((item) => {
+    return data.map((item, index) => {
       return (
         <Fragment key={item.id}>
           {editValue.id === item.id ? (
@@ -137,7 +135,11 @@ const Elements = () => {
               handleAddSubmit={handleAddSubmit}
             />
           ) : (
-            <ReadItem item={item} handleEditClick={handleEditClick} />
+            <ReadItem
+              item={item}
+              index={index}
+              handleEditClick={handleEditClick}
+            />
           )}
         </Fragment>
       );
@@ -163,6 +165,7 @@ const Elements = () => {
             id="urlPicture"
             name="urlPicture"
             type="text"
+            placeholder="URL"
             // accept=".pdf"
             // onChange={(e) => setAddElement({ urlPicture: e.target.files })}
             onChange={handleChange}

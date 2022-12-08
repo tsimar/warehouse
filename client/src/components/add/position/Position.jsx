@@ -1,21 +1,145 @@
-import React, { useState } from "react";
-// import "./stylePosition/position.css";
-
-const instrument = [
-  { id: 1, position: " koło zębate", permission: " mufta" },
-  { id: 2, position: " koło ", permission: " mufta" },
-  { id: 2, position: " zębate", permission: " mufta" },
-];
+import React, { useReducer, useState, useEffect, Fragment } from "react";
+import { apiPosition } from "../../../url/URL";
+import { EditItem } from "../EditItem";
+import ReadItem from "../ReadItem";
+import "./stylePosition/position.css";
 const Position = () => {
-  const [nameProdukt, setNameProdukt] = useState("koło zębate");
+  const [position, setPosition] = useState([]);
+  const [addPosition, setAddPosition] = useReducer(
+    (state, newState) => ({ ...state, ...newState }),
+    { position: "", permission: "" }
+  );
+  const [editValue, setEditValue] = useState({
+    editId: "",
+    position: "",
+    permission: "",
+  });
+  const fetchGET = async () => {
+    try {
+      // setLoading(true);
+      const res = await apiPosition.get();
 
-  const handleAddSubmit = async (e) => {};
-  const handleChange = (e) => {};
-  const handleChangeSelect = (e) => {
-    console.log("Fruit Selected!!");
-
-    setNameProdukt(e.target.value);
+      setPosition(res.data);
+      // setLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
   };
+
+  const handleAddSubmit = async (e) => {
+    e.preventDefault();
+    const newElement = {
+      position: addPosition.position,
+      permission: addPosition.permission,
+    };
+    apiPosition
+      .post("", newElement)
+      .then((response) => {
+        fetchGET();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    setAddPosition("");
+  };
+  const handleChange = (e) => {
+    e.preventDefault();
+
+    const fieldName = e.target.name;
+    const fieldValue = e.target.value;
+
+    const newFormData = { ...addPosition };
+    newFormData[fieldName] = fieldValue;
+
+    setAddPosition(newFormData);
+  };
+
+  useEffect(() => {
+    fetchGET();
+  }, []);
+
+  const handleEditFormSubmit = (event) => {
+    event.preventDefault();
+
+    const editedContact = {
+      id: editValue.id,
+      position: editValue.position,
+      permission: editValue.permission,
+    };
+
+    apiPosition
+      .put("", editedContact)
+      .then((response) => {
+        fetchGET();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const handleEditFormChange = (event) => {
+    event.preventDefault();
+
+    const fieldName = event.target.name;
+    const fieldValue = event.target.value;
+
+    const newFormData = { ...editValue };
+    newFormData[fieldName] = fieldValue;
+
+    setEditValue(newFormData);
+  };
+
+  const handleEditClick = (event, edit) => {
+    event.preventDefault();
+
+    const formValues = {
+      id: edit.id,
+      position: edit.position,
+      permission: edit.permission,
+    };
+    setEditValue(formValues);
+  };
+
+  const handleCancelClick = () => {
+    setEditValue.id(null);
+  };
+
+  const handleDeleteClick = (idPosition) => {
+    const newContacts = [...position];
+    const index = position.findIndex((contact) => contact.id === idPosition);
+
+    newContacts.splice(index, 1);
+    setPosition(newContacts);
+
+    apiPosition.delete(`/${idPosition}`);
+  };
+
+  const handlGetElement = (data) => {
+    return data.map((item, index) => {
+      return (
+        <Fragment key={item.id}>
+          {editValue.id === item.id ? (
+            <EditItem
+              editValue={editValue}
+              handleCancelClick={handleCancelClick}
+              handleEditFormChange={handleEditFormChange}
+              handleEditFormSubmit={handleEditFormSubmit}
+              handleDeleteClick={handleDeleteClick}
+              handleAddSubmit={handleAddSubmit}
+            />
+          ) : (
+            <ReadItem
+              item={item}
+              index={index}
+              handleEditClick={handleEditClick}
+            />
+          )}
+        </Fragment>
+      );
+    });
+  };
+
   return (
     <div>
       <form onSubmit={handleAddSubmit}>
@@ -24,7 +148,7 @@ const Position = () => {
           id="position"
           name="position"
           type="text"
-          value="position"
+          placeholder="position"
           onChange={handleChange}
         />
         <label htmlFor="permission">permission</label>
@@ -32,20 +156,12 @@ const Position = () => {
           id="permission"
           name="permission"
           type="text"
-          value="permission"
+          placeholder="permission"
           onChange={handleChange}
         />
         <button type="submit">add</button>
       </form>
-      <div>
-        {instrument.map((item, index) => (
-          <div key={index}>
-            <label>{item.id}</label>
-            <label>{item.position}</label>
-            <label>{item.permission}</label>
-          </div>
-        ))}
-      </div>
+      <div className="div-get">{handlGetElement(position)}</div>
     </div>
   );
 };

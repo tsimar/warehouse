@@ -9,7 +9,7 @@ import warehouse.warehouse.service.add.NameProjectService;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/project")
 @CrossOrigin
 public class NameProjectController {

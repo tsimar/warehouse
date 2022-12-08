@@ -9,7 +9,7 @@ import warehouse.warehouse.service.add.PositionService;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/position")
 @CrossOrigin
 public class PositionController {

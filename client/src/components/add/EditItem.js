@@ -8,27 +8,29 @@ export const EditItem = ({
   handleDeleteClick,
   handleAddSubmit,
 }) => {
+  const objName = Object.keys(editValue);
+
   return (
     <form onSubmit={handleEditFormSubmit}>
       <div className="div__div-get">
-        <span>{editValue.id}</span>
+        {/* <span>{editValue.id}</span> */}
         <input
           id="element"
-          name="nameElement"
+          name={objName[1]}
           type="text"
-          placeholder="element"
+          placeholder={objName[1]}
           required
-          value={editValue.nameElement}
+          value={editValue[objName[1]]}
           onChange={handleEditFormChange}
         />
         <input
           id="urlPicture"
-          name="urlPicture"
+          name={objName[2]}
           type="text"
           // accept=".pdf"
           // onChange={(e) => setAddElement({ urlPicture: e.target.files })}
           onChange={handleEditFormChange}
-          value={editValue.urlPicture}
+          value={editValue[objName[2]]}
         />
         <button className="size" name="save" type="submit">
           save
