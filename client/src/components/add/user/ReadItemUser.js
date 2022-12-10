@@ -1,10 +1,9 @@
 import React from "react";
 
-const ReadItem = ({ item, index, handleEditClick }) => {
+const ReadItemUser = ({ item, index, handleEditClick }) => {
   const objName = Object.keys(item);
 
   const addSpan = (data, obj) => {
-    
     return data.map((_, index) => {
       return index > 0 ? <span key={index}>{obj[data[index]]}</span> : null;
     });
@@ -21,4 +20,4 @@ const ReadItem = ({ item, index, handleEditClick }) => {
     </div>
   );
 };
-export default ReadItem;
+export default ReadItemUser;

@@ -1,12 +1,24 @@
-import React, { useReducer, useState, useEffect, Fragment } from "react";
+import React, {
+  useReducer,
+  useState,
+  useRef,
+  useEffect,
+  Fragment,
+} from "react";
 import { apiUser, apiPosition } from "../../../url/URL";
-import { EditItem } from "../EditItem";
-import ReadItem from "../ReadItem";
+import { EditItemUser } from "./EditItemUser";
+import ReadItemUser from "./ReadItemUser";
 import "./styleUser/user.css";
 
 const User = () => {
+  const nameUserRef = useRef(null);
+  const lastNameRef = useRef(null);
+  const loginRef = useRef(null);
+  const passwordRef = useRef(null);
   const [user, setUser] = useState([]);
   const [position, setPosition] = useState([]);
+  const [selectPosition, setSelectPosition] = useState("");
+
   const [addUser, setAddUser] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
     { nameUser: "", lastName: "", login: "", password: "", idPosition: "" }
@@ -24,6 +36,7 @@ const User = () => {
       // setLoading(true);
       const res = await apiPosition.get();
       setPosition(res.data);
+      console.log("position", res.data);
       // setLoading(false);
     } catch (error) {
       console.log(error);
@@ -34,7 +47,8 @@ const User = () => {
     try {
       // setLoading(true);
       const res = await apiUser.get();
-      setPosition(res.data);
+      setUser(res.data);
+      console.log("user", res.data);
       // setLoading(false);
     } catch (error) {
       console.log(error);
@@ -43,9 +57,11 @@ const User = () => {
 
   useEffect(() => {
     fetchGET();
+  }, [editValue.editId]);
+
+  useEffect(() => {
     fetchGETPosition();
   }, []);
-
   const handleAddSubmit = async (e) => {
     e.preventDefault();
     const newElement = {
@@ -53,7 +69,7 @@ const User = () => {
       lastName: addUser.lastName,
       login: addUser.login,
       password: addUser.password,
-      idPosition: addUser.idPosition,
+      idPosition: selectPosition,
     };
     apiUser
       .post("", newElement)
@@ -65,11 +81,16 @@ const User = () => {
       });
 
     setAddUser("");
+    nameUserRef.current.value = "";
+    lastNameRef.current.value = "";
+    loginRef.current.value = "";
+    passwordRef.current.value = "";
   };
   const handleChange = (e) => {
     e.preventDefault();
 
     const fieldName = e.target.name;
+
     const fieldValue = e.target.value;
 
     const newFormData = { ...addUser };
@@ -80,7 +101,7 @@ const User = () => {
 
   const handleEditFormSubmit = (event) => {
     event.preventDefault();
-
+    console.log(event);
     const editedContact = {
       id: editValue.id,
       nameUser: editValue.nameUser,
@@ -94,6 +115,7 @@ const User = () => {
       .put("", editedContact)
       .then((response) => {
         fetchGET();
+        handleCancelClick();
       })
       .catch((error) => {
         console.log(error);
@@ -104,6 +126,7 @@ const User = () => {
     event.preventDefault();
 
     const fieldName = event.target.name;
+
     const fieldValue = event.target.value;
 
     const newFormData = { ...editValue };
@@ -127,47 +150,61 @@ const User = () => {
   };
 
   const handleCancelClick = () => {
-    setEditValue.id(null);
+    setEditValue("");
   };
 
   const handleDeleteClick = (idUser) => {
-    const newContacts = [...position];
+    const newContacts = [...user];
     const index = user.findIndex((contact) => contact.id === idUser);
-
     newContacts.splice(index, 1);
     setUser(newContacts);
-
     apiUser.delete(`/${idUser}`);
   };
-  const handleChangeSelect = (e) => {
-    console.log("Fruit Selected!!");
 
-    setPosition(e.target.value);
+  const handleChangeSelect = (e) => {
+    setSelectPosition(e.target.value);
   };
-  // const handlGetElement = (data) => {
-  //   return data.map((item, index) => {
-  //     return (
-  //       <Fragment key={item.id}>
-  //         {editValue.id === item.id ? (
-  //           <EditItem
-  //             editValue={editValue}
-  //             handleCancelClick={handleCancelClick}
-  //             handleEditFormChange={handleEditFormChange}
-  //             handleEditFormSubmit={handleEditFormSubmit}
-  //             handleDeleteClick={handleDeleteClick}
-  //             handleAddSubmit={handleAddSubmit}
-  //           />
-  //         ) : (
-  //           <ReadItem
-  //             item={item}
-  //             index={index}
-  //             handleEditClick={handleEditClick}
-  //           />
-  //         )}
-  //       </Fragment>
-  //     );
-  //   });
-  // };
+  const handleGetComboBox = (data) => {
+    return (
+      <>
+        <label htmlFor="position">stanowisko</label>
+        <select value={selectPosition} onChange={handleChangeSelect}>
+          {data.map((item, index) => (
+            <option key={index} value={item.position}>
+              {item.position}
+            </option>
+          ))}
+        </select>
+      </>
+    );
+  };
+
+  const handlGetElement = (data) => {
+    return data.map((item, index) => {
+      return (
+        <Fragment key={item.id}>
+          {editValue.id === item.id ? (
+            <EditItemUser
+              editValue={editValue}
+              handleCancelClick={handleCancelClick}
+              handleEditFormChange={handleEditFormChange}
+              handleEditFormSubmit={handleEditFormSubmit}
+              handleDeleteClick={handleDeleteClick}
+              handleAddSubmit={handleAddSubmit}
+              position={position}
+            />
+          ) : (
+            // handleGetComboBox(position))
+            <ReadItemUser
+              item={item}
+              index={index}
+              handleEditClick={handleEditClick}
+            />
+          )}
+        </Fragment>
+      );
+    });
+  };
 
   return (
     <div>
@@ -175,17 +212,19 @@ const User = () => {
         <label htmlFor="name">imia</label>
         <input
           id="name"
-          name="name"
+          name="nameUser"
           type="text"
-          placeholder="name"
+          placeholder="imia"
+          ref={nameUserRef}
           onChange={handleChange}
         />
         <label htmlFor="last_name">nazwisko</label>
         <input
           id="last_name"
-          name="last_name"
+          name="lastName"
           type="text"
-          placeholder="last_name"
+          placeholder="nazwisko"
+          ref={lastNameRef}
           onChange={handleChange}
         />
         <label htmlFor="login">login</label>
@@ -194,6 +233,7 @@ const User = () => {
           name="login"
           type="text"
           placeholder="login"
+          ref={loginRef}
           onChange={handleChange}
         />
         <label htmlFor="password">password</label>
@@ -201,21 +241,15 @@ const User = () => {
           id="password"
           name="password"
           type="text"
-          placeholder="password"
+          placeholder="hasło"
           onChange={handleChange}
+          ref={passwordRef}
         />
-        <label htmlFor="position">stanowisko</label>
-        <select value={position.position} onChange={handleChangeSelect}>
-          {position.map((item, index) => (
-            <option key={index} value={item.position}>
-              {item.position}
-            </option>
-          ))}
-        </select>
+        {handleGetComboBox(position)}
 
         <button type="submit">add</button>
       </form>
-      {/* <div className="div-get">{handlGetElement(user)}</div> */}
+      <div className="div-get">{handlGetElement(user)}</div>
     </div>
   );
 };

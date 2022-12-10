@@ -6,32 +6,33 @@ export const EditItem = ({
   handleEditFormChange,
   handleEditFormSubmit,
   handleDeleteClick,
-  handleAddSubmit,
+  handleEditComboBox,
 }) => {
   const objName = Object.keys(editValue);
+  let i = 0;
+  const handleAddInput = (data, obj) => {
+    return data.map((_, index) => {
+      data[index] === "idPosition" ? (i = index) : (i = null);
+      return (index > 0) & (data[index] !== "idPosition") ? (
+        <input
+          key={i}
+          id={data[i]}
+          name={data[i]}
+          type="text"
+          placeholder={data[i]}
+          required
+          value={obj[data[i]]}
+          onChange={handleEditFormChange}
+        />
+      ) : null;
+    });
+  };
 
   return (
     <form onSubmit={handleEditFormSubmit}>
       <div className="div__div-get">
-        {/* <span>{editValue.id}</span> */}
-        <input
-          id="element"
-          name={objName[1]}
-          type="text"
-          placeholder={objName[1]}
-          required
-          value={editValue[objName[1]]}
-          onChange={handleEditFormChange}
-        />
-        <input
-          id="urlPicture"
-          name={objName[2]}
-          type="text"
-          // accept=".pdf"
-          // onChange={(e) => setAddElement({ urlPicture: e.target.files })}
-          onChange={handleEditFormChange}
-          value={editValue[objName[2]]}
-        />
+        {handleAddInput(objName, editValue)}
+        {handleEditComboBox(editValue[objName[i]])}
         <button className="size" name="save" type="submit">
           save
         </button>

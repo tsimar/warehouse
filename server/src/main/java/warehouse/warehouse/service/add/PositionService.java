@@ -20,6 +20,14 @@ public class PositionService {
         return positionRepository.findAll();
     }
 
+    public Long getPositionId (String namePosition){
+        Long id=0L;
+        List <Position> positions=positionRepository.select(namePosition);
+//        id=positions.id;
+        System.out.println(positions);
+        return id;
+    }
+
     public Position save(Position position) {
         return positionRepository.save(position);
     }

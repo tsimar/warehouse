@@ -1,14 +1,18 @@
 import React, { useReducer, useState, useEffect, Fragment } from "react";
+import { useRef } from "react";
 import { apiPosition } from "../../../url/URL";
 import { EditItem } from "../EditItem";
 import ReadItem from "../ReadItem";
 import "./stylePosition/position.css";
+
 const Position = () => {
+  const positionRef = useRef(null);
+  const permissionRef = useRef(null);
   const [position, setPosition] = useState([]);
-  const [addPosition, setAddPosition] = useReducer(
-    (state, newState) => ({ ...state, ...newState }),
-    { position: "", permission: "" }
-  );
+  const [addPosition, setAddPosition] = useReducer({
+    position: "",
+    permission: "",
+  });
   const [editValue, setEditValue] = useState({
     editId: "",
     position: "",
@@ -42,6 +46,8 @@ const Position = () => {
       });
 
     setAddPosition("");
+    positionRef.current.value = "";
+    permissionRef.current.value = "";
   };
   const handleChange = (e) => {
     e.preventDefault();
@@ -102,7 +108,7 @@ const Position = () => {
   };
 
   const handleCancelClick = () => {
-    setEditValue.id(null);
+    setEditValue("");
   };
 
   const handleDeleteClick = (idPosition) => {
@@ -150,6 +156,7 @@ const Position = () => {
           type="text"
           placeholder="position"
           onChange={handleChange}
+          ref={positionRef}
         />
         <label htmlFor="permission">permission</label>
         <input
@@ -158,6 +165,7 @@ const Position = () => {
           type="text"
           placeholder="permission"
           onChange={handleChange}
+          ref={permissionRef}
         />
         <button type="submit">add</button>
       </form>

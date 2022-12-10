@@ -1,10 +1,18 @@
-import React, { useReducer, useState, useEffect, Fragment } from "react";
+import React, {
+  useReducer,
+  useState,
+  useRef,
+  useEffect,
+  Fragment,
+} from "react";
 import { apiProject } from "../../../url/URL";
 import { EditItem } from "../EditItem";
 import ReadItem from "../ReadItem";
 import "./styleProject/project.css";
 
 const Project = () => {
+  const nameProjectRef = useRef(null);
+  const code112Ref = useRef(null);
   const [project, setProject] = useState([]);
   const [addProject, setAddProject] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
@@ -44,7 +52,10 @@ const Project = () => {
       });
 
     setAddProject("");
+    nameProjectRef.current.value = "";
+    code112Ref.current.value = "";
   };
+
   const handleChange = (e) => {
     e.preventDefault();
 
@@ -105,7 +116,7 @@ const Project = () => {
   };
 
   const handleCancelClick = () => {
-    // setEditContactId(null);
+    setEditValue("");
   };
 
   const handleDeleteClick = (idProject) => {
@@ -154,6 +165,7 @@ const Project = () => {
             type="text"
             placeholder="project"
             onChange={handleChange}
+            ref={nameProjectRef}
           />
         </div>
         <div className="div__add--wrapper">
@@ -164,6 +176,7 @@ const Project = () => {
             type="text"
             placeholder="code 112"
             onChange={handleChange}
+            ref={code112Ref}
           />
         </div>
         <button type="submit">add</button>

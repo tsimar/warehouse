@@ -9,9 +9,11 @@ import java.util.List;
 @Service
 public class UserService {
     private final UserRepository userRepository;
+    private PositionService positionService;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, PositionService positionService) {
         this.userRepository = userRepository;
+        this.positionService = positionService;
     }
 
     public List<User> getAll() {
@@ -27,6 +29,8 @@ public class UserService {
     }
 
     public void editUser(User user) {
+//    positionService.getPositionId(user.getIdPosition());
+        Long id = 1L;
         try {
             userRepository.update
                     (
@@ -35,7 +39,7 @@ public class UserService {
                             user.getLastName(),
                             user.getLogin(),
                             user.getPassword(),
-                            user.getIdPosition(),
+                            id,
                             user.getId()
                     );
         } catch (Exception e) {

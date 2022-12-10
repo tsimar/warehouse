@@ -3,10 +3,11 @@ import "./styleElements/elements.css";
 import { apiElement } from "../../../url/URL";
 import { EditItem } from "../EditItem";
 import ReadItem from "../ReadItem";
-
-// let idIndex = "";
+import { useRef } from "react";
 
 const Elements = () => {
+  const elementRef = useRef(null);
+  const urlPictureRef = useRef(null);
   const [element, setElement] = useState([]);
   const [addElement, setAddElement] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
@@ -17,6 +18,7 @@ const Elements = () => {
     nameElement: "",
     urlPicture: "",
   });
+
   const fetchGET = async () => {
     try {
       // setLoading(true);
@@ -46,6 +48,8 @@ const Elements = () => {
       });
 
     setAddElement("");
+    elementRef.current.value = "";
+    urlPictureRef.current.value = "";
   };
   const handleChange = (e) => {
     e.preventDefault();
@@ -107,7 +111,7 @@ const Elements = () => {
   };
 
   const handleCancelClick = () => {
-    // setEditContactId(null);
+    setEditValue("");
   };
 
   const handleDeleteClick = (idElement) => {
@@ -153,10 +157,11 @@ const Elements = () => {
           <label htmlFor="element">element</label>
           <input
             id="element"
-            name="element"
+            name="nameElement"
             type="text"
             placeholder="element"
             onChange={handleChange}
+            ref={elementRef}
           />
         </div>
         <div className="div__add--wrapper">
@@ -169,6 +174,7 @@ const Elements = () => {
             // accept=".pdf"
             // onChange={(e) => setAddElement({ urlPicture: e.target.files })}
             onChange={handleChange}
+            ref={urlPictureRef}
           />
         </div>
         <button type="submit">add</button>
