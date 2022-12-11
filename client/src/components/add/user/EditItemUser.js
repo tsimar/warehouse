@@ -7,20 +7,33 @@ export const EditItemUser = ({
   handleEditFormSubmit,
   handleDeleteClick,
   position,
+  handleEditSelect,
+  editSelectPositionById,
 }) => {
-  const [editSelectPosition, setEditSelectPosition] = useState("");
+  const [editSelectPosition, setEditSelectPosition] = useState(
+    editSelectPositionById
+  );
   const objName = Object.keys(editValue);
-
-  const findPositionById = () => {
-    for (let index = 0; index < position.length; index++) {
-      if (position.id === editValue.idPosition) {
-        setEditSelectPosition(position.position);
-      }
-    }
-  };
+  // const [positionId, setPositionId] = useState({
+  //   id: "",
+  //   position: "",
+  //   permission: "",
+  // });
+  // const findPositionById = (data) => {
+  //   setEditSelectPosition(data.position);
+  // };
 
   const handleAddInput = (data, obj) => {
-    findPositionById(obj);
+    // position
+    //   .filter((e) => e.id === editValue.idPosition)
+    //   .map((filterName) => setEditSelectPosition(filterName.position));
+
+    // for (let index = 0; index < position.length; index++) {
+    //   if (position[index].id === editValue.idPosition) {
+    //     setEditSelectPosition(position.position);
+    //   }
+    // }
+
     return data.map((_, index) => {
       return (index > 0) & (data[index] !== "idPosition") ? (
         <input
@@ -36,20 +49,18 @@ export const EditItemUser = ({
       ) : null;
     });
   };
-  const handleChangeSelect = (e) => {
+  const handleEditChangeSelect = (e) => {
     setEditSelectPosition(e.target.value);
+    handleEditSelect(e.target.value);
   };
   const handleEditComboBox = (data) => {
-    console.log(position.filter((e) => e.id === data));
-    // let idSelect = position.filter((e) => e.id === data);
-    // if (data == null) {
-    //   idSelect = 1;
-    // }
-    // setEditSelectPosition(idSelect);
     return (
       <>
         <label htmlFor="position">stanowisko</label>
-        <select value={editSelectPosition} onChange={handleChangeSelect}>
+        <select
+          value={editSelectPosition}
+          onChange={(e) => handleEditChangeSelect(e)}
+        >
           {data.map((item, index) => (
             <option key={index} value={item.position}>
               {item.position}

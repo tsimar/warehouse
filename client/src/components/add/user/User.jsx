@@ -11,18 +11,26 @@ import ReadItemUser from "./ReadItemUser";
 import "./styleUser/user.css";
 
 const User = () => {
+  let editSelectPutPosition = "";
+
   const nameUserRef = useRef(null);
   const lastNameRef = useRef(null);
   const loginRef = useRef(null);
   const passwordRef = useRef(null);
+
   const [user, setUser] = useState([]);
   const [position, setPosition] = useState([]);
   const [selectPosition, setSelectPosition] = useState("");
+  const [editSelectPosition, setEditSelectPosition] = useState("");
 
-  const [addUser, setAddUser] = useReducer(
-    (state, newState) => ({ ...state, ...newState }),
-    { nameUser: "", lastName: "", login: "", password: "", idPosition: "" }
-  );
+  const [addUser, setAddUser] = useReducer({
+    nameUser: "",
+    lastName: "",
+    login: "",
+    password: "",
+    idPosition: "",
+  });
+
   const [editValue, setEditValue] = useState({
     editId: "",
     nameUser: "",
@@ -31,6 +39,7 @@ const User = () => {
     password: "",
     idPosition: "",
   });
+
   const fetchGETPosition = async () => {
     try {
       // setLoading(true);
@@ -62,6 +71,7 @@ const User = () => {
   useEffect(() => {
     fetchGETPosition();
   }, []);
+
   const handleAddSubmit = async (e) => {
     e.preventDefault();
     const newElement = {
@@ -81,6 +91,7 @@ const User = () => {
       });
 
     setAddUser("");
+
     nameUserRef.current.value = "";
     lastNameRef.current.value = "";
     loginRef.current.value = "";
@@ -99,16 +110,33 @@ const User = () => {
     setAddUser(newFormData);
   };
 
+  const changeNamePositionById = (data) => {
+    setEditSelectPosition("");
+    for (let index = 0; index < position.length; index++) {
+      if (position[index].position === data) {
+        return (editSelectPutPosition = position[index].id);
+      }
+    }
+  };
+
+  const changeIdByNamePosition = (data) => {
+    for (let index = 0; index < position.length; index++) {
+      if (position[index].id === data) {
+        return setEditSelectPosition(position[index].position);
+      }
+    }
+  };
+
   const handleEditFormSubmit = (event) => {
     event.preventDefault();
-    console.log(event);
+    changeNamePositionById(editSelectPosition);
     const editedContact = {
       id: editValue.id,
       nameUser: editValue.nameUser,
       lastName: editValue.lastName,
       login: editValue.login,
       password: editValue.password,
-      idPosition: editValue.idPosition,
+      idPosition: editSelectPutPosition,
     };
 
     apiUser
@@ -147,6 +175,7 @@ const User = () => {
       idPosition: edit.idPosition,
     };
     setEditValue(formValues);
+    changeIdByNamePosition(edit.idPosition);
   };
 
   const handleCancelClick = () => {
@@ -162,8 +191,14 @@ const User = () => {
   };
 
   const handleChangeSelect = (e) => {
-    setSelectPosition(e.target.value);
+    setSelectPosition(e.target.name);
   };
+
+  const handleEditSelect = (data) => {
+    // e.preventDefault();
+    setEditSelectPosition(data);
+  };
+
   const handleGetComboBox = (data) => {
     return (
       <>
@@ -192,6 +227,8 @@ const User = () => {
               handleDeleteClick={handleDeleteClick}
               handleAddSubmit={handleAddSubmit}
               position={position}
+              handleEditSelect={handleEditSelect}
+              editSelectPositionById={editSelectPosition}
             />
           ) : (
             // handleGetComboBox(position))
