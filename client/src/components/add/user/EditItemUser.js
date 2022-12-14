@@ -14,26 +14,8 @@ export const EditItemUser = ({
     editSelectPositionById
   );
   const objName = Object.keys(editValue);
-  // const [positionId, setPositionId] = useState({
-  //   id: "",
-  //   position: "",
-  //   permission: "",
-  // });
-  // const findPositionById = (data) => {
-  //   setEditSelectPosition(data.position);
-  // };
 
   const handleAddInput = (data, obj) => {
-    // position
-    //   .filter((e) => e.id === editValue.idPosition)
-    //   .map((filterName) => setEditSelectPosition(filterName.position));
-
-    // for (let index = 0; index < position.length; index++) {
-    //   if (position[index].id === editValue.idPosition) {
-    //     setEditSelectPosition(position.position);
-    //   }
-    // }
-
     return data.map((_, index) => {
       return (index > 0) & (data[index] !== "idPosition") ? (
         <input

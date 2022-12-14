@@ -6,22 +6,20 @@ export const EditItem = ({
   handleEditFormChange,
   handleEditFormSubmit,
   handleDeleteClick,
-  handleEditComboBox,
 }) => {
   const objName = Object.keys(editValue);
-  let i = 0;
+
   const handleAddInput = (data, obj) => {
     return data.map((_, index) => {
-      data[index] === "idPosition" ? (i = index) : (i = null);
-      return (index > 0) & (data[index] !== "idPosition") ? (
+      return index > 0 ? (
         <input
-          key={i}
-          id={data[i]}
-          name={data[i]}
+          key={index}
+          id={data[index]}
+          name={data[index]}
           type="text"
-          placeholder={data[i]}
+          placeholder={data[index]}
           required
-          value={obj[data[i]]}
+          value={obj[data[index]]}
           onChange={handleEditFormChange}
         />
       ) : null;
@@ -32,7 +30,7 @@ export const EditItem = ({
     <form onSubmit={handleEditFormSubmit}>
       <div className="div__div-get">
         {handleAddInput(objName, editValue)}
-        {handleEditComboBox(editValue[objName[i]])}
+
         <button className="size" name="save" type="submit">
           save
         </button>
@@ -54,4 +52,4 @@ export const EditItem = ({
       </div>
     </form>
   );
-};
+}; 

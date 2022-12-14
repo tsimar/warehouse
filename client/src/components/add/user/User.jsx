@@ -5,6 +5,7 @@ import React, {
   useEffect,
   Fragment,
 } from "react";
+// import Call from "../../../Call";
 import { apiUser, apiPosition } from "../../../url/URL";
 import { EditItemUser } from "./EditItemUser";
 import ReadItemUser from "./ReadItemUser";
@@ -45,6 +46,7 @@ const User = () => {
       // setLoading(true);
       const res = await apiPosition.get();
       setPosition(res.data);
+      // setPositionName(res.data.position);
       console.log("position", res.data);
       // setLoading(false);
     } catch (error) {
@@ -70,6 +72,9 @@ const User = () => {
 
   useEffect(() => {
     fetchGETPosition();
+ 
+      // setPositionName(...position.position)
+
   }, []);
 
   const handleAddSubmit = async (e) => {
@@ -231,10 +236,10 @@ const User = () => {
               editSelectPositionById={editSelectPosition}
             />
           ) : (
-            // handleGetComboBox(position))
             <ReadItemUser
               item={item}
               index={index}
+              position={position}
               handleEditClick={handleEditClick}
             />
           )}
@@ -245,48 +250,56 @@ const User = () => {
 
   return (
     <div>
-      <form onSubmit={handleAddSubmit}>
-        <label htmlFor="name">imia</label>
-        <input
-          id="name"
-          name="nameUser"
-          type="text"
-          placeholder="imia"
-          ref={nameUserRef}
-          onChange={handleChange}
-        />
-        <label htmlFor="last_name">nazwisko</label>
-        <input
-          id="last_name"
-          name="lastName"
-          type="text"
-          placeholder="nazwisko"
-          ref={lastNameRef}
-          onChange={handleChange}
-        />
-        <label htmlFor="login">login</label>
-        <input
-          id="login"
-          name="login"
-          type="text"
-          placeholder="login"
-          ref={loginRef}
-          onChange={handleChange}
-        />
-        <label htmlFor="password">password</label>
-        <input
-          id="password"
-          name="password"
-          type="text"
-          placeholder="hasło"
-          onChange={handleChange}
-          ref={passwordRef}
-        />
-        {handleGetComboBox(position)}
-
+      <form className="form--wrapper" onSubmit={handleAddSubmit}>
+        <div className="div__add--wrapper">
+          <label htmlFor="name">imia</label>
+          <input
+            id="name"
+            name="nameUser"
+            type="text"
+            placeholder="imia"
+            ref={nameUserRef}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="div__add--wrapper">
+          <label htmlFor="last_name">nazwisko</label>
+          <input
+            id="last_name"
+            name="lastName"
+            type="text"
+            placeholder="nazwisko"
+            ref={lastNameRef}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="div__add--wrapper">
+          <label htmlFor="login">login</label>
+          <input
+            id="login"
+            name="login"
+            type="text"
+            placeholder="login"
+            ref={loginRef}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="div__add--wrapper">
+          <label htmlFor="password">password</label>
+          <input
+            id="password"
+            name="password"
+            type="text"
+            placeholder="hasło"
+            onChange={handleChange}
+            ref={passwordRef}
+          />
+        </div>
+        <div className="div__add--wrapper">{handleGetComboBox(position)}</div>
         <button type="submit">add</button>
       </form>
-      <div className="div-get">{handlGetElement(user)}</div>
+      <div className="div-getUser">{handlGetElement(user)}</div>
+   
     </div>
   );
 };

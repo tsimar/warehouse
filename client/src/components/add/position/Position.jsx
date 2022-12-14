@@ -148,25 +148,29 @@ const Position = () => {
 
   return (
     <div>
-      <form onSubmit={handleAddSubmit}>
-        <label htmlFor="position">position</label>
-        <input
-          id="position"
-          name="position"
-          type="text"
-          placeholder="position"
-          onChange={handleChange}
-          ref={positionRef}
-        />
-        <label htmlFor="permission">permission</label>
-        <input
-          id="permission"
-          name="permission"
-          type="text"
-          placeholder="permission"
-          onChange={handleChange}
-          ref={permissionRef}
-        />
+      <form className="form--wrapper" onSubmit={handleAddSubmit}>
+        <div className="div__add--wrapper">
+          <label htmlFor="position">position</label>
+          <input
+            id="position"
+            name="position"
+            type="text"
+            placeholder="position"
+            onChange={handleChange}
+            ref={positionRef}
+          />
+        </div>
+        <div className="div__add--wrapper">
+          <label htmlFor="permission">permission</label>
+          <input
+            id="permission"
+            name="permission"
+            type="text"
+            placeholder="permission"
+            onChange={handleChange}
+            ref={permissionRef}
+          />
+        </div>
         <button type="submit">add</button>
       </form>
       <div className="div-get">{handlGetElement(position)}</div>

@@ -1,6 +1,6 @@
 export const NameItemsMenu = [
   {
-    value: " Nas",
+    value: " magazyn zewneczny",
     href: "/",
     // icon: "home",
   },
@@ -19,5 +19,13 @@ export const NameItemsMenu = [
   {
     value: "projekt",
     href: "/project",
+  },
+  {
+    value: "magazyn wew obróbka",
+    href: "/wareMasz",
+  },
+  {
+    value: "warszatat",
+    href: "/staty",
   },
 ];

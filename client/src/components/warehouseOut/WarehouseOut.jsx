@@ -1,6 +1,6 @@
-import axios from "axios";
+// import axios from "axios";
 import React, { useState } from "react";
-import { FilePicker } from "react-file-picker";
+// import { FilePicker } from "react-file-picker";
 
 import "./styleWareHouseOut/warehouse.css";
 
@@ -17,15 +17,15 @@ const WarehouseOut = () => {
     setNameProdukt(e.target.value);
   };
 
-  const onClikHadle = () => {
-    <FilePicker
-      extensions={["md"]}
-      // onChange={FileObject => (/* do something with File object */)}
-      // onError={errMsg => (/* do something with err msg string */)}
-    >
-      <button> Click to upload markdown</button>
-    </FilePicker>;
-  };
+  // const onClikHadle = () => {
+  //   <FilePicker
+  //     extensions={["md"]}
+  //     // onChange={FileObject => (/* do something with File object */)}
+  //     // onError={errMsg => (/* do something with err msg string */)}
+  //   >
+  //     <button> Click to upload markdown</button>
+  //   </FilePicker>;
+  // };
 
   return (
     <div className="wropper--div">
@@ -81,7 +81,7 @@ const WarehouseOut = () => {
           </select>
         </section>
         <button type="submit">add</button>
-        <input type="file"/>
+        <input type="file" />
       </form>
     </div>
   );
