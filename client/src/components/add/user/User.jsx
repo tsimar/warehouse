@@ -5,7 +5,7 @@ import React, {
   useEffect,
   Fragment,
 } from "react";
-// import Call from "../../../Call";
+
 import { apiUser, apiPosition } from "../../../url/URL";
 import { EditItemUser } from "./EditItemUser";
 import ReadItemUser from "./ReadItemUser";
@@ -72,9 +72,8 @@ const User = () => {
 
   useEffect(() => {
     fetchGETPosition();
- 
-      // setPositionName(...position.position)
 
+    // setPositionName(...position.position)
   }, []);
 
   const handleAddSubmit = async (e) => {
@@ -102,6 +101,7 @@ const User = () => {
     loginRef.current.value = "";
     passwordRef.current.value = "";
   };
+
   const handleChange = (e) => {
     e.preventDefault();
 
@@ -299,7 +299,6 @@ const User = () => {
         <button type="submit">add</button>
       </form>
       <div className="div-getUser">{handlGetElement(user)}</div>
-   
     </div>
   );
 };
