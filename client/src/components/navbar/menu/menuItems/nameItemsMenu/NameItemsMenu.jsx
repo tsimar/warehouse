@@ -26,6 +26,6 @@ export const NameItemsMenu = [
   },
   {
     value: "warszatat",
-    href: "/staty",
+    href: "/readyElement",
   },
 ];

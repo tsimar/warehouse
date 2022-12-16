@@ -7,3 +7,9 @@ export const apiUser = axios.create({ baseURL: `${URL}/user` });
 export const apiProject = axios.create({ baseURL: `${URL}/project` });
 export const apiPosition = axios.create({ baseURL: `${URL}/position` });
 export const apiWarehouseOut = axios.create({ baseURL: `${URL}/warehouseOut` });
+export const apiWarehouseMashin = axios.create({
+  baseURL: `${URL}/warehouseMashin`,
+});
+export const apiOutGoodElement = axios.create({
+  baseURL: `${URL}/warehouseMashin`,
+});

@@ -7,7 +7,8 @@ import Position from "./components/add/position/Position";
 import WarehouseOut from "./components/warehouseOut/WarehouseOut";
 import Elements from "./components/add/elements/Elements";
 import Project from "./components/add/project/Project";
-
+import WarehouseMashin from "./components/warehouseMashin/WarehouseMashin";
+import ReadyElement from "./components/readyElement/ReadyElement";
 
 function App() {
   return (
@@ -21,6 +22,8 @@ function App() {
         <Route path="/position" element={<Position />} />
         <Route path="/element" element={<Elements />} />
         <Route path="/project" element={<Project />} />
+        <Route path="/wareMashin" element={<WarehouseMashin />} />
+        <Route path="/readyElement" element={<ReadyElement />} />
       </Routes>
     </Router>
   );
