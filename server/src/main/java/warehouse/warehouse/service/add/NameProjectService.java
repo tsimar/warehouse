@@ -42,4 +42,7 @@ public class NameProjectService {
             System.out.println(e.getMessage());
         }
     }
+    final void  metod(){
+//        return;
+    }
 }

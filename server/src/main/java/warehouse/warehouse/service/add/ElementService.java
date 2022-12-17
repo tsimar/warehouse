@@ -38,14 +38,6 @@ public class ElementService {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-//        elementRepository
-//                .findById(element.getId()) // returns Optional<User>
-//                .ifPresent(user1 -> {
-//                    user1.setNameElement(element.getNameElement());
-//                    user1.setUrlPicture(element.getUrlPicture());;
-//
-//                    elementRepository.save(user1);
-//                });
 
     }
 

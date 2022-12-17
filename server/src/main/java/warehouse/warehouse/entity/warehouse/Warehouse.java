@@ -11,7 +11,7 @@ import java.sql.Date;
 @Data
 @Entity
 
-public class WarehouseOut {
+public class Warehouse {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,8 +20,9 @@ public class WarehouseOut {
 
     private int number;
     private Date dataStart;
-    private Long idNameProject;
+    private Long idProject;
     private Long idElement;
     private Long idUser;
+    private String warehouseName;
 
 }

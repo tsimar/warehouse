@@ -21,11 +21,11 @@ export const NameItemsMenu = [
     href: "/project",
   },
   {
-    value: "magazyn wew obróbka",
-    href: "/wareMasz",
+    value: "obróbka",
+    href: "/wareWork",
   },
   {
-    value: "warszatat",
-    href: "/readyElement",
+    value: "odbiór",
+    href: "/goodElement",
   },
 ];

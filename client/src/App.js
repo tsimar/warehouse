@@ -4,11 +4,10 @@ import "./App.css";
 import Navbar from "./components/navbar/Navbar";
 import User from "./components/add/user/User";
 import Position from "./components/add/position/Position";
-import WarehouseOut from "./components/warehouseOut/WarehouseOut";
+import Warehouse from "./components/warehouse/Warehouse";
 import Elements from "./components/add/elements/Elements";
 import Project from "./components/add/project/Project";
-import WarehouseMashin from "./components/warehouseMashin/WarehouseMashin";
-import ReadyElement from "./components/readyElement/ReadyElement";
+import WarehouseWork from "./components/warehouseWork/WarehouseWork";
 
 function App() {
   return (
@@ -17,13 +16,13 @@ function App() {
         <Navbar />
       </div>
       <Routes>
-        <Route path="/" exact element={<WarehouseOut />} />
+        <Route path="/" exact element={<Warehouse />} />
         <Route path="/addUser" element={<User />} />
         <Route path="/position" element={<Position />} />
         <Route path="/element" element={<Elements />} />
         <Route path="/project" element={<Project />} />
-        <Route path="/wareMashin" element={<WarehouseMashin />} />
-        <Route path="/readyElement" element={<ReadyElement />} />
+        <Route path="/wareWork" element={<WarehouseWork />} />
+        <Route path="/goodElement" element={<Warehouse />} />
       </Routes>
     </Router>
   );

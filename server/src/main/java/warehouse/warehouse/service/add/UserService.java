@@ -30,7 +30,7 @@ public class UserService {
 
     public void editUser(User user) {
 //    positionService.getPositionId(user.getIdPosition());
-        Long id = 1L;
+
         try {
             userRepository.update
                     (
@@ -39,7 +39,7 @@ public class UserService {
                             user.getLastName(),
                             user.getLogin(),
                             user.getPassword(),
-                            id,
+                           user.getIdPosition(),
                             user.getId()
                     );
         } catch (Exception e) {

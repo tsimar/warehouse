@@ -5,66 +5,58 @@ import React, {
   useRef,
   Fragment,
 } from "react";
-import ReadItemWarehouseOut from "./ReadItemWareHouseOut";
-import { EditItemWarehouseOut } from "./EditItemWareHouseOut";
 import DatePicker from "react-date-picker";
-import {
-  apiProject,
-  apiElement,
-  apiUser,
-  apiWarehouseOut,
-} from "../../url/URL";
+import { apiProject, apiElement, apiUser, apiWarehouse } from "../../url/URL";
 
-import "./styleWareHouseOut/warehouse.css";
-
-const WarehouseOut = () => {
+const Warehouse = () => {
   const numberRef = useRef(null);
   const [valueDate, OnChange] = useState(new Date());
   const [element, setElement] = useState([]);
   const [project, setProject] = useState([]);
   const [user, setUser] = useState([]);
-  const [warehouseOut, setWarehouseOut] = useState([]);
+  const [warehouse, setWarehouse] = useState([]);
   const [selectElement, setSelectElement] = useState("");
   const [selectProject, setSelectProject] = useState("");
   const [selectUser, setSelectUser] = useState("");
-  const [addWarehouseOut, setAddWarehouseOut] = useReducer({
-    nameUser: "",
-    lastName: "",
-    login: "",
-    password: "",
-    idPosition: "",
+  const [addWarehouse, setAddWarehouse] = useReducer({
+    idProject: "",
+    idElement: "",
+    number: "",
+    date: "",
+    idUser: "",
     warehouseName: "",
   });
 
   const [editValue, setEditValue] = useState({
     editId: "",
-    nameUser: "",
-    lastName: "",
-    login: "",
-    password: "",
-    idPosition: "",
+    idProject: "",
+    idElement: "",
+    number: "",
+    date: "",
+    idUser: "",
     warehouseName: "",
   });
 
   const handleAddSubmit = async (e) => {
     e.preventDefault();
-    const newWarehouseOut = {
-      nameUser: addWarehouseOut.nameUser,
-      lastName: addWarehouseOut.lastName,
-      login: addWarehouseOut.login,
-      password: addWarehouseOut.password,
-      idPosition: addWarehouseOut.password,
+    const newWarehouse = {
+      idProject: addWarehouse.idProject,
+      idElement: addWarehouse.idElement,
+      number: addWarehouse.number,
+      date: addWarehouse.date,
+      idUser: addWarehouse.idUser,
+      warehouseName: addWarehouse.warehouseName,
     };
-    apiWarehouseOut
-      .post("", newWarehouseOut)
+    apiWarehouse
+      .post("", newWarehouse)
       .then((response) => {
-        fetchGetWarehouseOut();
+        fetchGetWarehouse();
       })
       .catch((error) => {
         console.log(error);
       });
 
-    setAddWarehouseOut("");
+    setAddWarehouse("");
 
     numberRef.current.value = "";
     // lastNameRef.current.value = "";
@@ -79,10 +71,10 @@ const WarehouseOut = () => {
 
     const fieldValue = e.target.value;
 
-    const newFormData = { ...addWarehouseOut };
+    const newFormData = { ...addWarehouse };
     newFormData[fieldName] = fieldValue;
 
-    setAddWarehouseOut(newFormData);
+    setAddWarehouse(newFormData);
   };
 
   const handleEditFormSubmit = (event) => {
@@ -90,23 +82,25 @@ const WarehouseOut = () => {
     // changeNamePositionById(editSelectPosition);
     const editedContact = {
       id: editValue.id,
-      nameUser: editValue.nameUser,
-      lastName: editValue.lastName,
-      login: editValue.login,
-      password: editValue.password,
-      idPosition: editValue.password,
+      idProject: editValue.idProject,
+      idElement: editValue.idElement,
+      number: editValue.number,
+      date: editValue.date,
+      idUser: editValue.idUser,
+      warehouseName: editValue.warehouseName,
     };
 
-    apiWarehouseOut
+    apiWarehouse
       .put("", editedContact)
       .then((response) => {
-        fetchGetWarehouseOut();
+        fetchGetWarehouse();
         handleCancelClick();
       })
       .catch((error) => {
         console.log(error);
       });
   };
+
   const handleEditFormChange = (event) => {
     event.preventDefault();
 
@@ -125,26 +119,26 @@ const WarehouseOut = () => {
 
     const formValues = {
       id: edit.id,
-      nameUser: edit.nameUser,
-      lastName: edit.lastName,
-      login: edit.login,
-      password: edit.password,
       idPosition: edit.idPosition,
+      idElement: edit.idElement,
+      number: edit.number,
+      date: edit.date,
+      idUser: edit.idUser,
+      warehouseName: edit.warehouseName,
     };
     setEditValue(formValues);
     // changeIdByNamePosition(edit.idPosition);
   };
-
   const handleCancelClick = () => {
     setEditValue("");
   };
 
   const handleDeleteClick = (idProps) => {
-    const newContacts = [...warehouseOut];
-    const index = warehouseOut.findIndex((contact) => contact.id === idProps);
+    const newContacts = [...warehouse];
+    const index = warehouse.findIndex((contact) => contact.id === idProps);
     newContacts.splice(index, 1);
-    setWarehouseOut(newContacts);
-    apiWarehouseOut.delete(`/${idProps}`);
+    setWarehouse(newContacts);
+    apiWarehouse.delete(`/${idProps}`);
   };
 
   const handleChangeSelectProject = (e, name) => {
@@ -189,12 +183,12 @@ const WarehouseOut = () => {
       console.log(error);
     }
   };
-  const fetchGetWarehouseOut = async () => {
+  const fetchGetWarehouse = async () => {
     try {
       // setLoading(true);
-      const res = await apiWarehouseOut.get();
-      setWarehouseOut(res.data);
-      console.log("wareOut", res.data);
+      const res = await apiWarehouse.get();
+      setAddWarehouse(res.data);
+
       // setLoading(false);
     } catch (error) {
       console.log(error);
@@ -205,38 +199,12 @@ const WarehouseOut = () => {
     fetchGetElement();
     fetchGETProject();
     fetchGetUser();
-    fetchGetWarehouseOut();
+    fetchGetWarehouse();
   }, []);
 
-  const handlGetWarehouseOut = (data) => {
-    // e.preventDefault();
-    return data.map((item, index) => {
-      return (
-        <Fragment key={item.id}>
-          {editValue.id === item.id ? (
-            <EditItemWarehouseOut
-              editValue={editValue}
-              handleCancelClick={handleCancelClick}
-              handleEditFormChange={handleEditFormChange}
-              handleEditFormSubmit={handleEditFormSubmit}
-              handleDeleteClick={handleDeleteClick}
-              handleAddSubmit={handleAddSubmit}
-            />
-          ) : (
-            <ReadItemWarehouseOut
-              item={item}
-              index={index}
-              handleEditClick={handleEditClick}
-            />
-          )}
-        </Fragment>
-      );
-    });
-  };
-
   return (
-    <div className="wropper--div">
-      <form className="form--add" onSubmit={handleAddSubmit}>
+    <div>
+      <form className="form--wrapper" onSubmit={handleAddSubmit}>
         <section>
           <label htmlFor="project">project</label>
           <select
@@ -274,7 +242,10 @@ const WarehouseOut = () => {
             onChange={handleChange}
           />
         </section>
-        <DatePicker onChange={OnChange} value={valueDate} />
+        <section>
+          <label htmlFor="data">date</label>
+          <DatePicker id="data" onChange={OnChange} value={valueDate} />
+        </section>
         <section>
           <label htmlFor="user">imia</label>
           <select
@@ -290,9 +261,9 @@ const WarehouseOut = () => {
         </section>
         <button type="submit">add</button>
       </form>
-      <div className="div-get">{handlGetWarehouseOut(warehouseOut)}</div>
+      {/* <div className="div-getUser">{handlGetElement(user)}</div> */}
     </div>
   );
 };
 
-export default WarehouseOut;
+export default Warehouse;
