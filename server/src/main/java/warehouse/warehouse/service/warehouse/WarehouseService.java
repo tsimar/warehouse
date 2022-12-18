@@ -6,6 +6,8 @@ import warehouse.warehouse.entity.add.Position;
 import warehouse.warehouse.entity.warehouse.Warehouse;
 import warehouse.warehouse.repository.warehouse.WarehouseRepository;
 
+import java.util.List;
+
 @Service
 public class WarehouseService {
     private final WarehouseRepository warehouseRepository;
@@ -24,7 +26,7 @@ public class WarehouseService {
     }
 
     @Transactional
-    public void editElement(Warehouse warehouse) {
+    public void edit(Warehouse warehouse) {
         try {
             warehouseRepository
                     .findById(warehouse.getId())
@@ -39,5 +41,9 @@ public class WarehouseService {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    public List<Warehouse> getAll() {
+        return null;
     }
 }

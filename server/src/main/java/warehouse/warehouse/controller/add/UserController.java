@@ -2,7 +2,6 @@ package warehouse.warehouse.controller.add;
 
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import warehouse.warehouse.entity.add.User;
 import warehouse.warehouse.service.add.UserService;

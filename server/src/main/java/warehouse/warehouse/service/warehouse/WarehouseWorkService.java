@@ -31,7 +31,7 @@ public class WarehouseWorkService {
     }
 
     @Transactional
-    public void editElement(WarehouseWork warehouseWork) {
+    public void edit(WarehouseWork warehouseWork) {
         try {
             warehouseWorkRepository
                     .findById(warehouseWork.getId())
@@ -50,4 +50,6 @@ public class WarehouseWorkService {
             System.out.println(e.getMessage());
         }
     }
+
+
 }
