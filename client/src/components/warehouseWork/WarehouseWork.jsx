@@ -6,6 +6,8 @@ import React, {
   Fragment,
 } from "react";
 import DatePicker from "react-date-picker";
+import { EditItemWarehouseWork } from "./EditItemWarehouseWork";
+import ReadItemWarehouseWork from "./ReadItemWarehouseWork";
 import { apiProject, apiElement, apiWarehouseWork } from "../../url/URL";
 
 const WarehouseWork = () => {

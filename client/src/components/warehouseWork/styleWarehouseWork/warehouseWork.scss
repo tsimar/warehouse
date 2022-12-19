@@ -1,0 +1,22 @@
+@import'../../../style/style.scss';
+
+$width: calc(100% - 120px);
+
+.wropper--div {
+    margin: 20px;
+}
+
+.form--add {
+    width: 250px;
+    line-height: 1.8rem;
+
+    & label {
+        display: inline-block;
+        width: 70px;
+        margin-right: 10px;
+    }
+
+    & input {
+        width: $width;
+    }
+}

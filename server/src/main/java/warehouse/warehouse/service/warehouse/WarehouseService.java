@@ -6,6 +6,7 @@ import warehouse.warehouse.entity.add.Position;
 import warehouse.warehouse.entity.warehouse.Warehouse;
 import warehouse.warehouse.repository.warehouse.WarehouseRepository;
 
+import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -43,7 +44,14 @@ public class WarehouseService {
         }
     }
 
+
+
+    public Collection<Warehouse> getTypeWarehouse(String warehouseName) {
+        return warehouseRepository.getWarehouse(warehouseName);
+    }
+
+
     public List<Warehouse> getAll() {
-        return null;
+        return warehouseRepository.findAll();
     }
 }

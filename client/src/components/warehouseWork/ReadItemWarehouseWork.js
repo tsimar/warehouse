@@ -1,6 +1,6 @@
 import React from "react";
 
-const ReadItemWarehouseOut = ({ item, index, position, handleEditClick }) => {
+const ReadItemWarehouseWork = ({ item, index, position, handleEditClick }) => {
   const objName = Object.keys(item);
 
   const addSpan = (data, obj) => {
@@ -31,4 +31,4 @@ const ReadItemWarehouseOut = ({ item, index, position, handleEditClick }) => {
     </div>
   );
 };
-export default ReadItemWarehouseOut;
+export default ReadItemWarehouseWork;

@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import warehouse.warehouse.entity.warehouse.Warehouse;
 import warehouse.warehouse.service.warehouse.WarehouseService;
 
+import java.util.Collection;
 import java.util.List;
 
 @RestController
@@ -16,6 +17,11 @@ public class WarehouseController {
 
     public WarehouseController(WarehouseService warehouseService) {
         this.warehouseService = warehouseService;
+    }
+
+    @GetMapping("/{warehouseName}")
+    public ResponseEntity<Collection<Warehouse>> getAll(@PathVariable String warehouseName){
+        return ResponseEntity.ok(warehouseService.getTypeWarehouse(warehouseName));
     }
 
     @GetMapping
@@ -37,7 +43,8 @@ public class WarehouseController {
             warehouseService.delete(id);
         }
     }
-    @PutMapping() public void edit(@RequestBody Warehouse warehouse) {
+    @PutMapping
+    public void edit(@RequestBody Warehouse warehouse) {
         warehouseService.edit(warehouse);
     }
 }

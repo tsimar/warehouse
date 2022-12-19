@@ -6,6 +6,9 @@ import React, {
   Fragment,
 } from "react";
 import DatePicker from "react-date-picker";
+import { EditItemWarehouse } from "./EditItemWarehouse";
+import ReadItemWarehouse from "./ReadItemWarehouse";
+import "./styleWarehouse/warehouse.css";
 import { apiProject, apiElement, apiUser, apiWarehouse } from "../../url/URL";
 
 const Warehouse = () => {
@@ -18,21 +21,21 @@ const Warehouse = () => {
   const [selectElement, setSelectElement] = useState("");
   const [selectProject, setSelectProject] = useState("");
   const [selectUser, setSelectUser] = useState("");
-  const [addWarehouse, setAddWarehouse] = useReducer({
+  const [addWarehouse, setAddWarehouse] = useState({
+    number: "",
+    dataStart: "",
     idProject: "",
     idElement: "",
-    number: "",
-    date: "",
     idUser: "",
     warehouseName: "",
   });
 
   const [editValue, setEditValue] = useState({
     editId: "",
+    number: "",
+    dataStart: "",
     idProject: "",
     idElement: "",
-    number: "",
-    date: "",
     idUser: "",
     warehouseName: "",
   });
@@ -43,7 +46,7 @@ const Warehouse = () => {
       idProject: addWarehouse.idProject,
       idElement: addWarehouse.idElement,
       number: addWarehouse.number,
-      date: addWarehouse.date,
+      dataStart: addWarehouse.dataStart,
       idUser: addWarehouse.idUser,
       warehouseName: addWarehouse.warehouseName,
     };
@@ -85,7 +88,7 @@ const Warehouse = () => {
       idProject: editValue.idProject,
       idElement: editValue.idElement,
       number: editValue.number,
-      date: editValue.date,
+      dataStart: editValue.dataStart,
       idUser: editValue.idUser,
       warehouseName: editValue.warehouseName,
     };
@@ -122,7 +125,7 @@ const Warehouse = () => {
       idPosition: edit.idPosition,
       idElement: edit.idElement,
       number: edit.number,
-      date: edit.date,
+      dataStart: edit.dataStart,
       idUser: edit.idUser,
       warehouseName: edit.warehouseName,
     };
@@ -186,9 +189,8 @@ const Warehouse = () => {
   const fetchGetWarehouse = async () => {
     try {
       // setLoading(true);
-      const res = await apiWarehouse.get();
-      setAddWarehouse(res.data);
-
+      const res = await apiWarehouse.get("/in");
+      setWarehouse(res.data);
       // setLoading(false);
     } catch (error) {
       console.log(error);
@@ -201,6 +203,37 @@ const Warehouse = () => {
     fetchGetUser();
     fetchGetWarehouse();
   }, []);
+
+  const handlGetElement = (data) => {
+    return data.map((item, index) => {
+      return (
+        <Fragment key={item.id}>
+          {editValue.id === item.id ? (
+            <EditItemWarehouse
+              editValue={editValue}
+              // handleCancelClick={handleCancelClick}
+              // handleEditFormChange={handleEditFormChange}
+              // handleEditFormSubmit={handleEditFormSubmit}
+              // handleDeleteClick={handleDeleteClick}
+              // handleAddSubmit={handleAddSubmit}
+              // project={project}
+              // handleEditSelect={handleEditSelect}
+              // editSelectPositionById={editSelectPosition}
+            />
+          ) : (
+            <ReadItemWarehouse
+              item={item}
+              index={index}
+              project={project}
+              user={user}
+              element={element}
+              handleEditClick={handleEditClick}
+            />
+          )}
+        </Fragment>
+      );
+    });
+  };
 
   return (
     <div>
@@ -261,7 +294,7 @@ const Warehouse = () => {
         </section>
         <button type="submit">add</button>
       </form>
-      {/* <div className="div-getUser">{handlGetElement(user)}</div> */}
+      <div className="div-getUser">{handlGetElement(warehouse)}</div>
     </div>
   );
 };
