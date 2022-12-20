@@ -192,7 +192,7 @@ const WarehouseWork = () => {
           />
         </section>
         <section>
-          <label htmlFor="number">ilość</label>
+          <label htmlFor="number">ferzarka BACA</label>
           <input
             id="number"
             name="number"

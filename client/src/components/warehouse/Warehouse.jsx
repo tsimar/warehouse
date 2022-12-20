@@ -5,6 +5,7 @@ import React, {
   useRef,
   Fragment,
 } from "react";
+import { useLocation } from "react-router-dom";
 import DatePicker from "react-date-picker";
 import { EditItemWarehouse } from "./EditItemWarehouse";
 import ReadItemWarehouse from "./ReadItemWarehouse";
@@ -12,6 +13,15 @@ import "./styleWarehouse/warehouse.css";
 import { apiProject, apiElement, apiUser, apiWarehouse } from "../../url/URL";
 
 const Warehouse = () => {
+  const location = useLocation();
+  let namePathname = "in";
+  let wareName = location.pathname.split("/");
+  wareName = wareName[0];
+  if (wareName === "") {
+    namePathname = "in";
+  } else {
+    namePathname = "out";
+  }
   const numberRef = useRef(null);
   const [valueDate, OnChange] = useState(new Date());
   const [element, setElement] = useState([]);
@@ -127,7 +137,7 @@ const Warehouse = () => {
       number: edit.number,
       dataStart: edit.dataStart,
       idUser: edit.idUser,
-      warehouseName: edit.warehouseName,
+      warehouseName: namePathname,
     };
     setEditValue(formValues);
     // changeIdByNamePosition(edit.idPosition);
@@ -186,10 +196,10 @@ const Warehouse = () => {
       console.log(error);
     }
   };
-  const fetchGetWarehouse = async () => {
+  const fetchGetWarehouse = async (name) => {
     try {
       // setLoading(true);
-      const res = await apiWarehouse.get("/in");
+      const res = await apiWarehouse.get(`/${name}`);
       setWarehouse(res.data);
       // setLoading(false);
     } catch (error) {
@@ -201,8 +211,8 @@ const Warehouse = () => {
     fetchGetElement();
     fetchGETProject();
     fetchGetUser();
-    fetchGetWarehouse();
-  }, []);
+    fetchGetWarehouse(namePathname);
+  }, [wareName]);
 
   const handlGetElement = (data) => {
     return data.map((item, index) => {
@@ -211,11 +221,11 @@ const Warehouse = () => {
           {editValue.id === item.id ? (
             <EditItemWarehouse
               editValue={editValue}
-              // handleCancelClick={handleCancelClick}
-              // handleEditFormChange={handleEditFormChange}
-              // handleEditFormSubmit={handleEditFormSubmit}
-              // handleDeleteClick={handleDeleteClick}
-              // handleAddSubmit={handleAddSubmit}
+              handleCancelClick={handleCancelClick}
+              handleEditFormChange={handleEditFormChange}
+              handleEditFormSubmit={handleEditFormSubmit}
+              handleDeleteClick={handleDeleteClick}
+              handleAddSubmit={handleAddSubmit}
               // project={project}
               // handleEditSelect={handleEditSelect}
               // editSelectPositionById={editSelectPosition}

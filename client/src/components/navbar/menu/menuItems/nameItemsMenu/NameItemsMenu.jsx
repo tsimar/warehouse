@@ -1,7 +1,7 @@
 export const NameItemsMenu = [
   {
     value: " magazyn zewneczny",
-    href: "/",
+    Link: "/warehouse",
     // icon: "home",
   },
   {
@@ -26,6 +26,6 @@ export const NameItemsMenu = [
   },
   {
     value: "odbiór",
-    href: "/goodElement",
+    Link: "/goodElement",
   },
 ];
