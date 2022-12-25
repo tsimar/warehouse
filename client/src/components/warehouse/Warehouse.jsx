@@ -1,36 +1,41 @@
-import React, {
-  useState,
-  useEffect,
-  useReducer,
-  useRef,
-  Fragment,
-} from "react";
+import React, { useState, useEffect, useRef, Fragment } from "react";
 import { useLocation } from "react-router-dom";
 import DatePicker from "react-date-picker";
+
 import { EditItemWarehouse } from "./EditItemWarehouse";
 import ReadItemWarehouse from "./ReadItemWarehouse";
 import "./styleWarehouse/warehouse.css";
 import { apiProject, apiElement, apiUser, apiWarehouse } from "../../url/URL";
 
+let wareName;
+
 const Warehouse = () => {
+  let editSelectPutProject = "";
+  let editSelectPutUser = "";
+  let editSelectPutElement = "";
   const location = useLocation();
-  let namePathname = "in";
-  let wareName = location.pathname.split("/");
-  wareName = wareName[0];
-  if (wareName === "") {
-    namePathname = "in";
-  } else {
-    namePathname = "out";
-  }
+  const [warehouseName, setWarehouseName] = useState("in");
   const numberRef = useRef(null);
   const [valueDate, OnChange] = useState(new Date());
+  // const [valueDate, OnChange] = useState({
+  //   value: new Date(),
+  //   format: "MM-DD-YYYY",
+  //   // onChange: (date) => console.log(date.format()),
+  // });
   const [element, setElement] = useState([]);
   const [project, setProject] = useState([]);
   const [user, setUser] = useState([]);
   const [warehouse, setWarehouse] = useState([]);
   const [selectElement, setSelectElement] = useState("");
+
   const [selectProject, setSelectProject] = useState("");
   const [selectUser, setSelectUser] = useState("");
+  const [editSelect, setEditSelect] = useState({
+    project: "",
+    element: "",
+    user: "",
+    dataStart: "",
+  });
   const [addWarehouse, setAddWarehouse] = useState({
     number: "",
     dataStart: "",
@@ -52,13 +57,23 @@ const Warehouse = () => {
 
   const handleAddSubmit = async (e) => {
     e.preventDefault();
+    changeNameProjectById(selectProject);
+    changeNameElementById(selectElement);
+    changeNameUserById(selectUser);
+    let d =
+      valueDate.getFullYear() +
+      "-" +
+      (valueDate.getMonth() + 1) +
+      "-" +
+      valueDate.getDate();
+    console.log(d);
     const newWarehouse = {
-      idProject: addWarehouse.idProject,
-      idElement: addWarehouse.idElement,
+      idProject: editSelectPutProject,
+      idElement: editSelectPutElement,
       number: addWarehouse.number,
-      dataStart: addWarehouse.dataStart,
-      idUser: addWarehouse.idUser,
-      warehouseName: addWarehouse.warehouseName,
+      dataStart: d,
+      idUser: editSelectPutUser,
+      warehouseName: warehouseName,
     };
     apiWarehouse
       .post("", newWarehouse)
@@ -72,13 +87,71 @@ const Warehouse = () => {
     setAddWarehouse("");
 
     numberRef.current.value = "";
-    // lastNameRef.current.value = "";
-    // loginRef.current.value = "";
-    // passwordRef.current.value = "";
   };
 
+  const changeNameProjectById = (data) => {
+    editSelect.project = "";
+    for (let index = 0; index < project.length; index++) {
+      if (project[index].nameProject === data) {
+        return (editSelectPutProject = project[index].id);
+      } else {
+        editSelectPutProject = project[0].id;
+      }
+    }
+  };
+  const changeNameUserById = (data) => {
+    editSelect.user = "";
+    for (let index = 0; index < user.length; index++) {
+      if (user[index].nameUser === data) {
+        return (editSelectPutUser = user[index].id);
+      } else {
+        editSelectPutUser = user[0].id;
+      }
+    }
+  };
+  const changeNameElementById = (data) => {
+    editSelect.element = "";
+    for (let index = 0; index < element.length; index++) {
+      if (element[index].nameElement === data) {
+        return (editSelectPutElement = element[index].id);
+      } else {
+        editSelectPutElement = element[0].id;
+      }
+    }
+  };
+
+  const changeIdByNameProject = (data) => {
+    for (let index = 0; index < project.length; index++) {
+      if (project[index].id === data) {
+        return (editSelect.project = project[index].nameProject);
+      } else {
+        editSelect.project = project[0].nameProject;
+      }
+    }
+  };
+  const changeIdByNameUser = (data) => {
+    for (let index = 0; index < project.length; index++) {
+      if (project[index].id === data) {
+        return (editSelect.user = user[index].nameUser);
+      } else {
+        editSelect.user = user[0].nameUser;
+      }
+    }
+  };
+  const changeIdByNameElement = (data) => {
+    for (let index = 0; index < element.length; index++) {
+      if (element[index].id === data) {
+        return (editSelect.element = element[index].nameElement);
+      } else {
+        editSelect.element = element[0].nameelement;
+      }
+    }
+  };
   const handleChange = (e) => {
     e.preventDefault();
+    setSelectUser(user[0].nameUser);
+    setSelectProject(project[0].nameProject);
+    setSelectElement(element[0].nameElement);
 
     const fieldName = e.target.name;
 
@@ -92,14 +165,16 @@ const Warehouse = () => {
 
   const handleEditFormSubmit = (event) => {
     event.preventDefault();
-    // changeNamePositionById(editSelectPosition);
+    changeNameProjectById(editSelect.project);
+    changeNameUserById(editSelect.user);
+    changeNameElementById(editSelect.element);
     const editedContact = {
       id: editValue.id,
-      idProject: editValue.idProject,
-      idElement: editValue.idElement,
+      idProject: editSelectPutProject,
+      idElement: editSelectPutElement,
       number: editValue.number,
-      dataStart: editValue.dataStart,
-      idUser: editValue.idUser,
+      dataStart: editSelect.dataStart,
+      idUser: editSelectPutUser,
       warehouseName: editValue.warehouseName,
     };
 
@@ -129,18 +204,28 @@ const Warehouse = () => {
 
   const handleEditClick = (event, edit) => {
     event.preventDefault();
+    let dateLocal = new Date();
 
+    let date = edit.dataStart.split("-");
+    dateLocal.setDate(date[2]);
+    // console.log(dateLocal.getDate());
+    dateLocal.setMonth(date[1] - 1);
+    // console.log(dateLocal.getMonth() + 1);
+    dateLocal.setFullYear(date[0]);
+    // console.log(dateLocal.getFullYear());
     const formValues = {
       id: edit.id,
-      idPosition: edit.idPosition,
+      idProject: edit.idProject,
       idElement: edit.idElement,
       number: edit.number,
-      dataStart: edit.dataStart,
+      dataStart: dateLocal,
       idUser: edit.idUser,
-      warehouseName: namePathname,
+      warehouseName: warehouseName,
     };
     setEditValue(formValues);
-    // changeIdByNamePosition(edit.idPosition);
+    changeIdByNameProject(edit.idProject);
+    changeIdByNameUser(edit.idUser);
+    changeIdByNameElement(edit.idElement);
   };
   const handleCancelClick = () => {
     setEditValue("");
@@ -154,15 +239,6 @@ const Warehouse = () => {
     apiWarehouse.delete(`/${idProps}`);
   };
 
-  const handleChangeSelectProject = (e, name) => {
-    if (name === "project") {
-      setSelectProject(e.target.value);
-    } else if (name === "user") {
-      setSelectUser(e.target.value);
-    } else if (name === "element") {
-      setSelectElement(e.target.value);
-    }
-  };
   const fetchGETProject = async () => {
     try {
       // setLoading(true);
@@ -196,11 +272,28 @@ const Warehouse = () => {
       console.log(error);
     }
   };
-  const fetchGetWarehouse = async (name) => {
+
+  const selectNameWarehouse = (wareName) => {
+    let name;
+    if (wareName === "") {
+      name = "in";
+    } else {
+      name = "out";
+    }
+    setWarehouseName(name);
+    return name;
+  };
+
+  const fetchGetWarehouse = async () => {
+    wareName = location.pathname.split("/");
+
+    wareName = wareName[1];
+    let name = selectNameWarehouse(wareName);
     try {
       // setLoading(true);
       const res = await apiWarehouse.get(`/${name}`);
       setWarehouse(res.data);
+      console.log("warehouse", res.data);
       // setLoading(false);
     } catch (error) {
       console.log(error);
@@ -211,8 +304,18 @@ const Warehouse = () => {
     fetchGetElement();
     fetchGETProject();
     fetchGetUser();
-    fetchGetWarehouse(namePathname);
-  }, [wareName]);
+  }, []);
+
+  useEffect(() => {
+    fetchGetWarehouse();
+  }, [location]);
+
+  const handleEditSelect = (name, value) => {
+    const newFormData = { ...editSelect };
+    newFormData[name] = value;
+
+    setEditSelect(newFormData);
+  };
 
   const handlGetElement = (data) => {
     return data.map((item, index) => {
@@ -226,9 +329,14 @@ const Warehouse = () => {
               handleEditFormSubmit={handleEditFormSubmit}
               handleDeleteClick={handleDeleteClick}
               handleAddSubmit={handleAddSubmit}
-              // project={project}
-              // handleEditSelect={handleEditSelect}
-              // editSelectPositionById={editSelectPosition}
+              project={project}
+              element={element}
+              user={user}
+              handleEditSelect={handleEditSelect}
+              editSelectProjectById={editSelect.project}
+              editSelectElementById={editSelect.element}
+              editSelectUserById={editSelect.user}
+              editSelectDateById={editSelect.dataStart}
             />
           ) : (
             <ReadItemWarehouse
@@ -246,13 +354,13 @@ const Warehouse = () => {
   };
 
   return (
-    <div>
+    <div className="warehous--body">
       <form className="form--wrapper" onSubmit={handleAddSubmit}>
         <section>
           <label htmlFor="project">project</label>
           <select
             value={selectProject}
-            onChange={(e) => handleChangeSelectProject(e, "project")}
+            onChange={(e) => setSelectProject(e.target.value)}
           >
             {project.map((item, index) => (
               <option key={index} value={item.nameProject}>
@@ -265,7 +373,7 @@ const Warehouse = () => {
           <label htmlFor="element">element</label>
           <select
             value={selectElement}
-            onChange={(e) => handleChangeSelectProject(e, "element")}
+            onChange={(e) => setSelectElement(e.target.value)}
           >
             {element.map((item, index) => (
               <option key={index} value={item.nameElement}>
@@ -281,19 +389,26 @@ const Warehouse = () => {
             name="number"
             type="number"
             placeholder="ilość"
+            pattern="[0-9]*"
+            required
             ref={numberRef}
             onChange={handleChange}
           />
         </section>
         <section>
           <label htmlFor="data">date</label>
-          <DatePicker id="data" onChange={OnChange} value={valueDate} />
+          <DatePicker
+            dateFormat="dd-MM-yyyy"
+            id="data"
+            onChange={OnChange}
+            value={valueDate}
+          />
         </section>
         <section>
           <label htmlFor="user">imia</label>
           <select
             value={selectUser}
-            onChange={(e) => handleChangeSelectProject(e, "user")}
+            onChange={(e) => setSelectUser(e.target.value)}
           >
             {user.map((item, index) => (
               <option key={index} value={item.nameUser}>

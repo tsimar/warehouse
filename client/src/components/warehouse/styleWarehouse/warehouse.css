@@ -19,3 +19,7 @@
 .form--add input {
   width: calc(100% - 120px);
 }
+
+.div-getUser {
+  overflow-y: scroll;
+}

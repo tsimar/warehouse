@@ -1,28 +1,28 @@
 export const NameItemsMenu = [
   {
-    value: " magazyn zewneczny",
-    Link: "/warehouse",
+    value: "magazyn zewneczny",
+    Link: "/",
     // icon: "home",
   },
   {
     value: "nowy pracownik ",
-    href: "/addUser",
+    Link: "/addUser",
   },
   {
     value: "stanowisko",
-    href: "/position",
+    Link: "/position",
   },
   {
     value: "element",
-    href: "/element",
+    Link: "/element",
   },
   {
     value: "projekt",
-    href: "/project",
+    Link: "/project",
   },
   {
     value: "obróbka",
-    href: "/wareWork",
+    Link: "/wareWork",
   },
   {
     value: "odbiór",

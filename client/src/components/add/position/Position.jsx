@@ -9,10 +9,13 @@ const Position = () => {
   const positionRef = useRef(null);
   const permissionRef = useRef(null);
   const [position, setPosition] = useState([]);
-  const [addPosition, setAddPosition] = useReducer({
-    position: "",
-    permission: "",
-  });
+  const [addPosition, setAddPosition] = useReducer(
+    (state, newState) => ({ ...state, ...newState }),
+    {
+      position: "",
+      permission: "",
+    }
+  );
   const [editValue, setEditValue] = useState({
     editId: "",
     position: "",

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import DatePicker from "react-date-picker";
 
 export const EditItemWarehouse = ({
   editValue,
@@ -6,18 +7,35 @@ export const EditItemWarehouse = ({
   handleEditFormChange,
   handleEditFormSubmit,
   handleDeleteClick,
-  position,
+  project,
+  element,
+  user,
   handleEditSelect,
-  editSelectPositionById,
+  editSelectProjectById,
+  editSelectUserById,
+  editSelectElementById,
+  editSelectDateById,
 }) => {
-  const [editSelectPosition, setEditSelectPosition] = useState(
-    editSelectPositionById
-  );
+  // const [valueDate, OnChange] = useState(editValue.dateStart);
+  if (editSelectDateById === "") {
+    editSelectDateById = editValue.dataStart;
+  }
+  const [editSelect, setEditSelect] = useState({
+    project: editSelectProjectById,
+    element: editSelectElementById,
+    user: editSelectUserById,
+    dataStart: editSelectDateById,
+  });
+
   const objName = Object.keys(editValue);
 
   const handleAddInput = (data, obj) => {
     return data.map((_, index) => {
-      return (index > 0) & (data[index] !== "idPosition") ? (
+      return (index > 0) &
+        (data[index] !== "idProject") &
+        (data[index] !== "idUser") &
+        (data[index] !== "idElement") &
+        (data[index] !== "dataStart") ? (
         <input
           key={index}
           id={data[index]}
@@ -31,21 +49,64 @@ export const EditItemWarehouse = ({
       ) : null;
     });
   };
-  const handleEditChangeSelect = (e) => {
-    setEditSelectPosition(e.target.value);
-    handleEditSelect(e.target.value);
+  const handleEditChangeSelect = (e, name) => {
+    const nameValue = e.target.value;
+    const newFormData = { ...editSelect };
+    newFormData[name] = nameValue;
+    setEditSelect(newFormData);
+    handleEditSelect(name, nameValue);
+  };
+  const handleEditChangeSelectDate = (value, name) => {
+    const newFormData = { ...editSelect };
+    newFormData[name] = value;
+    setEditSelect(newFormData);
+    handleEditSelect(name, value);
   };
   const handleEditComboBox = (data) => {
     return (
       <>
-        <label htmlFor="position">stanowisko</label>
+        <label htmlFor="project">project</label>
         <select
-          value={editSelectPosition}
-          onChange={(e) => handleEditChangeSelect(e)}
+          value={editSelect.editSelectProject}
+          onChange={(e) => handleEditChangeSelect(e, "project")}
         >
           {data.map((item, index) => (
-            <option key={index} value={item.position}>
-              {item.position}
+            <option key={index} value={item.nameProject}>
+              {item.nameProject}
+            </option>
+          ))}
+        </select>
+      </>
+    );
+  };
+  const handleEditComboBoxEl = (data) => {
+    return (
+      <>
+        <label htmlFor="element">element</label>
+        <select
+          value={editSelect.editSelectElement}
+          onChange={(value) => handleEditChangeSelect(value, "element")}
+        >
+          {data.map((item, index) => (
+            <option key={index} value={item.nameElement}>
+              {item.nameElement}
+            </option>
+          ))}
+        </select>
+      </>
+    );
+  };
+  const handleEditComboBoxUser = (data) => {
+    return (
+      <>
+        <label htmlFor="user">pracownic</label>
+        <select
+          value={editSelect.editSelectUser}
+          onChange={(e) => handleEditChangeSelect(e, "user")}
+        >
+          {data.map((item, index) => (
+            <option key={index} value={item.nameUser}>
+              {item.nameUser} {item.lastName}
             </option>
           ))}
         </select>
@@ -55,8 +116,18 @@ export const EditItemWarehouse = ({
   return (
     <form onSubmit={handleEditFormSubmit}>
       <div className="div__div-get">
+        {handleEditComboBox(project)}
+        {handleEditComboBoxEl(element)}
+        <DatePicker
+          // defaultValue={new Date()}
+          onChange={(e) => handleEditChangeSelectDate(e, "dataStart")}
+          // onChange={(value) => OnChange(value)}
+          value={editSelect.dataStart}
+          dateFormat="dd-MM-yyyy"
+        />
+
         {handleAddInput(objName, editValue)}
-        {handleEditComboBox(position)}
+        {handleEditComboBoxUser(user)}
         <button className="size" name="save" type="submit">
           save
         </button>

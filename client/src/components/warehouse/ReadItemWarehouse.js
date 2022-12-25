@@ -8,8 +8,6 @@ const ReadItemWarehouse = ({
   user,
   handleEditClick,
 }) => {
-  const objName = Object.keys(item);
-
   const addUser = (warehouse, user) => {
     return user.map((item, index) => {
       return warehouse.idUser === item.id ? (
@@ -27,13 +25,34 @@ const ReadItemWarehouse = ({
     });
   };
   const addProject = (warehouse, project) => {
+    console.log(warehouse);
     return project.map((item, index) => {
       return warehouse.idProject === item.id ? (
         <span key={index}>{item.nameProject}</span>
       ) : null;
     });
   };
+  const handleChangeDate = (data) => {
+    let dateLocal = new Date();
+    let date;
+    let d;
+    let m;
+    let y;
+    if (data === null) {
+      date = new Date();
+      d = date.getDate();
+      m = date.getMonth() + 1;
+      y = date.getFullYear();
+    } else {
+      date = data.split("-");
+      d = date[2];
+      m = date[1];
+      y = date[0];
+    }
 
+    date = d + "-" + m + "-" + y;
+    return <span>{date}</span>;
+  };
   return (
     <div
       className="div__div-get"
@@ -41,11 +60,11 @@ const ReadItemWarehouse = ({
       onClick={(e) => handleEditClick(e, item)}
     >
       <span>{index + 1}</span>
+      {addProject(item, project)}
       {addElement(item, element)}
       <span>{item.number}</span>
+      {handleChangeDate(item.dataStart)}
 
-      {addProject(item, project)}
-      <span>{item.dataStart}</span>
       {addUser(item, user)}
     </div>
   );

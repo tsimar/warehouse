@@ -161,7 +161,7 @@ const Project = () => {
           <label htmlFor="name">project</label>
           <input
             id="name"
-            name="nammeProject"
+            name="nameProject"
             type="text"
             placeholder="project"
             onChange={handleChange}

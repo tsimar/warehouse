@@ -24,13 +24,16 @@ const User = () => {
   const [selectPosition, setSelectPosition] = useState("");
   const [editSelectPosition, setEditSelectPosition] = useState("");
 
-  const [addUser, setAddUser] = useReducer({
-    nameUser: "",
-    lastName: "",
-    login: "",
-    password: "",
-    idPosition: "",
-  });
+  const [addUser, setAddUser] = useReducer(
+    (state, newState) => ({ ...state, ...newState }),
+    {
+      nameUser: "",
+      lastName: "",
+      login: "",
+      password: "",
+      idPosition: "",
+    }
+  );
 
   const [editValue, setEditValue] = useState({
     editId: "",
@@ -78,12 +81,14 @@ const User = () => {
 
   const handleAddSubmit = async (e) => {
     e.preventDefault();
+    console.log(selectPosition);
+    changeNamePositionById(selectPosition);
     const newElement = {
       nameUser: addUser.nameUser,
       lastName: addUser.lastName,
       login: addUser.login,
       password: addUser.password,
-      idPosition: selectPosition,
+      idPosition: editSelectPutPosition,
     };
     apiUser
       .post("", newElement)
@@ -104,7 +109,7 @@ const User = () => {
 
   const handleChange = (e) => {
     e.preventDefault();
-
+    setSelectPosition(position[0].position);
     const fieldName = e.target.name;
 
     const fieldValue = e.target.value;
@@ -196,7 +201,8 @@ const User = () => {
   };
 
   const handleChangeSelect = (e) => {
-    setSelectPosition(e.target.name);
+    setSelectPosition(e.target.value);
+    // changeNamePositionById(e.target.value);
   };
 
   const handleEditSelect = (data) => {
