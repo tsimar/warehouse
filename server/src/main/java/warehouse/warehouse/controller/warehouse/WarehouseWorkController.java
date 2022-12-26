@@ -22,7 +22,8 @@ public class WarehouseWorkController {
 
     @GetMapping
     public ResponseEntity<List<WarehouseWork>> getAll(){
-        return ResponseEntity.ok(warehouseWorkService.getAll());
+
+        return ResponseEntity.ok(warehouseWorkService.getSelectWarehouseWork());
     }
 
     @PostMapping

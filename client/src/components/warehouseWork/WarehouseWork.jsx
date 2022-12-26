@@ -9,9 +9,11 @@ import DatePicker from "react-date-picker";
 import { EditItemWarehouseWork } from "./EditItemWarehouseWork";
 import ReadItemWarehouseWork from "./ReadItemWarehouseWork";
 import { apiProject, apiElement, apiWarehouseWork } from "../../url/URL";
-
+let k = 0;
 const WarehouseWork = () => {
+  k++;
   const numberRef = useRef(null);
+  const [checked, setChecked] = useState(false);
   const [valueDateStart, OnChangeStart] = useState(new Date());
   const [valueDateFinish, OnChangeFinish] = useState(new Date());
   const [element, setElement] = useState([]);
@@ -140,71 +142,73 @@ const WarehouseWork = () => {
     // loginRef.current.value = "";
     // passwordRef.current.value = "";
   };
+  const handleEditClick = (event, edit) => {
+    event.preventDefault();
+    let dateLocal = new Date();
 
+    // let date = edit.dataStart.split("-");
+    // dateLocal.setDate(date[2]);
+    // // console.log(dateLocal.getDate());
+    // dateLocal.setMonth(date[1] - 1);
+    // // console.log(dateLocal.getMonth() + 1);
+    // dateLocal.setFullYear(date[0]);
+    // // console.log(dateLocal.getFullYear());
+    const formValues = {
+      id: edit.id,
+      idProject: edit.idProject,
+      idElement: edit.idElement,
+      number: edit.number,
+      dataStart: dateLocal,
+      idUser: edit.idUser,
+    };
+    setEditValue(formValues);
+    // changeIdByNameProject(edit.idProject);
+    // changeIdByNameUser(edit.idUser);
+    // changeIdByNameElement(edit.idElement);
+  };
+
+  const handlGetWarehouseWork = (data) => {
+    return data.map((item, index) => {
+      return (
+        <Fragment key={item.id}>
+          {editValue.id === item.id ? null : (
+            // <EditItemWarehouseWork
+            // editValue={editValue}
+            // handleCancelClick={handleCancelClick}
+            //  handleEditFormChange={handleEditFormChange}
+            //  handleEditFormSubmit={handleEditFormSubmit}
+            // handleDeleteClick={handleDeleteClick}
+            // handleAddSubmit={handleAddSubmit}
+            // project={project}
+            // element={element}
+            // user={user}
+            //  handleEditSelect={handleEditSelect}
+            //  editSelectProjectById={editSelect.project}
+            //  editSelectElementById={editSelect.element}
+            //  editSelectUserById={editSelect.user}
+            //  editSelectDateById={editSelect.dataStart}
+            // />
+            <ReadItemWarehouseWork
+              item={item}
+              index={index}
+              project={project}
+              element={element}
+              handleEditClick={handleEditClick}
+            />
+          )}
+        </Fragment>
+      );
+    });
+  };
   return (
     <div>
-      <form className="form--wrapper" onSubmit={handleAddSubmit}>
-        <section>
-          <label htmlFor="project">project</label>
-          <select value={selectProject} onChange={setSelectProject}>
-            {project.map((item, index) => (
-              <option key={index} value={item.nameProject}>
-                {item.nameProject}
-              </option>
-            ))}
-          </select>
-        </section>
-        <section>
-          <label htmlFor="element">element</label>
-          <select value={selectElement} onChange={setSelectElement}>
-            {element.map((item, index) => (
-              <option key={index} value={item.nameElement}>
-                {item.nameElement}
-              </option>
-            ))}
-          </select>
-        </section>
-        <section>
-          <label htmlFor="number">ilość</label>
-          <input
-            id="number"
-            name="number"
-            type="number"
-            placeholder="ilość"
-            ref={numberRef}
-            onChange={handleChange}
-          />
-        </section>
-        <section>
-          <label htmlFor="dataStart">rozpoczęcie</label>
-          <DatePicker
-            id="dataStart"
-            onChange={OnChangeStart}
-            value={valueDateStart}
-          />
-        </section>
-        <section>
-          <label htmlFor="dataFinish">wykonanie</label>
-          <DatePicker
-            id="dataFinish"
-            onChange={OnChangeFinish}
-            value={valueDateFinish}
-          />
-        </section>
-        <section>
-          <label htmlFor="number">ferzarka BACA</label>
-          <input
-            id="number"
-            name="number"
-            type="boolean"
-            placeholder="ilość"
-            ref={numberRef}
-            onChange={handleChange}
-          />
-        </section>
-        <button type="submit">add</button>
-      </form>
-      {/* <div className="div-getUser">{handlGetWarehouseWork(user)}</div> */}
+      <label htmlFor="">Nr</label>
+      <label htmlFor="">projekt</label>
+      <label htmlFor="">detal</label>
+
+      <div className="div-getWarehouseWork">
+        {handlGetWarehouseWork(warehouseWork)}
+      </div>
     </div>
   );
 };

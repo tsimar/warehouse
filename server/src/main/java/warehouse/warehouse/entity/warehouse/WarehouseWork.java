@@ -29,6 +29,8 @@ public class WarehouseWork {
     private String heidenhain;
     private String millingMachineSmall;
 
+    private int warehouseOpen;
+
 
 
 

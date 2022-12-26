@@ -6,11 +6,17 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import warehouse.warehouse.entity.warehouse.Warehouse;
 
-import java.util.Collection;
 import java.util.List;
 
 @Repository
 public interface WarehouseRepository extends JpaRepository<Warehouse,Long> {
     @Query(value = "SELECT w FROM Warehouse w WHERE w.warehouseName=?1 ")
-    Collection<Warehouse> getWarehouse(String warehouseName);
+    List<Warehouse> getWarehouse(String warehouseName);
+
+    @Query(value = "SELECT w FROM Warehouse w WHERE w.warehouseName=?1")
+    List<Warehouse> getIn(String in);
+
+    @Query(value = "SELECT w FROM Warehouse w WHERE w.warehouseName=?1 ")
+    List<Warehouse> getOut(String out);
+
 }

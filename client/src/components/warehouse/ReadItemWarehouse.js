@@ -33,7 +33,6 @@ const ReadItemWarehouse = ({
     });
   };
   const handleChangeDate = (data) => {
-    let dateLocal = new Date();
     let date;
     let d;
     let m;

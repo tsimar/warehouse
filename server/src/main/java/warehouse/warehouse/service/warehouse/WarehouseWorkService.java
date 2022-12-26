@@ -4,21 +4,24 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import warehouse.warehouse.entity.warehouse.Warehouse;
 import warehouse.warehouse.entity.warehouse.WarehouseWork;
-import warehouse.warehouse.repository.warehouse.WarehouseRepository;
 import warehouse.warehouse.repository.warehouse.WarehouseWorkRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class WarehouseWorkService {
     private final WarehouseWorkRepository warehouseWorkRepository;
+    private final WarehouseService warehouseService;
 
-
-    public WarehouseWorkService(WarehouseWorkRepository warehouseWorkRepository) {
+    public WarehouseWorkService(WarehouseWorkRepository warehouseWorkRepository, WarehouseService warehouseService) {
         this.warehouseWorkRepository = warehouseWorkRepository;
+        this.warehouseService = warehouseService;
     }
 
-    public List<WarehouseWork> getAll(){
+    public List<WarehouseWork> getAll() {
+
+
         return warehouseWorkRepository.findAll();
     }
 
@@ -51,5 +54,33 @@ public class WarehouseWorkService {
         }
     }
 
+    public List<WarehouseWork> getSelectWarehouseWork() {
+        List<Warehouse> warehouses = warehouseService.getWarehouseByName();
+        List<WarehouseWork> warehouseWorks = warehouseWorkRepository.findAllOpen(1);
+        List<WarehouseWork> resultWarehouseWork = systemWarehouseWork(warehouses, warehouseWorks);
 
+        return resultWarehouseWork;
+    }
+
+    private List<WarehouseWork> systemWarehouseWork(List<Warehouse> warehouses, List<WarehouseWork> warehouseWorks) {
+        List<WarehouseWork> resultWarehouseWork = warehouseWorks;
+        for (Warehouse item : warehouses) {
+            WarehouseWork warehouseWork = new WarehouseWork();
+            int k = 0;
+            for (WarehouseWork itemWork : warehouseWorks) {
+                if (itemWork.getIdProject() == item.getIdProject() && itemWork.getIdElement() == item.getIdElement()) {
+                    k++;
+                }
+            }
+            if (k == 0) {
+                warehouseWork.setIdProject(item.getIdProject());
+                warehouseWork.setIdElement(item.getIdElement());
+                warehouseWork.setNumber(item.getNumber());
+                warehouseWork.setDataStart(item.getDataStart());
+                resultWarehouseWork.add(warehouseWork);
+            }
+
+        }
+        return resultWarehouseWork;
+    }
 }

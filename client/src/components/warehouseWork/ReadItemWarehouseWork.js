@@ -1,8 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 
-const ReadItemWarehouseWork = ({ item, index, position, handleEditClick }) => {
+const ReadItemWarehouseWork = ({
+  item,
+  index,
+  project,
+  element,
+  handleEditClick,
+}) => {
   const objName = Object.keys(item);
-
+  const [checked, setChecked] = useState(false);
   const addSpan = (data, obj) => {
     return data.map((item, index) => {
       return (index > 0) & (5 > index) ? (
@@ -11,14 +17,22 @@ const ReadItemWarehouseWork = ({ item, index, position, handleEditClick }) => {
     });
   };
 
-  const addPosition = (user, position) => {
-    return position.map((item, index) => {
-      return user.idPosition === item.id ? (
-        <span key={index}>{item.position}</span>
+  const addProject = (warehouseWork, project) => {
+    return project.map((item, index) => {
+      return warehouseWork.idProject === item.id ? (
+        <span key={index}>{item.nameProject}</span>
+      ) : null;
+    });
+  };
+  const addElement = (warehouseWork, element) => {
+    return element.map((item, index) => {
+      return warehouseWork.idElement === item.id ? (
+        <span key={index}>{item.nameElement}</span>
       ) : null;
     });
   };
 
+  console.log(checked);
   return (
     <div
       className="div__div-get"
@@ -26,8 +40,20 @@ const ReadItemWarehouseWork = ({ item, index, position, handleEditClick }) => {
       onClick={(e) => handleEditClick(e, item)}
     >
       <span>{index + 1}</span>
+      {addProject(item, project)}
+      {addElement(item, element)}
       {addSpan(objName, item)}
-      {addPosition(item, position)}
+      <div key={index + 1}>
+        <label className="fff" key={index + 1}>
+          <input
+            key={index + 1}
+            type="checkbox"
+            checked={checked}
+            value="dsfsdfs"
+            onChange={(e) => setChecked(e.target.checked)}
+          />
+        </label>
+      </div>
     </div>
   );
 };
