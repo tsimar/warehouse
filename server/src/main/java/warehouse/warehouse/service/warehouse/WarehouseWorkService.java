@@ -6,6 +6,8 @@ import warehouse.warehouse.entity.warehouse.Warehouse;
 import warehouse.warehouse.entity.warehouse.WarehouseWork;
 import warehouse.warehouse.repository.warehouse.WarehouseWorkRepository;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,22 +66,30 @@ public class WarehouseWorkService {
 
     private List<WarehouseWork> systemWarehouseWork(List<Warehouse> warehouses, List<WarehouseWork> warehouseWorks) {
         List<WarehouseWork> resultWarehouseWork = warehouseWorks;
+        Long idNew = 3L;
         for (Warehouse item : warehouses) {
             WarehouseWork warehouseWork = new WarehouseWork();
             int k = 0;
+
             for (WarehouseWork itemWork : warehouseWorks) {
                 if (itemWork.getIdProject() == item.getIdProject() && itemWork.getIdElement() == item.getIdElement()) {
                     k++;
                 }
             }
             if (k == 0) {
+                warehouseWork.setId(idNew);
                 warehouseWork.setIdProject(item.getIdProject());
                 warehouseWork.setIdElement(item.getIdElement());
                 warehouseWork.setNumber(item.getNumber());
                 warehouseWork.setDataStart(item.getDataStart());
+                warehouseWork.setDataFinish(Date.valueOf(LocalDate.now()));
+                warehouseWork.setHeidenhain("false");
+                warehouseWork.setLathe("false");
+                warehouseWork.setBacaFanuc("false");
+                warehouseWork.setMillingMachineSmall("false");
                 resultWarehouseWork.add(warehouseWork);
             }
-
+            idNew++;
         }
         return resultWarehouseWork;
     }

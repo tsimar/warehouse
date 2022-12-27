@@ -171,25 +171,26 @@ const WarehouseWork = () => {
     return data.map((item, index) => {
       return (
         <Fragment key={item.id}>
-          {editValue.id === item.id ? null : (
-            // <EditItemWarehouseWork
-            // editValue={editValue}
-            // handleCancelClick={handleCancelClick}
-            //  handleEditFormChange={handleEditFormChange}
-            //  handleEditFormSubmit={handleEditFormSubmit}
-            // handleDeleteClick={handleDeleteClick}
-            // handleAddSubmit={handleAddSubmit}
-            // project={project}
-            // element={element}
-            // user={user}
-            //  handleEditSelect={handleEditSelect}
-            //  editSelectProjectById={editSelect.project}
-            //  editSelectElementById={editSelect.element}
-            //  editSelectUserById={editSelect.user}
-            //  editSelectDateById={editSelect.dataStart}
-            // />
+          {editValue.id === item.id ? (
+            <EditItemWarehouseWork
+              editValue={editValue}
+              handleCancelClick={handleCancelClick}
+              // handleEditFormChange={handleEditFormChange}
+              // handleEditFormSubmit={handleEditFormSubmit}
+              handleDeleteClick={handleDeleteClick}
+              handleAddSubmit={handleAddSubmit}
+              project={project}
+              element={element}
+              user={user}
+              // handleEditSelect={handleEditSelect}
+              // editSelectProjectById={editSelect.project}
+              // editSelectElementById={editSelect.element}
+              // editSelectUserById={editSelect.user}
+              // editSelectDateById={editSelect.dataStart}
+            />
+          ) : (
             <ReadItemWarehouseWork
-              item={item}
+              item={warehouseWork}
               index={index}
               project={project}
               element={element}
@@ -200,6 +201,7 @@ const WarehouseWork = () => {
       );
     });
   };
+
   return (
     <div>
       <label htmlFor="">Nr</label>
