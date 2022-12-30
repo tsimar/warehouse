@@ -19,3 +19,11 @@
 .form--add input {
   width: calc(100% - 120px);
 }
+
+.label_name {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  gap: 30px;
+  margin-left: 20px;
+}

@@ -9,10 +9,13 @@ import DatePicker from "react-date-picker";
 import { EditItemWarehouseWork } from "./EditItemWarehouseWork";
 import ReadItemWarehouseWork from "./ReadItemWarehouseWork";
 import { apiProject, apiElement, apiWarehouseWork } from "../../url/URL";
+import "./styleWarehouseWork/warehouseWork.css";
+
 let k = 0;
 const WarehouseWork = () => {
   k++;
   const numberRef = useRef(null);
+
   const [checked, setChecked] = useState(false);
   const [valueDateStart, OnChangeStart] = useState(new Date());
   const [valueDateFinish, OnChangeFinish] = useState(new Date());
@@ -31,7 +34,7 @@ const WarehouseWork = () => {
     bacaFanuc: "",
     lathe: "",
     heidenhain: "",
-    millingMachine: "",
+    millingMachineSmall: "",
   });
 
   const [editValue, setEditValue] = useState({
@@ -44,7 +47,7 @@ const WarehouseWork = () => {
     bacaFanuc: "",
     lathe: "",
     heidenhain: "",
-    millingMachine: "",
+    millingMachineSmall: "",
   });
   const handleChange = (e) => {
     e.preventDefault();
@@ -146,13 +149,6 @@ const WarehouseWork = () => {
     event.preventDefault();
     let dateLocal = new Date();
 
-    // let date = edit.dataStart.split("-");
-    // dateLocal.setDate(date[2]);
-    // // console.log(dateLocal.getDate());
-    // dateLocal.setMonth(date[1] - 1);
-    // // console.log(dateLocal.getMonth() + 1);
-    // dateLocal.setFullYear(date[0]);
-    // // console.log(dateLocal.getFullYear());
     const formValues = {
       id: edit.id,
       idProject: edit.idProject,
@@ -181,7 +177,7 @@ const WarehouseWork = () => {
               handleAddSubmit={handleAddSubmit}
               project={project}
               element={element}
-              user={user}
+
               // handleEditSelect={handleEditSelect}
               // editSelectProjectById={editSelect.project}
               // editSelectElementById={editSelect.element}
@@ -190,7 +186,7 @@ const WarehouseWork = () => {
             />
           ) : (
             <ReadItemWarehouseWork
-              item={warehouseWork}
+              item={item}
               index={index}
               project={project}
               element={element}
@@ -204,10 +200,11 @@ const WarehouseWork = () => {
 
   return (
     <div>
-      <label htmlFor="">Nr</label>
-      <label htmlFor="">projekt</label>
-      <label htmlFor="">detal</label>
-
+      <div className="label_name">
+        <label htmlFor="">Nr</label>
+        <label htmlFor="">projekt</label>
+        <label htmlFor="">detal</label>
+      </div>
       <div className="div-getWarehouseWork">
         {handlGetWarehouseWork(warehouseWork)}
       </div>

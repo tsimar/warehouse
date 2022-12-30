@@ -1,14 +1,17 @@
-import React, { useState, useEffect } from "react";
-
+import React, { useState } from "react";
+let k;
+let p;
 const ReadItemWarehouseWork = ({
   item,
   index,
   project,
   element,
   handleEditClick,
+  checked,
 }) => {
-  const objName = Object.keys(item);
-  const [checkedV, setCheckedV] = useState(new Array(item.length).fill(false));
+  // const objName = Object.keys(item);
+  // const [checkedV, setCheckedV] = useState(new Array(item.length).fill(false));
+  // const count = useRef(null);
   //   const [addPosition, setAddPosition] = useReducer(
   //   (state, newState) => ({ ...state, ...newState }),
   //   {
@@ -24,49 +27,49 @@ const ReadItemWarehouseWork = ({
   //   });
   // };
   // let index = 1;
+  // useEffect(() => {
+  //   console.log(checkedV);
+  // }, [checked]);
 
-  const addProject = (warehouseWork, project) => {
-    return project.map((item, index) => {
-      return warehouseWork === item.id ? (
-        <span key={index}>{item.nameProject}</span>
-      ) : null;
-    });
-  };
-  const addElement = (warehouseWork, element) => {
+  const addElement = (warehouse, element) => {
     return element.map((item, index) => {
-      return warehouseWork === item.id ? (
+      return warehouse.idElement === item.id ? (
         <span key={index}>{item.nameElement}</span>
       ) : null;
     });
   };
-  const handleOnChange = (data, position) => {
-    // e.preventDefault();
-    const updatedCheckedState = data.map((item1, index1) =>
-      index1 === position ? !item1 : item1
-    );
 
-    const te = { ...checkedV };
-    te[position] = true;
-    console.log(updatedCheckedState);
-    console.log(index, " = ", checkedV[index]);
-    setCheckedV(te);
-
-    console.log(index, " =index= ", ...checkedV);
+  const addProject = (warehouseWork, project) => {
+    if (k !== warehouseWork.idProject) {
+      return project.map((item, index) => {
+        return warehouseWork.idProject === item.id ? (
+          <span key={index}>{item.nameProject}</span>
+        ) : null;
+      });
+    } else {
+      console.log("k", k);
+    }
   };
+  const handleChangeDate = (data) => {
+    let date;
+    let d;
+    let m;
+    let y;
+    if (data === null) {
+      date = new Date();
+      d = date.getDate();
+      m = date.getMonth() + 1;
+      y = date.getFullYear();
+    } else {
+      date = data.split("-");
+      d = date[2];
+      m = date[1];
+      y = date[0];
+    }
 
-  // const mashinaObrobka = (name) => {
-  //   if (name === null) {
-  //     name = false;
-  //   }
-
-  //   return (
-  //     <>
-  //       <label>{checked[index]}</label>
-
-  //     </>
-  //   );
-  // };
-
+    date = d + "-" + m + "-" + y;
+    return <span>{date}</span>;
+  };
   return (
     <div
       className="div__div-get"
@@ -74,18 +77,16 @@ const ReadItemWarehouseWork = ({
       onClick={(e) => handleEditClick(e, item)}
     >
       <span>{index + 1}</span>
-      {/* {addProject(item.idProject, project)}
-      {addElement(item.idElement, element)} */}
+      {addProject(item, project)}
+      {addElement(item, element)}
 
-      <div key={index + 1}>
-        <input
-          id="baca"
-          type="checkbox"
-          checked={checkedV[index]}
-          onChange={() => handleOnChange(checkedV, index)}
-        />
-        {/* <labal>position={index}</labal> */}
-      </div>
+      <span>{item.number}</span>
+      {handleChangeDate(item.dataStart)}
+      {handleChangeDate(item.dataFinish)}
+      <button>{item.bacaFanuc} </button>
+      <button>{item.lathe} </button>
+      <button>{item.heidenhain} </button>
+      <button>{item.millingMachineSmall} </button>
     </div>
   );
 };
