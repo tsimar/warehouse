@@ -11,12 +11,9 @@ import ReadItemWarehouseWork from "./ReadItemWarehouseWork";
 import { apiProject, apiElement, apiWarehouseWork } from "../../url/URL";
 import "./styleWarehouseWork/warehouseWork.css";
 
-let k = 0;
 const WarehouseWork = () => {
-  k++;
   const numberRef = useRef(null);
 
-  const [checked, setChecked] = useState(false);
   const [valueDateStart, OnChangeStart] = useState(new Date());
   const [valueDateFinish, OnChangeFinish] = useState(new Date());
   const [element, setElement] = useState([]);
@@ -25,6 +22,12 @@ const WarehouseWork = () => {
   const [warehouseWork, setWarehouseWork] = useState([]);
   const [selectElement, setSelectElement] = useState("");
   const [selectProject, setSelectProject] = useState("");
+  const [checkedFanucBaca, setCheckedFanucBaca] = useState([]);
+  const [checkedLathe, setCheckedLathe] = useState([]);
+  const [checkedHeidenhain, setCheckedHeidenhain] = useState([]);
+  const [checkedMillingMachineSmall, setCheckedMillingMachineSmall] = useState(
+    []
+  );
   const [addWarehouseWork, setAddWarehouseWork] = useReducer({
     idProject: "",
     idElement: "",
@@ -49,6 +52,45 @@ const WarehouseWork = () => {
     heidenhain: "",
     millingMachineSmall: "",
   });
+  const handleButton = (e, index) => {
+    e.preventDefault();
+
+    const fieldName = e.target.name;
+    let fieldValue = e.target.innerText;
+
+    if (fieldValue === "false") {
+      fieldValue = "true";
+    } else {
+      fieldValue = "false";
+    }
+    let newValue;
+
+    switch (fieldName) {
+      case "bacaFanuc":
+        newValue = { ...checkedFanucBaca };
+        newValue[index] = fieldValue;
+        setCheckedFanucBaca(newValue);
+        break;
+      case "lathe":
+        newValue = { ...checkedLathe };
+        newValue[index] = fieldValue;
+        setCheckedLathe(newValue);
+        break;
+      case "heidenhain":
+        newValue = { ...checkedHeidenhain };
+        newValue[index] = fieldValue;
+        setCheckedHeidenhain(newValue);
+        break;
+      case "millingMachineSmall":
+        newValue = { ...checkedMillingMachineSmall };
+        newValue[index] = fieldValue;
+        setCheckedMillingMachineSmall(newValue);
+        break;
+
+      default:
+        break;
+    }
+  };
   const handleChange = (e) => {
     e.preventDefault();
 
@@ -108,6 +150,7 @@ const WarehouseWork = () => {
       const res = await apiWarehouseWork.get();
       setWarehouseWork(res.data);
       console.log("wareOut", res.data);
+
       // setLoading(false);
     } catch (error) {
       console.log(error);
@@ -119,6 +162,24 @@ const WarehouseWork = () => {
     fetchGETProject();
     fetchGetWarehouseWork();
   }, []);
+
+  useEffect(() => {
+    // const value = { ...warehouseWork };
+    let bacaFanuc = { ...warehouseWork };
+    let lathe = { ...warehouseWork };
+    let heidenhain = { ...warehouseWork };
+    let millingMachineSmall = { ...warehouseWork };
+    warehouseWork.map((item, index) => {
+      bacaFanuc[index] = item.bacaFanuc;
+      setCheckedFanucBaca(bacaFanuc);
+      lathe[index] = item.lathe;
+      setCheckedLathe(lathe);
+      heidenhain[index] = item.heidenhain;
+      setCheckedHeidenhain(heidenhain);
+      millingMachineSmall[index] = item.millingMachineSmall;
+      setCheckedMillingMachineSmall(millingMachineSmall);
+    });
+  }, [warehouseWork]);
 
   const handleAddSubmit = async (e) => {
     e.preventDefault();
@@ -167,32 +228,36 @@ const WarehouseWork = () => {
     return data.map((item, index) => {
       return (
         <Fragment key={item.id}>
-          {editValue.id === item.id ? (
+          {/* {editValue.id === item.id ? (
             <EditItemWarehouseWork
               editValue={editValue}
-              handleCancelClick={handleCancelClick}
+              handleCancelClick={handleCancelClick} 
               // handleEditFormChange={handleEditFormChange}
               // handleEditFormSubmit={handleEditFormSubmit}
-              handleDeleteClick={handleDeleteClick}
-              handleAddSubmit={handleAddSubmit}
-              project={project}
-              element={element}
+              // handleDeleteClick={handleDeleteClick}
+              // handleAddSubmit={handleAddSubmit}
+              // project={project}
+              // element={element}
 
               // handleEditSelect={handleEditSelect}
               // editSelectProjectById={editSelect.project}
               // editSelectElementById={editSelect.element}
               // editSelectUserById={editSelect.user}
               // editSelectDateById={editSelect.dataStart}
-            />
-          ) : (
-            <ReadItemWarehouseWork
-              item={item}
-              index={index}
-              project={project}
-              element={element}
-              handleEditClick={handleEditClick}
-            />
-          )}
+          //   />
+          // ) : (*/}
+          <ReadItemWarehouseWork
+            item={item}
+            index={index}
+            project={project}
+            element={element}
+            handleEditClick={handleEditClick}
+            handleButton={handleButton}
+            checkedFanucBaca={checkedFanucBaca[index]}
+            checkedLathe={checkedLathe[index]}
+            checkedHeidenhain={checkedHeidenhain[index]}
+            checkedMillingMachineSmall={checkedMillingMachineSmall[index]}
+          />
         </Fragment>
       );
     });

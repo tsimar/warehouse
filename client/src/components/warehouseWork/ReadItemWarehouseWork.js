@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 let k;
-let p;
+// let p;
 const ReadItemWarehouseWork = ({
   item,
   index,
@@ -8,9 +8,14 @@ const ReadItemWarehouseWork = ({
   element,
   handleEditClick,
   checked,
+  handleButton,
+  checkedFanucBaca,
+  checkedLathe,
+  checkedHeidenhain,
+  checkedMillingMachineSmall,
 }) => {
+  console.log(checkedFanucBaca);
   // const objName = Object.keys(item);
-  // const [checkedV, setCheckedV] = useState(new Array(item.length).fill(false));
   // const count = useRef(null);
   //   const [addPosition, setAddPosition] = useReducer(
   //   (state, newState) => ({ ...state, ...newState }),
@@ -70,6 +75,19 @@ const ReadItemWarehouseWork = ({
     date = d + "-" + m + "-" + y;
     return <span>{date}</span>;
   };
+
+  // const handleButton = (e, index) => {
+  //   e.preventDefault();
+  //   // const fieldName = e.tatrget.name;
+  //   const fieldValue = e.target.innerText;
+  //   if (fieldValue === "false"){
+  //     fieldValue="true"
+  //   } else {
+  //     fieldValue = "false";
+  //   }
+  //   setCheckedV(fieldValue[index]);
+  // };
+
   return (
     <div
       className="div__div-get"
@@ -83,10 +101,21 @@ const ReadItemWarehouseWork = ({
       <span>{item.number}</span>
       {handleChangeDate(item.dataStart)}
       {handleChangeDate(item.dataFinish)}
-      <button>{item.bacaFanuc} </button>
-      <button>{item.lathe} </button>
-      <button>{item.heidenhain} </button>
-      <button>{item.millingMachineSmall} </button>
+      <button onClick={(e) => handleButton(e, index)} name="bacaFanuc">
+        {checkedFanucBaca}
+      </button>
+      <button onClick={(e) => handleButton(e, index)} name="lathe">
+        {checkedLathe}
+      </button>
+      <button onClick={(e) => handleButton(e, index)} name="heidenhain">
+        {checkedHeidenhain}
+      </button>
+      <button
+        onClick={(e) => handleButton(e, index)}
+        name="millingMachineSmall"
+      >
+        {checkedMillingMachineSmall}
+      </button>
     </div>
   );
 };

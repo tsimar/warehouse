@@ -6,6 +6,7 @@ import ReadItem from "../ReadItem";
 import { useRef } from "react";
 
 const Elements = () => {
+  console.log(apiElement);
   const elementRef = useRef(null);
   const urlPictureRef = useRef(null);
   const [element, setElement] = useState([]);
