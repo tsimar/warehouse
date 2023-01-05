@@ -1,6 +1,5 @@
 package warehouse.warehouse.entity.add;
 
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -11,19 +10,23 @@ import lombok.NoArgsConstructor;
 
 import java.io.File;
 
-
 @Data
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class Element {
+public class NewElement {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
-    private String nameElement;
-    private String urlPicture;
+
+
+
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        private Long id;
+
+        private String nameElement;
+        private File urlPicture;
+
 
 
 }

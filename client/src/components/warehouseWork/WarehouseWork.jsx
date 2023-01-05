@@ -53,8 +53,6 @@ const WarehouseWork = () => {
     millingMachineSmall: "",
   });
   const handleButton = (e, index) => {
-    e.preventDefault();
-
     const fieldName = e.target.name;
     let fieldValue = e.target.innerText;
 

@@ -419,7 +419,7 @@ const Warehouse = () => {
         </section>
         <button type="submit">add</button>
       </form>
-      <div className="div-getUser">{handlGetElement(warehouse)}</div>
+      <div className="div-getWorhouse">{handlGetElement(warehouse)}</div>
     </div>
   );
 };

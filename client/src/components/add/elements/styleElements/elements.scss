@@ -15,20 +15,21 @@
 }
 
 .div__div-get {
-    width: 100%;
+    width: 500px;
     margin-left: 20px;
     display: flex;
     justify-content: flex-start;
-        gap: 20px;
+    gap: 20px;
 
     & span,
     & input {
         gap: 20px;
-        }
-& span:not(:first-child) {
-    margin-left: 20px;
-    width: 100px;
-}
+    }
+
+    & span:not(:first-child) {
+        margin-left: 20px;
+        width: 100px;
+    }
 }
 
 .div__div-get:nth-child(2n) {

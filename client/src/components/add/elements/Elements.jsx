@@ -1,4 +1,10 @@
-import React, { useReducer, useState, useEffect, Fragment } from "react";
+import React, {
+  ChangeEvent,
+  useReducer,
+  useState,
+  useEffect,
+  Fragment,
+} from "react";
 import "./styleElements/elements.css";
 import { apiElement } from "../../../url/URL";
 import { EditItem } from "../EditItem";
@@ -7,17 +13,20 @@ import { useRef } from "react";
 
 const Elements = () => {
   console.log(apiElement);
+  const [file, setFile] = useState();
+  const [fileName, setFileName] = useState("");
+
   const elementRef = useRef(null);
   const urlPictureRef = useRef(null);
   const [element, setElement] = useState([]);
   const [addElement, setAddElement] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
-    { nameElement: "", urlPicture: "" }
+    { nameElement: "", urlPicture: null }
   );
   const [editValue, setEditValue] = useState({
     editId: "",
     nameElement: "",
-    urlPicture: "",
+    urlPicture: [],
   });
 
   const fetchGET = async () => {
@@ -34,15 +43,23 @@ const Elements = () => {
 
   const handleAddSubmit = async (e) => {
     e.preventDefault();
+    const formData = new FormData();
+    formData.append("file", file);
+    // formData.append("fileName", addElement.urlPictureFileName);
+
     const newElement = {
       nameElement: addElement.nameElement,
-      urlPicture: addElement.urlPicture,
+      urlPicture: formData,
     };
     apiElement
-      .post("", newElement)
+      .post("/upload", formData)
       .then((response) => {
+        response.json();
         fetchGET();
         console.log(response);
+      })
+      .then((result) => {
+        console.log("success:", result);
       })
       .catch((error) => {
         console.log(error);
@@ -64,6 +81,25 @@ const Elements = () => {
     setAddElement(newFormData);
   };
 
+  const handleFileChange = (e) => {
+    if (!e.target.files) {
+      return;
+    }
+
+    // const fieldName = e.target.name;
+    const fieldValue = e.target.files[0];
+    const fieldValueFileName = e.target.files[0].name;
+
+    const newFormData = { ...addElement };
+    newFormData["urlPicture"] = fieldValue;
+    // newFormData["urlPictureFileName"] = fieldValueFileName;
+
+    setFile(e.target.files[0]);
+    // setAddElement(newFormData);
+    // setFileName(e.target.files[0].name);
+
+    // 🚩 do the file upload here normally...
+  };
   useEffect(() => {
     fetchGET();
   }, []);
@@ -80,12 +116,12 @@ const Elements = () => {
     apiElement
       .put("", editedContact)
       .then((response) => {
-        console.log(response);
         fetchGET();
       })
       .catch((error) => {
         console.log(error);
       });
+    handleCancelClick();
   };
 
   const handleEditFormChange = (event) => {
@@ -170,43 +206,42 @@ const Elements = () => {
           <input
             id="urlPicture"
             name="urlPicture"
-            type="text"
+            type="file"
             placeholder="URL"
-            // accept=".pdf"
+            accept=".pdf"
             // onChange={(e) => setAddElement({ urlPicture: e.target.files })}
-            onChange={handleChange}
+            onChange={handleFileChange}
             ref={urlPictureRef}
           />
         </div>
         <button type="submit">add</button>
       </form>
-
       <div className="div-get">{handlGetElement(element)}</div>
+       <img src={element.urlPicture} />
     </div>
   );
 };
 
 export default Elements;
 
-
 // import React, { useState } from "react";
-//   
+//
 // function App() {
 //     const [file, setFile] = useState();
 //     function handleChange(e) {
 //         console.log(e.target.files);
 //         setFile(URL.createObjectURL(e.target.files[0]));
 //     }
-//   
+//
 //     return (
 //         <div className="App">
 //             <h2>Add Image:</h2>
 //             <input type="file" onChange={handleChange} />
 //             <img src={file} />
-//   
+//
 //         </div>
-//   
+//
 //     );
 // }
-//   
+//
 // export default App;

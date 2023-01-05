@@ -6,4 +6,6 @@
 .navbar {
   width: 100%;
   background-color: bisque;
+  margin-bottom: 20px;
+  position: static;
 }

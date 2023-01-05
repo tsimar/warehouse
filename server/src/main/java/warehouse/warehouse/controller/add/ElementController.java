@@ -2,9 +2,9 @@ package warehouse.warehouse.controller.add;
 
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import warehouse.warehouse.entity.add.Element;
 import warehouse.warehouse.service.add.ElementService;
 
@@ -25,9 +25,13 @@ public class ElementController {
         return ResponseEntity.ok(elementService.getAll());
     }
 
-    @PostMapping
-    public ResponseEntity<Element> save(@RequestBody Element element) {
-        return ResponseEntity.ok(elementService.save(element));
+//    @PostMapping
+//    public ResponseEntity<Element> save(@RequestBody Element element) {
+//        return ResponseEntity.ok(elementService.save(element));
+//    }
+   @PostMapping("/upload")
+    public void uploadFile(@RequestParam("file") MultipartFile file) throws Exception {
+       elementService.uploadFile(file);
     }
 
     @DeleteMapping("/{id}")

@@ -10,4 +10,5 @@ import java.util.List;
 public interface WarehouseWorkRepository extends JpaRepository <WarehouseWork,Long>{
     @Query(value = "SELECT w FROM WarehouseWork w WHERE w.warehouseOpen=?1 ")
     List<WarehouseWork> findAllOpen(int number);
+
 }
