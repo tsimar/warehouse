@@ -1,5 +1,5 @@
 import React, {
-  ChangeEvent,
+
   useReducer,
   useState,
   useEffect,
@@ -10,12 +10,35 @@ import { apiElement } from "../../../url/URL";
 import { EditItem } from "../EditItem";
 import ReadItem from "../ReadItem";
 import { useRef } from "react";
+import { Icon } from "react-icons-kit";
+import { plus } from "react-icons-kit/feather/plus";
+
+// Core viewer
+import { Worker } from "@react-pdf-viewer/core";
+// Import the main Viewer component
+import { Viewer } from "@react-pdf-viewer/core";
+// Import the styles
+import "@react-pdf-viewer/core/lib/styles/index.css";
+
+//default layout plugin
+import { defaultLayoutPlugin } from "@react-pdf-viewer/default-layout";
+// Import styles of default layout plugin
+import "@react-pdf-viewer/default-layout/lib/styles/index.css";
 
 const Elements = () => {
-  console.log(apiElement);
+  //creating new plugin instance
+  const defaultLayoutPluginInstance = defaultLayoutPlugin();
+  //pdf file onChange state
+  const [pdfFile, setPdfFile] = useState(null);
+  //pdf file error state
+  const [pdfError, setPdfError] = useState("");
+
+  const allowedFiles = ["application/pdf"];
+  //pdf file-------------------------------------------
+
   const [file, setFile] = useState();
   const [fileName, setFileName] = useState("");
-
+  //----------------------------------------
   const elementRef = useRef(null);
   const urlPictureRef = useRef(null);
   const [element, setElement] = useState([]);
@@ -187,6 +210,28 @@ const Elements = () => {
     });
   };
 
+  const handleFile = (e) => {
+    let selectedFile = e.target.files[0];
+    // console.log(selectedFile.type);
+
+    if (selectedFile) {
+      if (selectedFile && allowedFiles.includes(selectedFile.type)) {
+        let reader = new FileReader();
+        reader.readAsDataURL(selectedFile);
+        reader.onloadend = (e) => {
+          setPdfError("");
+          setPdfFile(e.target.result);
+          console.log(e.target.result);
+        };
+      } else {
+        setPdfFile(null);
+        setPdfError("Not a valid pdf: Please select only PDF");
+      }
+    } else {
+      console.log("please select a PDF");
+    }
+  };
+
   return (
     <div>
       <form className="form--wrapper" onSubmit={handleAddSubmit}>
@@ -214,10 +259,35 @@ const Elements = () => {
             ref={urlPictureRef}
           />
         </div>
-        <button type="submit">add</button>
+        <button type="submit">
+          <Icon icon={plus} size={20} />
+        </button>
       </form>
       <div className="div-get">{handlGetElement(element)}</div>
-       <img src={element.urlPicture} />
+      <div className="container">
+        {/*Upload PDF */}
+        <form>
+          <label>
+            <h5>Upload pdf</h5>
+          </label>
+          <input type="file" className="form-control" onChange={handleFile} />
+          {pdfError && <span className="text-danger">{pdfError}</span>}
+        </form>
+
+        {/* View PDF*/}
+        <h5>View PDF</h5>
+        <div className="viewer">
+          {pdfFile && (
+            <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.1.81/build/pdf.worker.min.js">
+              <Viewer
+                fileUrl={pdfFile}
+                plugins={[defaultLayoutPluginInstance]}
+              ></Viewer>
+            </Worker>
+          )}
+          {!pdfFile && <>no file is selected yet</>}
+        </div>
+      </div>
     </div>
   );
 };

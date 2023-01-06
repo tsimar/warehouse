@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { Icon } from "react-icons-kit";
+import { trash2 } from "react-icons-kit/feather/trash2";
 
 export const EditItemUser = ({
   editValue,
@@ -73,7 +75,7 @@ export const EditItemUser = ({
           type="button"
           onClick={() => handleDeleteClick(editValue.id)}
         >
-          Delete
+          <Icon icon={trash2} size={20} />
         </button>
       </div>
     </form>

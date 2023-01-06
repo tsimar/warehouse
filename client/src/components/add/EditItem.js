@@ -1,4 +1,8 @@
 import React from "react";
+import { Icon } from "react-icons-kit";
+import { trash2 } from "react-icons-kit/feather/trash2";
+import { slash } from "react-icons-kit/feather/slash";
+import { tick } from "react-icons-kit/typicons/tick";
 
 export const EditItem = ({
   editValue,
@@ -32,7 +36,7 @@ export const EditItem = ({
         {handleAddInput(objName, editValue)}
 
         <button className="size" name="save" type="submit">
-          save
+          <Icon icon={tick} size={20} />
         </button>
         <button
           className="size"
@@ -40,14 +44,14 @@ export const EditItem = ({
           name="cancel"
           onClick={handleCancelClick}
         >
-          cancel
+          <Icon icon={slash} size={20} />
         </button>
         <button
           className="size"
           type="button"
           onClick={() => handleDeleteClick(editValue.id)}
         >
-          Delete
+          <Icon icon={trash2} size={20} />
         </button>
       </div>
     </form>
