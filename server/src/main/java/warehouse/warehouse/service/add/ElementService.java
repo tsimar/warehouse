@@ -12,6 +12,7 @@ import warehouse.warehouse.repository.add.NewElementRepo;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.ObjectInputFilter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,6 +41,7 @@ public class ElementService {
 
         } else {
             throw new Exception();
+
         }
 
 //        List<String> list = new ArrayList<String>();
@@ -50,8 +52,22 @@ public class ElementService {
 //        }
 //
 //        return list;
-
     }
+    public File  getListOfFiles(String nameFile) throws Exception {
+
+//        List<String> list = new ArrayList<>();
+//        File files = new File(path);
+//        String[] fileList = ((File) files).list();
+//        for (String name : fileList) {
+//            if (nameFile!="" || nameFile==name)
+//            list.add(name);
+//        }
+//
+//        return list;
+        File resourceFile = new File(path+"/TapScanner 20-12-2022-20꞉55.pdf");
+    return resourceFile;
+    }
+
 
     public ElementService(ElementRepository elementRepository, NewElementRepo newElementRepository) {
         this.elementRepository = elementRepository;

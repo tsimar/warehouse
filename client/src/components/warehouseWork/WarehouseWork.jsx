@@ -255,6 +255,7 @@ const WarehouseWork = () => {
             checkedLathe={checkedLathe[index]}
             checkedHeidenhain={checkedHeidenhain[index]}
             checkedMillingMachineSmall={checkedMillingMachineSmall[index]}
+            handleDeleteClick={handleDeleteClick}
           />
         </Fragment>
       );

@@ -247,6 +247,7 @@ const User = () => {
               index={index}
               position={position}
               handleEditClick={handleEditClick}
+              handleDeleteClick={handleDeleteClick}
             />
           )}
         </Fragment>

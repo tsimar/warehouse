@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import warehouse.warehouse.entity.add.Element;
 import warehouse.warehouse.service.add.ElementService;
 
+import java.io.File;
 import java.util.List;
 
 @RestController
@@ -16,7 +17,7 @@ import java.util.List;
 public class ElementController {
     private final ElementService elementService;
 
-    public  ElementController(ElementService elementService) {
+    public ElementController(ElementService elementService) {
         this.elementService = elementService;
     }
 
@@ -25,13 +26,21 @@ public class ElementController {
         return ResponseEntity.ok(elementService.getAll());
     }
 
-//    @PostMapping
-//    public ResponseEntity<Element> save(@RequestBody Element element) {
-//        return ResponseEntity.ok(elementService.save(element));
-//    }
-   @PostMapping("/upload")
+    @GetMapping("/{nameFile}")
+    public ResponseEntity<File> getFile(@PathVariable String nameFile) throws Exception {
+        return ResponseEntity.ok(elementService.getListOfFiles(nameFile));
+    }
+
+    @PostMapping
+    public ResponseEntity<Element> save(@RequestBody Element element) throws Exception {
+
+        return ResponseEntity.ok(elementService.save(element));
+    }
+
+    @PostMapping("/upload")
     public void uploadFile(@RequestParam("file") MultipartFile file) throws Exception {
-       elementService.uploadFile(file);
+
+        elementService.uploadFile(file);
     }
 
     @DeleteMapping("/{id}")
@@ -43,6 +52,7 @@ public class ElementController {
             elementService.deleteElement(id);
         }
     }
+
     @PutMapping()
     public void editElement(@RequestBody Element element) {
         elementService.editElement(element);

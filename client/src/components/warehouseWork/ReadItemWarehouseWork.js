@@ -13,6 +13,7 @@ const ReadItemWarehouseWork = ({
   checkedLathe,
   checkedHeidenhain,
   checkedMillingMachineSmall,
+  handleDeleteClick,
 }) => {
   console.log(checkedFanucBaca);
   // const objName = Object.keys(item);
@@ -92,7 +93,9 @@ const ReadItemWarehouseWork = ({
     <div
       className="div__div-get"
       key={item.id}
-      onClick={(e) => handleEditClick(e, item)}
+      onDoubleClick={(e) => handleEditClick(e, item)}
+      onDrag={() => handleDeleteClick(item.id)}
+      draggable
     >
       <span>{index + 1}</span>
       {addProject(item, project)}

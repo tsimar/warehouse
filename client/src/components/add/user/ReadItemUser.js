@@ -1,6 +1,12 @@
 import React from "react";
 
-const ReadItemUser = ({ item, index, position, handleEditClick }) => {
+const ReadItemUser = ({
+  item,
+  index,
+  position,
+  handleEditClick,
+  handleDeleteClick,
+}) => {
   const objName = Object.keys(item);
 
   const addSpan = (data, obj) => {
@@ -23,7 +29,9 @@ const ReadItemUser = ({ item, index, position, handleEditClick }) => {
     <div
       className="div__div-get"
       key={item.id}
-      onClick={(e) => handleEditClick(e, item)}
+      onDoubleClick={(e) => handleEditClick(e, item)}
+      onDrag={() => handleDeleteClick(item.id)}
+      draggable
     >
       <span>{index + 1}</span>
       {addSpan(objName, item)}

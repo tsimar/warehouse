@@ -142,6 +142,7 @@ const Position = () => {
               item={item}
               index={index}
               handleEditClick={handleEditClick}
+              handleDeleteClick={handleDeleteClick}
             />
           )}
         </Fragment>

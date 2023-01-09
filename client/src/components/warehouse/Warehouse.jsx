@@ -346,6 +346,7 @@ const Warehouse = () => {
               user={user}
               element={element}
               handleEditClick={handleEditClick}
+              handleDeleteClick={handleDeleteClick}
             />
           )}
         </Fragment>

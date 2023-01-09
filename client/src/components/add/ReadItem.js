@@ -1,7 +1,7 @@
 // import matchers from "@testing-library/jest-dom/matchers";
 import React from "react";
 
-const ReadItem = ({ item, index, handleEditClick }) => {
+const ReadItem = ({ item, index, handleEditClick, handleDeleteClick }) => {
   const objName = Object.keys(item);
 
   const addSpan = (data, obj) => {
@@ -14,7 +14,9 @@ const ReadItem = ({ item, index, handleEditClick }) => {
     <div
       className="div__div-get"
       key={item.id}
-      onClick={(e) => handleEditClick(e, item)}
+      onDoubleClick={(e) => handleEditClick(e, item)}
+      onDrag={() => handleDeleteClick(item.id)}
+      draggable
     >
       <span>{index + 1}</span>
       {addSpan(objName, item)}

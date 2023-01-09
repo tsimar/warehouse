@@ -7,6 +7,7 @@ const ReadItemWarehouse = ({
   element,
   user,
   handleEditClick,
+  handleDeleteClick,
 }) => {
   const addUser = (warehouse, user) => {
     return user.map((item, index) => {
@@ -56,7 +57,9 @@ const ReadItemWarehouse = ({
     <div
       className="div__div-get"
       key={item.id}
-      onClick={(e) => handleEditClick(e, item)}
+      onDoubleClick={(e) => handleEditClick(e, item)}
+      onDrag={() => handleDeleteClick(item.id)}
+      draggable
     >
       <span>{index + 1}</span>
       {addProject(item, project)}

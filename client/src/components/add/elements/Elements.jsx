@@ -1,10 +1,4 @@
-import React, {
-
-  useReducer,
-  useState,
-  useEffect,
-  Fragment,
-} from "react";
+import React, { useReducer, useState, useEffect, Fragment } from "react";
 import "./styleElements/elements.css";
 import { apiElement } from "../../../url/URL";
 import { EditItem } from "../EditItem";
@@ -44,7 +38,7 @@ const Elements = () => {
   const [element, setElement] = useState([]);
   const [addElement, setAddElement] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
-    { nameElement: "", urlPicture: null }
+    { nameElement: "", urlPicture: "" }
   );
   const [editValue, setEditValue] = useState({
     editId: "",
@@ -72,8 +66,23 @@ const Elements = () => {
 
     const newElement = {
       nameElement: addElement.nameElement,
-      urlPicture: formData,
+      urlPicture: addElement.urlPicture,
     };
+
+    apiElement
+      .post(``, newElement)
+      .then((response) => {
+        response.json();
+        fetchGET();
+        console.log(response);
+      })
+      .then((result) => {
+        console.log("success:", result);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
     apiElement
       .post("/upload", formData)
       .then((response) => {
@@ -203,6 +212,7 @@ const Elements = () => {
               item={item}
               index={index}
               handleEditClick={handleEditClick}
+              handleDeleteClick={handleDeleteClick}
             />
           )}
         </Fragment>
@@ -212,7 +222,6 @@ const Elements = () => {
 
   const handleFile = (e) => {
     let selectedFile = e.target.files[0];
-    // console.log(selectedFile.type);
 
     if (selectedFile) {
       if (selectedFile && allowedFiles.includes(selectedFile.type)) {
@@ -221,7 +230,11 @@ const Elements = () => {
         reader.onloadend = (e) => {
           setPdfError("");
           setPdfFile(e.target.result);
-          console.log(e.target.result);
+
+          const newFormData = { ...addElement };
+          newFormData["urlPicture"] = selectedFile.name;
+          setAddElement(newFormData);
+          setFile(selectedFile);
         };
       } else {
         setPdfFile(null);
@@ -255,7 +268,7 @@ const Elements = () => {
             placeholder="URL"
             accept=".pdf"
             // onChange={(e) => setAddElement({ urlPicture: e.target.files })}
-            onChange={handleFileChange}
+            onChange={handleFile}
             ref={urlPictureRef}
           />
         </div>
