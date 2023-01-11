@@ -2,6 +2,8 @@ package warehouse.warehouse.service.add;
 
 
 import jakarta.transaction.Transactional;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import warehouse.warehouse.entity.add.Element;
@@ -9,20 +11,27 @@ import warehouse.warehouse.entity.add.NewElement;
 import warehouse.warehouse.repository.add.ElementRepository;
 import warehouse.warehouse.repository.add.NewElementRepo;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.ObjectInputFilter;
-import java.util.ArrayList;
+import java.io.*;
+import java.net.MalformedURLException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 
 @Service
 public class ElementService {
     private final ElementRepository elementRepository;
-    private final NewElementRepo newElementRepository;
+
 
     private static final String path = "C:\\English";
+    private Path foundFile;
+
+    public ElementService(ElementRepository elementRepository) {
+        this.elementRepository = elementRepository;
+
+
+    }
 
     public void uploadFile(MultipartFile file)
             throws Exception {
@@ -53,6 +62,33 @@ public class ElementService {
 //
 //        return list;
     }
+
+    public Resource getFileAsResource(String fileCode) throws IOException {
+        Path dirPath = Paths.get(path);
+
+        try {
+            Files.list(dirPath).forEach(file -> {
+                if (file.getFileName().toString().startsWith(fileCode)) {
+                    foundFile = file;
+                    return;
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if (foundFile != null) {
+            try {
+                return new UrlResource(foundFile.toUri());
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return null;
+    }
+
+
     public File  getListOfFiles(String nameFile) throws Exception {
 
 //        List<String> list = new ArrayList<>();
@@ -69,10 +105,7 @@ public class ElementService {
     }
 
 
-    public ElementService(ElementRepository elementRepository, NewElementRepo newElementRepository) {
-        this.elementRepository = elementRepository;
-        this.newElementRepository = newElementRepository;
-    }
+
 
     public List<Element> getAll() {
         return  elementRepository.findAll();
@@ -82,9 +115,7 @@ public class ElementService {
         return elementRepository.save(element);
     }
 
-    public NewElement newSave(NewElement newElement) {
-        return newElementRepository.save(newElement);
-    }
+
 
     //    @Autowired
     @Transactional
@@ -106,4 +137,8 @@ public class ElementService {
 
         elementRepository.deleteById(id);
     }
+
+
+
+
 }

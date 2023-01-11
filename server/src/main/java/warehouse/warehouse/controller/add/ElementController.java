@@ -1,14 +1,19 @@
 package warehouse.warehouse.controller.add;
 
 
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import warehouse.warehouse.entity.add.Element;
+import warehouse.warehouse.repository.add.NewElementRepo;
 import warehouse.warehouse.service.add.ElementService;
 
-import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -16,6 +21,7 @@ import java.util.List;
 @CrossOrigin
 public class ElementController {
     private final ElementService elementService;
+
 
     public ElementController(ElementService elementService) {
         this.elementService = elementService;
@@ -27,10 +33,29 @@ public class ElementController {
     }
 
     @GetMapping("/{nameFile}")
-    public ResponseEntity<File> getFile(@PathVariable String nameFile) throws Exception {
-        return ResponseEntity.ok(elementService.getListOfFiles(nameFile));
-    }
+    public ResponseEntity<?> getFile(@PathVariable("nameFile") String nameFile) throws Exception {
+//        OutputStream pdfStream = PDFGenerator.pdfGenerate(data);
 
+        Resource resource = null;
+        try {
+            resource = elementService.getFileAsResource(nameFile);
+        } catch (IOException e) {
+            return ResponseEntity.internalServerError().build();
+        }
+
+        if (resource == null) {
+            return new ResponseEntity<>("File not found", HttpStatus.NOT_FOUND);
+        }
+
+        String contentType = "application/pdf";
+        String headerValue = "attachment; filename=\"" + resource.getFilename() + "\"";
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(contentType))
+                .header(HttpHeaders.CONTENT_DISPOSITION, headerValue)
+                .body(resource);
+    }
+//  .contentType(MediaType.parseMediaType(contentType))
     @PostMapping
     public ResponseEntity<Element> save(@RequestBody Element element) throws Exception {
 
