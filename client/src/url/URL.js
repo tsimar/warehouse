@@ -2,6 +2,7 @@ import axios from "axios";
 
 export const apiElement = axios.create({
   baseURL: `${process.env.REACT_APP_BASE_URL}/element`,
+  responseType: "blob",
 });
 export const apiUser = axios.create({
   baseURL: `${process.env.REACT_APP_BASE_URL}/user`,

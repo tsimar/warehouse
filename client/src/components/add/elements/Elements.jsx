@@ -6,9 +6,12 @@ import ReadItem from "../ReadItem";
 import { useRef } from "react";
 import { Icon } from "react-icons-kit";
 import { plus } from "react-icons-kit/feather/plus";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
+// import { PdfJs } from "@react-pdf-viewer/core";
 
 // Core viewer
-import { Worker } from "@react-pdf-viewer/core";
+import { PdfJs, Worker } from "@react-pdf-viewer/core";
 // Import the main Viewer component
 import { Viewer } from "@react-pdf-viewer/core";
 // Import the styles
@@ -20,6 +23,7 @@ import { defaultLayoutPlugin } from "@react-pdf-viewer/default-layout";
 import "@react-pdf-viewer/default-layout/lib/styles/index.css";
 
 const Elements = () => {
+  let pdfBlobOutput;
   //creating new plugin instance
   const defaultLayoutPluginInstance = defaultLayoutPlugin();
   //pdf file onChange state
@@ -49,15 +53,29 @@ const Elements = () => {
   const fetchGET = async () => {
     try {
       // setLoading(true);
-      const res = await apiElement.get();
-      console.log(res.data);
-      setElement(res.data);
-      // setLoading(false);
+      const res = await apiElement.get("/TapScanner 20-12-2022-20꞉55.pdf");
+      const url = window.URL.createObjectURL(new Blob([res.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "file.pdf"); //or any other extension
+      document.body.appendChild(link);
+      link.click();
+      // handleFileCopy(link.download);
     } catch (error) {
       console.log(error);
     }
   };
-
+  // const fetchGET = async () => {
+  //   try {
+  //     // setLoading(true);
+  //     const res = await apiElement.get();
+  //     console.log(res.data);
+  //     setElement(res.data);
+  //     // setLoading(false);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
   const handleAddSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
@@ -124,13 +142,8 @@ const Elements = () => {
 
     const newFormData = { ...addElement };
     newFormData["urlPicture"] = fieldValue;
-    // newFormData["urlPictureFileName"] = fieldValueFileName;
 
     setFile(e.target.files[0]);
-    // setAddElement(newFormData);
-    // setFileName(e.target.files[0].name);
-
-    // 🚩 do the file upload here normally...
   };
   useEffect(() => {
     fetchGET();
@@ -220,6 +233,20 @@ const Elements = () => {
     });
   };
 
+  const handleFileCopy = (value) => {
+    let selectedFile = value;
+
+    if (selectedFile) {
+      let reader = new FileReader();
+      reader.readAsDataURL(selectedFile);
+      reader.onloadend = (e) => {
+        setPdfError("");
+        setPdfFile(e.target.result);
+      };
+    } else {
+      console.log("please select a PDF");
+    }
+  };
   const handleFile = (e) => {
     let selectedFile = e.target.files[0];
 
@@ -300,6 +327,7 @@ const Elements = () => {
           )}
           {!pdfFile && <>no file is selected yet</>}
         </div>
+        <div>{file}</div>
       </div>
     </div>
   );
