@@ -149,6 +149,7 @@ const Project = () => {
               index={index}
               handleEditClick={handleEditClick}
               handleDeleteClick={handleDeleteClick}
+              disabled={true}
             />
           )}
         </Fragment>

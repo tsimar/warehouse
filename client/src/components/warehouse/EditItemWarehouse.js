@@ -57,6 +57,7 @@ export const EditItemWarehouse = ({
     handleEditSelect(name, nameValue);
   };
   const handleEditChangeSelectDate = (value, name) => {
+    console.log(value, name);
     const newFormData = { ...editSelect };
     newFormData[name] = value;
     setEditSelect(newFormData);

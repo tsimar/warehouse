@@ -90,14 +90,14 @@ const User = () => {
       password: addUser.password,
       idPosition: editSelectPutPosition,
     };
-    apiUser
-      .post("", newElement)
-      .then((response) => {
-        fetchGET();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  await apiUser
+    .post("", newElement)
+    .then((response) => {
+      fetchGET();
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 
     setAddUser("");
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 const ReadItemWarehouse = ({
   item,
@@ -8,7 +8,9 @@ const ReadItemWarehouse = ({
   user,
   handleEditClick,
   handleDeleteClick,
+  showPdfFile,
 }) => {
+  const [nameFile, setNameFile] = useState("");
   const addUser = (warehouse, user) => {
     return user.map((item, index) => {
       return warehouse.idUser === item.id ? (
@@ -18,13 +20,20 @@ const ReadItemWarehouse = ({
       ) : null;
     });
   };
+
   const addElement = (warehouse, element) => {
-    return element.map((item, index) => {
-      return warehouse.idElement === item.id ? (
-        <span key={index}>{item.nameElement}</span>
-      ) : null;
-    });
+    return (
+      <>
+        {element
+          .filter((item) => item.id === warehouse)
+          .map((element) => (
+            <span onClick={() => showPdfFile(item.idElement)}></span>
+          ))
+          .map((file) => setNameFile(file.urlPicture))}
+      </>
+    );
   };
+
   const addProject = (warehouse, project) => {
     console.log(warehouse);
     return project.map((item, index) => {
@@ -68,6 +77,7 @@ const ReadItemWarehouse = ({
       {handleChangeDate(item.dataStart)}
 
       {addUser(item, user)}
+      {/* <div>{nameFile}</div> */}
     </div>
   );
 };

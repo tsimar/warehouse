@@ -53,14 +53,7 @@ public class ElementService {
 
         }
 
-//        List<String> list = new ArrayList<String>();
-//        File files = new File(path);
-//        String[] fileList = files.list();
-//        for (String name : fileList) {
-//            list.add(name);
-//        }
-//
-//        return list;
+
     }
 
     public Resource getFileAsResource(String fileCode) throws IOException {
@@ -89,7 +82,7 @@ public class ElementService {
     }
 
 
-    public File  getListOfFiles(String nameFile) throws Exception {
+    public File getListOfFiles(String nameFile) throws Exception {
 
 //        List<String> list = new ArrayList<>();
 //        File files = new File(path);
@@ -100,15 +93,13 @@ public class ElementService {
 //        }
 //
 //        return list;
-        File resourceFile = new File(path+"/TapScanner 20-12-2022-20꞉55.pdf");
-    return resourceFile;
+        File resourceFile = new File(path + "/TapScanner 20-12-2022-20꞉55.pdf");
+        return resourceFile;
     }
 
 
-
-
     public List<Element> getAll() {
-        return  elementRepository.findAll();
+        return elementRepository.findAll();
     }
 
     public Element save(Element element) {
@@ -116,17 +107,16 @@ public class ElementService {
     }
 
 
-
     //    @Autowired
     @Transactional
     public void editElement(Element element) {
         try {
-        elementRepository.update
-                (
-                       element.getNameElement(),
-                        element.getUrlPicture(),
-                        element.getId()
-                );
+            elementRepository.update
+                    (
+                            element.getNameElement(),
+                            element.getUrlPicture(),
+                            element.getId()
+                    );
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -137,8 +127,6 @@ public class ElementService {
 
         elementRepository.deleteById(id);
     }
-
-
 
 
 }

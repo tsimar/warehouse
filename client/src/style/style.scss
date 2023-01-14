@@ -11,3 +11,11 @@
 
 
 }
+@mixin flexStart ($gap, $jus-cont) {
+    display: flex;
+
+    justify-content: $jus-cont;
+    gap: $gap;
+
+
+}

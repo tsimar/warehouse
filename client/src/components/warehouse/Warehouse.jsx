@@ -5,7 +5,13 @@ import DatePicker from "react-date-picker";
 import { EditItemWarehouse } from "./EditItemWarehouse";
 import ReadItemWarehouse from "./ReadItemWarehouse";
 import "./styleWarehouse/warehouse.css";
-import { apiProject, apiElement, apiUser, apiWarehouse } from "../../url/URL";
+import {
+  apiProject,
+  apiElementPDF,
+  apiElement,
+  apiUser,
+  apiWarehouse,
+} from "../../url/URL";
 
 let wareName;
 
@@ -66,19 +72,21 @@ const Warehouse = () => {
       (valueDate.getMonth() + 1) +
       "-" +
       valueDate.getDate();
-    console.log(d);
+
     const newWarehouse = {
+      number: addWarehouse.number,
+      dataStart: valueDate,
       idProject: editSelectPutProject,
       idElement: editSelectPutElement,
-      number: addWarehouse.number,
-      dataStart: d,
       idUser: editSelectPutUser,
       warehouseName: warehouseName,
     };
-    apiWarehouse
+    console.log(newWarehouse);
+    await apiWarehouse
       .post("", newWarehouse)
       .then((response) => {
         fetchGetWarehouse();
+        console.log(response);
       })
       .catch((error) => {
         console.log(error);
@@ -165,15 +173,21 @@ const Warehouse = () => {
 
   const handleEditFormSubmit = (event) => {
     event.preventDefault();
+    let data;
     changeNameProjectById(editSelect.project);
     changeNameUserById(editSelect.user);
     changeNameElementById(editSelect.element);
+    if (editSelect.dataStart === "") {
+      data = editValue.dataStart;
+    } else {
+      data = editSelect.dataStart;
+    }
     const editedContact = {
       id: editValue.id,
       idProject: editSelectPutProject,
       idElement: editSelectPutElement,
       number: editValue.number,
-      dataStart: editSelect.dataStart,
+      dataStart: data,
       idUser: editSelectPutUser,
       warehouseName: editValue.warehouseName,
     };
@@ -250,6 +264,35 @@ const Warehouse = () => {
       console.log(error);
     }
   };
+
+  const showPdfFile = async (idElement) => {
+    // e.preventDefault();
+    const iframe = "";
+    const file = element
+      .filter((item) => item.id === idElement)
+      .map((element) => element.urlPicture);
+
+    try {
+      // setLoading(true);
+      let url = "";
+      if (file.length > 0) {
+        const res = await apiElementPDF.get(`/${file}`);
+
+        url = window.URL.createObjectURL(
+          new Blob([res.data], { type: "application/pdf" })
+        );
+      }
+      const iframe = document.querySelector("iframe");
+      if (iframe?.src) {
+        iframe.src = url;
+      } else {
+        iframe.src = null;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const fetchGetElement = async () => {
     try {
       // setLoading(true);
@@ -347,6 +390,7 @@ const Warehouse = () => {
               element={element}
               handleEditClick={handleEditClick}
               handleDeleteClick={handleDeleteClick}
+              showPdfFile={showPdfFile}
             />
           )}
         </Fragment>
@@ -421,6 +465,9 @@ const Warehouse = () => {
         <button type="submit">add</button>
       </form>
       <div className="div-getWorhouse">{handlGetElement(warehouse)}</div>
+      <div className="conteiner-showPdfFile">
+        <iframe className="iframe" src="" width="100%" height="100%"></iframe>
+      </div>
     </div>
   );
 };

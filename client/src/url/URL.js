@@ -1,8 +1,14 @@
 import axios from "axios";
 
-export const apiElement = axios.create({
+export const apiElementPDF = axios.create({
   baseURL: `${process.env.REACT_APP_BASE_URL}/element`,
   responseType: "blob",
+
+  mode: "cors",
+  cache: "default",
+});
+export const apiElement = axios.create({
+  baseURL: `${process.env.REACT_APP_BASE_URL}/element`,
 });
 export const apiUser = axios.create({
   baseURL: `${process.env.REACT_APP_BASE_URL}/user`,

@@ -1,6 +1,7 @@
 import React, { useReducer, useState, useEffect, Fragment } from "react";
 import "./styleElements/elements.css";
 import { apiElement } from "../../../url/URL";
+import { apiElementPDF } from "../../../url/URL";
 import { EditItem } from "../EditItem";
 import ReadItem from "../ReadItem";
 import { useRef } from "react";
@@ -53,29 +54,34 @@ const Elements = () => {
   const fetchGET = async () => {
     try {
       // setLoading(true);
-      const res = await apiElement.get("/TapScanner 20-12-2022-20꞉55.pdf");
-      const url = window.URL.createObjectURL(new Blob([res.data]));
-      const link = document.createElement("a");
-      link.href = url;
-      link.setAttribute("download", "file.pdf"); //or any other extension
-      document.body.appendChild(link);
-      link.click();
+      const res = await apiElement.get();
+      console.log(res.data);
+      setElement(res.data);
+      // setLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const showPdfFile = async (file) => {
+    // e.preventDefault();
+    try {
+      // setLoading(true);
+
+      const res = await apiElementPDF.get(`/${file}`);
+
+      // res.blob();
+      const url = window.URL.createObjectURL(
+        new Blob([res.data], { type: "application/pdf" })
+      );
+      const iframe = document.querySelector("iframe");
+      if (iframe?.src) iframe.src = url;
       // handleFileCopy(link.download);
     } catch (error) {
       console.log(error);
     }
   };
-  // const fetchGET = async () => {
-  //   try {
-  //     // setLoading(true);
-  //     const res = await apiElement.get();
-  //     console.log(res.data);
-  //     setElement(res.data);
-  //     // setLoading(false);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+
   const handleAddSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
@@ -90,9 +96,9 @@ const Elements = () => {
     apiElement
       .post(``, newElement)
       .then((response) => {
-        response.json();
+        // response.json();
         fetchGET();
-        console.log(response);
+        // console.log(response);
       })
       .then((result) => {
         console.log("success:", result);
@@ -104,9 +110,9 @@ const Elements = () => {
     apiElement
       .post("/upload", formData)
       .then((response) => {
-        response.json();
+        // response.json();
         fetchGET();
-        console.log(response);
+        // console.log(response);
       })
       .then((result) => {
         console.log("success:", result);
@@ -131,20 +137,21 @@ const Elements = () => {
     setAddElement(newFormData);
   };
 
-  const handleFileChange = (e) => {
-    if (!e.target.files) {
-      return;
-    }
+  // const handleFileChange = (e) => {
+  //   if (!e.target.files) {
+  //     return;
+  //   }
 
-    // const fieldName = e.target.name;
-    const fieldValue = e.target.files[0];
-    const fieldValueFileName = e.target.files[0].name;
+  //   // const fieldName = e.target.name;
+  //   const fieldValue = e.target.files[0];
+  //   const fieldValueFileName = e.target.files[0].name;
 
-    const newFormData = { ...addElement };
-    newFormData["urlPicture"] = fieldValue;
+  //   const newFormData = { ...addElement };
+  //   newFormData["urlPicture"] = fieldValue;
 
-    setFile(e.target.files[0]);
-  };
+  //   setFile(e.target.files[0]);
+  // };
+
   useEffect(() => {
     fetchGET();
   }, []);
@@ -226,6 +233,8 @@ const Elements = () => {
               index={index}
               handleEditClick={handleEditClick}
               handleDeleteClick={handleDeleteClick}
+              showPdfFile={showPdfFile}
+              disabled={false}
             />
           )}
         </Fragment>
@@ -233,20 +242,20 @@ const Elements = () => {
     });
   };
 
-  const handleFileCopy = (value) => {
-    let selectedFile = value;
+  // const handleFileCopy = (value) => {
+  //   let selectedFile = value;
 
-    if (selectedFile) {
-      let reader = new FileReader();
-      reader.readAsDataURL(selectedFile);
-      reader.onloadend = (e) => {
-        setPdfError("");
-        setPdfFile(e.target.result);
-      };
-    } else {
-      console.log("please select a PDF");
-    }
-  };
+  //   if (selectedFile) {
+  //     let reader = new FileReader();
+  //     reader.readAsDataURL(selectedFile);
+  //     reader.onloadend = (e) => {
+  //       setPdfError("");
+  //       setPdfFile(e.target.result);
+  //     };
+  //   } else {
+  //     console.log("please select a PDF");
+  //   }
+  // };
   const handleFile = (e) => {
     let selectedFile = e.target.files[0];
 
@@ -273,7 +282,7 @@ const Elements = () => {
   };
 
   return (
-    <div>
+    <div className="container-element">
       <form className="form--wrapper" onSubmit={handleAddSubmit}>
         <div className="div__add--wrapper">
           <label htmlFor="element">element</label>
@@ -294,7 +303,6 @@ const Elements = () => {
             type="file"
             placeholder="URL"
             accept=".pdf"
-            // onChange={(e) => setAddElement({ urlPicture: e.target.files })}
             onChange={handleFile}
             ref={urlPictureRef}
           />
@@ -303,56 +311,15 @@ const Elements = () => {
           <Icon icon={plus} size={20} />
         </button>
       </form>
-      <div className="div-get">{handlGetElement(element)}</div>
-      <div className="container">
-        {/*Upload PDF */}
-        <form>
-          <label>
-            <h5>Upload pdf</h5>
-          </label>
-          <input type="file" className="form-control" onChange={handleFile} />
-          {pdfError && <span className="text-danger">{pdfError}</span>}
-        </form>
+      <section className="container-getANDshowPdf">
+        <div className="div-get">{handlGetElement(element)}</div>
 
-        {/* View PDF*/}
-        <h5>View PDF</h5>
-        <div className="viewer">
-          {pdfFile && (
-            <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.1.81/build/pdf.worker.min.js">
-              <Viewer
-                fileUrl={pdfFile}
-                plugins={[defaultLayoutPluginInstance]}
-              ></Viewer>
-            </Worker>
-          )}
-          {!pdfFile && <>no file is selected yet</>}
+        <div className="conteiner-showPdfFile">
+          <iframe className="iframe" src="" width="100%" height="100%"></iframe>
         </div>
-        <div>{file}</div>
-      </div>
+      </section>
     </div>
   );
 };
 
 export default Elements;
-
-// import React, { useState } from "react";
-//
-// function App() {
-//     const [file, setFile] = useState();
-//     function handleChange(e) {
-//         console.log(e.target.files);
-//         setFile(URL.createObjectURL(e.target.files[0]));
-//     }
-//
-//     return (
-//         <div className="App">
-//             <h2>Add Image:</h2>
-//             <input type="file" onChange={handleChange} />
-//             <img src={file} />
-//
-//         </div>
-//
-//     );
-// }
-//
-// export default App;

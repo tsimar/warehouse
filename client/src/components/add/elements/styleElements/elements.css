@@ -1,5 +1,16 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.container-element {
+  width: 100%;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
 .div-get {
-  width: 300px;
+  width: 50%;
   display: flex;
   flex-wrap: wrap;
 }
@@ -33,4 +44,23 @@
 
 .size {
   width: 50px;
+}
+
+.container-getANDshowPdf {
+  display: flex;
+  justify-content: flex-start;
+  gap: 20px;
+  width: 100%;
+}
+
+.conteiner-showPdfFile {
+  position: relative;
+  width: 45%;
+  margin-right: 10px;
+}
+
+.iframe {
+  position: absolute;
+  top: 10px;
+  height: 400px;
 }
