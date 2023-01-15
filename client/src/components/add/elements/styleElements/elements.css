@@ -24,7 +24,7 @@
 }
 
 .div__div-get {
-  width: 500px;
+  width: 100%;
   margin-left: 20px;
   display: flex;
   justify-content: flex-start;
@@ -34,7 +34,6 @@
   gap: 20px;
 }
 .div__div-get span:not(:first-child) {
-  margin-left: 20px;
   width: 100px;
 }
 
@@ -61,6 +60,5 @@
 
 .iframe {
   position: absolute;
-  top: 10px;
   height: 400px;
 }

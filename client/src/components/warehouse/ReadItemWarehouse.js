@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 
 const ReadItemWarehouse = ({
   item,
@@ -11,6 +12,10 @@ const ReadItemWarehouse = ({
   showPdfFile,
 }) => {
   const [nameFile, setNameFile] = useState("");
+  const [propsElement, setPropsElement] = useState({
+    nameElement: "",
+    urlPicture: "",
+  });
   const addUser = (warehouse, user) => {
     return user.map((item, index) => {
       return warehouse.idUser === item.id ? (
@@ -20,18 +25,17 @@ const ReadItemWarehouse = ({
       ) : null;
     });
   };
+  useEffect(() => {
+    addElement(item, element);
+  }, []);
 
   const addElement = (warehouse, element) => {
-    return (
-      <>
-        {element
-          .filter((item) => item.id === warehouse)
-          .map((element) => (
-            <span onClick={() => showPdfFile(item.idElement)}></span>
-          ))
-          .map((file) => setNameFile(file.urlPicture))}
-      </>
-    );
+    element.map((item) => {
+      if (warehouse.idElement === item.id) {
+        setPropsElement(item);
+        setNameFile(item.urlPicture);
+      }
+    });
   };
 
   const addProject = (warehouse, project) => {
@@ -72,7 +76,11 @@ const ReadItemWarehouse = ({
     >
       <span>{index + 1}</span>
       {addProject(item, project)}
-      {addElement(item, element)}
+      {/* {addElement(item, element)} */}
+
+      <span onClick={() => showPdfFile(propsElement)}>
+        {propsElement.nameElement}
+      </span>
       <span>{item.number}</span>
       {handleChangeDate(item.dataStart)}
 

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, Fragment } from "react";
 import { useLocation } from "react-router-dom";
 import DatePicker from "react-date-picker";
+import { motion } from "framer-motion";
 
 import { EditItemWarehouse } from "./EditItemWarehouse";
 import ReadItemWarehouse from "./ReadItemWarehouse";
@@ -23,17 +24,13 @@ const Warehouse = () => {
   const [warehouseName, setWarehouseName] = useState("in");
   const numberRef = useRef(null);
   const [valueDate, OnChange] = useState(new Date());
-  // const [valueDate, OnChange] = useState({
-  //   value: new Date(),
-  //   format: "MM-DD-YYYY",
-  //   // onChange: (date) => console.log(date.format()),
-  // });
+
   const [element, setElement] = useState([]);
   const [project, setProject] = useState([]);
   const [user, setUser] = useState([]);
   const [warehouse, setWarehouse] = useState([]);
   const [selectElement, setSelectElement] = useState("");
-
+  const [nameLabelFile, setNameLabelFile] = useState("");
   const [selectProject, setSelectProject] = useState("");
   const [selectUser, setSelectUser] = useState("");
   const [editSelect, setEditSelect] = useState({
@@ -66,12 +63,6 @@ const Warehouse = () => {
     changeNameProjectById(selectProject);
     changeNameElementById(selectElement);
     changeNameUserById(selectUser);
-    let d =
-      valueDate.getFullYear() +
-      "-" +
-      (valueDate.getMonth() + 1) +
-      "-" +
-      valueDate.getDate();
 
     const newWarehouse = {
       number: addWarehouse.number,
@@ -265,19 +256,12 @@ const Warehouse = () => {
     }
   };
 
-  const showPdfFile = async (idElement) => {
-    // e.preventDefault();
-    const iframe = "";
-    const file = element
-      .filter((item) => item.id === idElement)
-      .map((element) => element.urlPicture);
-
+  const showPdfFile = async (nameFile) => {
     try {
-      // setLoading(true);
       let url = "";
-      if (file.length > 0) {
-        const res = await apiElementPDF.get(`/${file}`);
-
+      if (nameFile.urlPicture.length > 0) {
+        const res = await apiElementPDF.get(`/${nameFile.urlPicture}`);
+        setNameLabelFile(nameFile.nameElement);
         url = window.URL.createObjectURL(
           new Blob([res.data], { type: "application/pdf" })
         );
@@ -287,6 +271,7 @@ const Warehouse = () => {
         iframe.src = url;
       } else {
         iframe.src = null;
+        setNameLabelFile("");
       }
     } catch (error) {
       console.log(error);
@@ -464,10 +449,20 @@ const Warehouse = () => {
         </section>
         <button type="submit">add</button>
       </form>
-      <div className="div-getWorhouse">{handlGetElement(warehouse)}</div>
-      <div className="conteiner-showPdfFile">
-        <iframe className="iframe" src="" width="100%" height="100%"></iframe>
-      </div>
+      <section className="conteiner--warehouse">
+        <div className="div-getWorhouse">{handlGetElement(warehouse)}</div>
+        <motion.div drag className="conteiner-showPdfFile-warehouse">
+          <label htmlFor="iframe">część: {nameLabelFile}</label>
+          <iframe
+            id="iframe"
+            title="myFrame"
+            className="iframeWorehouse"
+            src=""
+            width="100%"
+            height="90%"
+          ></iframe>
+        </motion.div>
+      </section>
     </div>
   );
 };

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import DatePicker from "react-date-picker";
+// import "./styleWarehouseWork/warehouse.css";
 
 export const EditItemWarehouse = ({
   editValue,
@@ -65,7 +66,7 @@ export const EditItemWarehouse = ({
   };
   const handleEditComboBox = (data) => {
     return (
-      <>
+      <div className="container--project">
         <label htmlFor="project">project</label>
         <select
           value={editSelect.editSelectProject}
@@ -77,12 +78,12 @@ export const EditItemWarehouse = ({
             </option>
           ))}
         </select>
-      </>
+      </div>
     );
   };
   const handleEditComboBoxEl = (data) => {
     return (
-      <>
+      <div className="container--element">
         <label htmlFor="element">element</label>
         <select
           value={editSelect.editSelectElement}
@@ -94,12 +95,12 @@ export const EditItemWarehouse = ({
             </option>
           ))}
         </select>
-      </>
+      </div>
     );
   };
   const handleEditComboBoxUser = (data) => {
     return (
-      <>
+      <div className="container--user">
         <label htmlFor="user">pracownic</label>
         <select
           value={editSelect.editSelectUser}
@@ -111,7 +112,7 @@ export const EditItemWarehouse = ({
             </option>
           ))}
         </select>
-      </>
+      </div>
     );
   };
   return (
@@ -120,14 +121,24 @@ export const EditItemWarehouse = ({
         {handleEditComboBox(project)}
         {handleEditComboBoxEl(element)}
         <DatePicker
+          className="dateWarehouse"
           // defaultValue={new Date()}
           onChange={(e) => handleEditChangeSelectDate(e, "dataStart")}
           // onChange={(value) => OnChange(value)}
           value={editSelect.dataStart}
           dateFormat="dd-MM-yyyy"
         />
-
-        {handleAddInput(objName, editValue)}
+        <input
+          key={editValue.id}
+        className="div__div__get--namber"
+          name="number"
+          type="text"
+          // placeholder={data[index]}
+          required
+          value={editValue.number}
+          onChange={handleEditFormChange}
+        />
+        {/* {handleAddInput(objName, editValue)} */}
         {handleEditComboBoxUser(user)}
         <button className="size" name="save" type="submit">
           save
