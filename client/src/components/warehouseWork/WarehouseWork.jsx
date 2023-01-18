@@ -8,12 +8,19 @@ import React, {
 import DatePicker from "react-date-picker";
 import { EditItemWarehouseWork } from "./EditItemWarehouseWork";
 import ReadItemWarehouseWork from "./ReadItemWarehouseWork";
-import { apiProject, apiElement, apiWarehouseWork } from "../../url/URL";
+import {
+  apiProject,
+  apiElement,
+  apiElementPDF,
+  apiWarehouseWork,
+} from "../../url/URL";
 import "./styleWarehouseWork/warehouseWork.css";
+import { motion } from "framer-motion";
 
 const WarehouseWork = () => {
   const numberRef = useRef(null);
 
+  const [nameLabelFile, setNameLabelFile] = useState("");
   const [valueDateStart, OnChangeStart] = useState(new Date());
   const [valueDateFinish, OnChangeFinish] = useState(new Date());
   const [element, setElement] = useState([]);
@@ -155,6 +162,28 @@ const WarehouseWork = () => {
     }
   };
 
+  const showPdfFile = async (nameFile) => {
+    try {
+      let url = "";
+      if (nameFile.urlPicture.length > 0) {
+        const res = await apiElementPDF.get(`/${nameFile.urlPicture}`);
+        setNameLabelFile(nameFile.nameElement);
+        url = window.URL.createObjectURL(
+          new Blob([res.data], { type: "application/pdf" })
+        );
+      }
+      const iframe = document.querySelector("iframe");
+      if (iframe?.src) {
+        iframe.src = url;
+      } else {
+        iframe.src = null;
+        setNameLabelFile("");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     fetchGetElement();
     fetchGETProject();
@@ -256,6 +285,7 @@ const WarehouseWork = () => {
             checkedHeidenhain={checkedHeidenhain[index]}
             checkedMillingMachineSmall={checkedMillingMachineSmall[index]}
             handleDeleteClick={handleDeleteClick}
+            showPdfFile={showPdfFile}
           />
         </Fragment>
       );
@@ -272,6 +302,19 @@ const WarehouseWork = () => {
       <div className="div-getWarehouseWork">
         {handlGetWarehouseWork(warehouseWork)}
       </div>
+      <section className="conteiner--warehouse">
+        <motion.div drag className="conteiner-showPdfFile-warehouse">
+          <label htmlFor="iframe">część: {nameLabelFile}</label>
+          <iframe
+            id="iframe"
+            title="myFrame"
+            className="iframeWorehouse"
+            src=""
+            width="100%"
+            height="90%"
+          ></iframe>
+        </motion.div>
+      </section>
     </div>
   );
 };

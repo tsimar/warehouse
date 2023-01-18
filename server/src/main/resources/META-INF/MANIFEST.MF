@@ -1,0 +1,32 @@
+Manifest-Version: 1.0
+Main-Class: warehouse.warehouse.WarehouseCncApplication
+Class-Path: hibernate-commons-annotations-6.0.2.Final.jar h2-2.1.214.jar
+  HikariCP-5.0.1.jar spring-boot-starter-jdbc-3.0.0.jar spring-context-6
+ .0.2.jar logback-core-1.4.5.jar spring-data-jpa-3.0.0.jar jackson-datat
+ ype-jdk8-2.14.1.jar jboss-logging-3.5.0.Final.jar tomcat-embed-core-10.
+ 1.1.jar spring-aop-6.0.2.jar spring-data-commons-3.0.0.jar spring-beans
+ -6.0.2.jar jackson-core-2.14.1.jar slf4j-api-2.0.4.jar classmate-1.5.1.
+ jar jackson-module-parameter-names-2.14.1.jar spring-jdbc-6.0.2.jar spr
+ ing-boot-3.0.0.jar hibernate-core-6.1.5.Final.jar spring-jcl-6.0.2.jar 
+ tomcat-embed-el-10.1.1.jar tomcat-embed-websocket-10.1.1.jar jaxb-core-
+ 4.0.1.jar spring-boot-configuration-processor-3.0.0.jar logback-classic
+ -1.4.5.jar micrometer-commons-1.10.2.jar jakarta.transaction-api-2.0.1.
+ jar thymeleaf-3.1.0.RELEASE.jar spring-tx-6.0.2.jar spring-orm-6.0.2.ja
+ r snakeyaml-1.33.jar spring-aspects-6.0.2.jar jakarta.activation-api-2.
+ 1.0.jar jackson-annotations-2.14.1.jar jakarta.persistence-api-3.1.0.ja
+ r antlr4-runtime-4.10.1.jar spring-core-6.0.2.jar micrometer-observatio
+ n-1.10.2.jar jul-to-slf4j-2.0.4.jar spring-boot-starter-tomcat-3.0.0.ja
+ r istack-commons-runtime-4.1.1.jar spring-expression-6.0.2.jar unbescap
+ e-1.1.6.RELEASE.jar log4j-api-2.19.0.jar jakarta.xml.bind-api-4.0.0.jar
+  jakarta.annotation-api-2.1.1.jar spring-boot-starter-web-3.0.0.jar jax
+ b-runtime-4.0.1.jar log4j-to-slf4j-2.19.0.jar jakarta.inject-api-2.0.0.
+ jar spring-boot-starter-thymeleaf-3.0.0.jar mysql-connector-j-8.0.31.ja
+ r angus-activation-1.0.0.jar spring-boot-starter-data-jpa-3.0.0.jar asp
+ ectjweaver-1.9.9.1.jar spring-boot-devtools-3.0.0.jar spring-boot-start
+ er-logging-3.0.0.jar spring-boot-starter-aop-3.0.0.jar spring-webmvc-6.
+ 0.2.jar spring-boot-starter-json-3.0.0.jar jackson-datatype-jsr310-2.14
+ .1.jar spring-boot-autoconfigure-3.0.0.jar spring-web-6.0.2.jar jackson
+ -databind-2.14.1.jar attoparser-2.0.6.RELEASE.jar spring-boot-starter-3
+ .0.0.jar byte-buddy-1.12.19.jar thymeleaf-spring6-3.1.0.RELEASE.jar txw
+ 2-4.0.1.jar jandex-2.4.2.Final.jar
+

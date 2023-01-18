@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useReducer } from "react";
 let k;
 // let p;
 const ReadItemWarehouseWork = ({
@@ -14,6 +14,7 @@ const ReadItemWarehouseWork = ({
   checkedHeidenhain,
   checkedMillingMachineSmall,
   handleDeleteClick,
+  showPdfFile,
 }) => {
   console.log(checkedFanucBaca);
   // const objName = Object.keys(item);
@@ -36,14 +37,27 @@ const ReadItemWarehouseWork = ({
   // useEffect(() => {
   //   console.log(checkedV);
   // }, [checked]);
+  const [nameFile, setNameFile] = useState("");
+  const [propsElement, setPropsElement] = useReducer(
+    (state, newState) => ({ ...state, ...newState }),
+    {
+      nameElement: "",
+      urlPicture: "",
+    }
+  );
 
   const addElement = (warehouse, element) => {
-    return element.map((item, index) => {
-      return warehouse.idElement === item.id ? (
-        <span key={index}>{item.nameElement}</span>
-      ) : null;
+    element.map((item) => {
+      if (warehouse.idElement === item.id) {
+        setPropsElement(item);
+        setNameFile(item.urlPicture);
+      }
     });
   };
+
+  useEffect(() => {
+    addElement(item, element);
+  }, []);
 
   const addProject = (warehouseWork, project) => {
     if (k !== warehouseWork.idProject) {
@@ -77,18 +91,6 @@ const ReadItemWarehouseWork = ({
     return <span>{date}</span>;
   };
 
-  // const handleButton = (e, index) => {
-  //   e.preventDefault();
-  //   // const fieldName = e.tatrget.name;
-  //   const fieldValue = e.target.innerText;
-  //   if (fieldValue === "false"){
-  //     fieldValue="true"
-  //   } else {
-  //     fieldValue = "false";
-  //   }
-  //   setCheckedV(fieldValue[index]);
-  // };
-
   return (
     <div
       className="div__div-get"
@@ -99,7 +101,9 @@ const ReadItemWarehouseWork = ({
     >
       <span>{index + 1}</span>
       {addProject(item, project)}
-      {addElement(item, element)}
+      <span onClick={() => showPdfFile(propsElement)}>
+        {propsElement.nameElement}
+      </span>
 
       <span>{item.number}</span>
       {handleChangeDate(item.dataStart)}

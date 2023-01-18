@@ -23,8 +23,7 @@ import java.util.List;
 public class ElementService {
     private final ElementRepository elementRepository;
 
-
-    private static final String path = "C:\\English";
+    private static final String path = "/PDF";
     private Path foundFile;
 
     public ElementService(ElementRepository elementRepository) {
@@ -33,15 +32,19 @@ public class ElementService {
 
     }
 
-    public void uploadFile(MultipartFile file)
-            throws Exception {
+    public void uploadFile(MultipartFile file) throws Exception {
+
+        File newDir=new File(path);
+        if(!newDir.exists()){
+            System.out.println(newDir.mkdir()+" -----"+ newDir.getAbsolutePath());
+        }
 
         // Save file on system
         if (!file.getOriginalFilename().isEmpty()) {
 
             BufferedOutputStream outputStream =
                     new BufferedOutputStream(
-                            new FileOutputStream(new File(path,
+                            new FileOutputStream(new File(newDir,
                                     file.getOriginalFilename())));
 
             outputStream.write(file.getBytes());
@@ -57,27 +60,31 @@ public class ElementService {
     }
 
     public Resource getFileAsResource(String fileCode) throws IOException {
-        Path dirPath = Paths.get(path);
+        File pathPdf= new File(path);
+        if (pathPdf.exists()) {
 
-        try {
-            Files.list(dirPath).forEach(file -> {
-                if (file.getFileName().toString().startsWith(fileCode)) {
-                    foundFile = file;
-                    return;
-                }
-            });
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            Path dirPath = Paths.get(pathPdf.getAbsolutePath());
 
-        if (foundFile != null) {
             try {
-                return new UrlResource(foundFile.toUri());
-            } catch (MalformedURLException e) {
+                Files.list(dirPath).forEach(file -> {
+                    if (file.getFileName().toString().startsWith(fileCode)) {
+                        foundFile = file;
+                        return;
+                    }
+                });
+            } catch (
+                    IOException e) {
                 e.printStackTrace();
             }
-        }
 
+            if (foundFile != null) {
+                try {
+                    return new UrlResource(foundFile.toUri());
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
         return null;
     }
 

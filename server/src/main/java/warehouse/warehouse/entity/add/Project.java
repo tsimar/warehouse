@@ -1,8 +1,6 @@
 package warehouse.warehouse.entity.add;
 
 
-
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
