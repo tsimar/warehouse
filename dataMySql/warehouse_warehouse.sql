@@ -1,4 +1,6 @@
--- MySQL dump 10.13  Distrib 8.0.27, for Win64 (x86_64)
+CREATE DATABASE  IF NOT EXISTS `warehouse` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `warehouse`;
+-- MySQL dump 10.13  Distrib 8.0.32, for Win64 (x86_64)
 --
 -- Host: localhost    Database: warehouse
 -- ------------------------------------------------------
@@ -31,7 +33,7 @@ CREATE TABLE `warehouse` (
   `number` int NOT NULL,
   `id_project` bigint DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,7 +42,7 @@ CREATE TABLE `warehouse` (
 
 LOCK TABLES `warehouse` WRITE;
 /*!40000 ALTER TABLE `warehouse` DISABLE KEYS */;
-INSERT INTO `warehouse` VALUES (1,'in','2022-12-19',1,1,1,1),(3,'out','2022-11-10',1,1,15,9),(4,'out','2022-11-19',1,1,15,9),(15,'in','2022-12-17',1,1,0,1),(16,'in','2022-12-25',1,1,4,1),(17,'in','2022-12-25',1,1,5,1),(18,'in','2022-12-25',1,1,5,1),(19,'in','2022-12-25',1,1,5,1),(20,'in','2022-12-25',1,1,0,1);
+INSERT INTO `warehouse` VALUES (4,'out','2022-11-19',28,1,15,1),(22,'in','2022-12-27',33,1,9,1),(23,'in','2022-12-27',28,1,6,1),(26,'in','2023-01-18',28,1,4,1);
 /*!40000 ALTER TABLE `warehouse` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -53,4 +55,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-01-08 22:11:54
+-- Dump completed on 2023-01-23 21:10:30

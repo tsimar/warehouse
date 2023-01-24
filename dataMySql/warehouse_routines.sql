@@ -18,36 +18,12 @@ USE `warehouse`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `warehouse_work`
+-- Dumping events for database 'warehouse'
 --
 
-DROP TABLE IF EXISTS `warehouse_work`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `warehouse_work` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `baca_fanuc` varchar(255) DEFAULT NULL,
-  `data_finish` date DEFAULT NULL,
-  `data_start` date DEFAULT NULL,
-  `heidenhain` varchar(255) DEFAULT NULL,
-  `id_element` bigint DEFAULT NULL,
-  `id_project` bigint DEFAULT NULL,
-  `lathe` varchar(255) DEFAULT NULL,
-  `milling_machine_small` varchar(255) DEFAULT NULL,
-  `number` int NOT NULL,
-  `warehouse_open` int NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
 --
--- Dumping data for table `warehouse_work`
+-- Dumping routines for database 'warehouse'
 --
-
-LOCK TABLES `warehouse_work` WRITE;
-/*!40000 ALTER TABLE `warehouse_work` DISABLE KEYS */;
-/*!40000 ALTER TABLE `warehouse_work` ENABLE KEYS */;
-UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -58,4 +34,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-01-23 21:10:30
+-- Dump completed on 2023-01-23 21:10:31

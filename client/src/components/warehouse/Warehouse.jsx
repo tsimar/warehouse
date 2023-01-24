@@ -20,9 +20,15 @@ const Warehouse = () => {
   let editSelectPutProject = "";
   let editSelectPutUser = "";
   let editSelectPutElement = "";
+
+  // const [width, setWidth] = useState();
+  // const [height, setHeight] = useState();
+  // const listRef = useRef();
+
   const location = useLocation();
   const [warehouseName, setWarehouseName] = useState("in");
   const numberRef = useRef(null);
+
   const [valueDate, OnChange] = useState(new Date());
 
   const [element, setElement] = useState([]);
@@ -327,6 +333,24 @@ const Warehouse = () => {
       console.log(error);
     }
   };
+  // // This function calculates width and height of the list
+  // const getListSize = () => {
+  //   const newWidth = listRef.current.clientWidth;
+  //   setWidth(newWidth);
+
+  //   const newHeight = listRef.current.clientHeight;
+  //   setHeight(newHeight);
+  // };
+
+  // // Get 'width' and 'height' after the initial render and every time the list changes
+  // useEffect(() => {
+  //   getListSize();
+  // }, []);
+
+  // // Update 'width' and 'height' when the window resizes
+  // useEffect(() => {
+  //   window.addEventListener("resize", getListSize);
+  // }, []);
 
   useEffect(() => {
     fetchGetElement();

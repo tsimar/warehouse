@@ -6,6 +6,7 @@
     margin-right: 20px;
 
 }
+
 .div-get {
     width: 50%;
     display: flex;
@@ -23,7 +24,7 @@
 }
 
 .div__div-get {
-width: 100%;
+    width: 100%;
     margin-left: 20px;
     display: flex;
     justify-content: flex-start;
@@ -47,6 +48,7 @@ width: 100%;
 .size {
     width: 50px;
 }
+
 .container-getANDshowPdf {
     @include flexStart(20px, flex-start);
     width: 100%;
@@ -62,6 +64,62 @@ width: 100%;
 
 .iframe {
     position: absolute;
+    width: 90%;
     // top: 10px;
-    height: 400px;
+    height: 90%;
+        cursor: col-resize;
+    }
+    
+    
+    .container {
+        position: relative;
+    }
+    
+    .resizeable {
+        border: 2px solid black;
+        width: 100px;
+        height: 100px;
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-width: 15px;
+        min-height: 15px;
+    }
+    
+    .resizer {
+        position: absolute;
+        background: black;
+    }
+    
+    .resizer-r {
+        cursor: col-resize;
+        height: 100%;
+        right: 0;
+        top: 0;
+        width: 5px;
+    }
+    
+    .resizer-l {
+        cursor: col-resize;
+        height: 100%;
+        left: 0;
+        top: 0;
+        width: 5px;
+    }
+    
+    .resizer-t {
+        cursor: row-resize;
+        height: 5px;
+        left: 0;
+        top: 0;
+        width: 100%;
+    }
+    
+    .resizer-b {
+        cursor: row-resize;
+        height: 5px;
+        left: 0;
+        bottom: 0;
+        width: 100%;
 }

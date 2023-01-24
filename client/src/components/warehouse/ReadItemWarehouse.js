@@ -25,6 +25,7 @@ const ReadItemWarehouse = ({
       ) : null;
     });
   };
+
   useEffect(() => {
     addElement(item, element);
   }, []);

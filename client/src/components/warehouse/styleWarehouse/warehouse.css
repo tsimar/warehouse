@@ -67,6 +67,7 @@
 .iframeWorehouse {
   position: absolute;
   top: 30px;
+  cursor: col-resize;
 }
 
 .div {
