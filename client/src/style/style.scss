@@ -1,7 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Libre+Barcode+128&family=Outfit:wght@400;700&display=swap');
 * {
     margin: 0;
     padding: 0;
 }
+
 
 @mixin flexCenter {
     display: flex;
@@ -11,6 +13,7 @@
 
 
 }
+
 @mixin flexStart ($gap, $jus-cont) {
     display: flex;
 
@@ -18,4 +21,9 @@
     gap: $gap;
 
 
+}
+@mixin fontBarcode ($size) {
+    font-family: 'Libre Barcode 128', cursive;
+    font-family: 'Outfit', sans-serif;
+    font-size: $size;
 }

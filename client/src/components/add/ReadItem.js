@@ -43,6 +43,7 @@ const ReadItem = ({
       >
         <span>{index + 1}</span>
         {addSpan(objName, item)}
+        <span className="bandCode">{item.code112}</span>
       </div>
     );
   };

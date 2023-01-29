@@ -255,24 +255,6 @@ const WarehouseWork = () => {
     return data.map((item, index) => {
       return (
         <Fragment key={item.id}>
-          {/* {editValue.id === item.id ? (
-            <EditItemWarehouseWork
-              editValue={editValue}
-              handleCancelClick={handleCancelClick} 
-              // handleEditFormChange={handleEditFormChange}
-              // handleEditFormSubmit={handleEditFormSubmit}
-              // handleDeleteClick={handleDeleteClick}
-              // handleAddSubmit={handleAddSubmit}
-              // project={project}
-              // element={element}
-
-              // handleEditSelect={handleEditSelect}
-              // editSelectProjectById={editSelect.project}
-              // editSelectElementById={editSelect.element}
-              // editSelectUserById={editSelect.user}
-              // editSelectDateById={editSelect.dataStart}
-          //   />
-          // ) : (*/}
           <ReadItemWarehouseWork
             item={item}
             index={index}
@@ -298,6 +280,13 @@ const WarehouseWork = () => {
         <label htmlFor="">Nr</label>
         <label htmlFor="">projekt</label>
         <label htmlFor="">detal</label>
+        <label htmlFor="">ilość</label>
+        <label htmlFor="">data początku</label>
+        <label htmlFor="">data zakączenia</label>
+        <label htmlFor="">tokarka</label>
+        <label htmlFor="">fanuc frezarka</label>
+        <label htmlFor="">headehaine</label>
+        <label htmlFor="">baca frezarka</label>
       </div>
       <div className="div-getWarehouseWork">
         {handlGetWarehouseWork(warehouseWork)}

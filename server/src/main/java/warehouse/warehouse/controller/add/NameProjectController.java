@@ -1,6 +1,7 @@
 package warehouse.warehouse.controller.add;
 
 
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +26,8 @@ public class NameProjectController {
     }
 
     @PostMapping
-    public ResponseEntity<Project> save(@RequestBody Project nameProject) {
+    public ResponseEntity<Project> save(@RequestBody Project nameProject ) {
+        System.out.println(nameProject);
         return ResponseEntity.ok(nameProjectService.save(nameProject));
     }
 

@@ -39,7 +39,7 @@ const Project = () => {
     e.preventDefault();
     const newProject = {
       nameProject: addProject.nameProject,
-      code112: addProject.code112,
+      code112: 1,
     };
     apiProject
       .post("", newProject)
@@ -53,7 +53,7 @@ const Project = () => {
 
     setAddProject("");
     nameProjectRef.current.value = "";
-    code112Ref.current.value = "";
+    // code112Ref.current.value = "";
   };
 
   const handleChange = (e) => {
@@ -90,6 +90,7 @@ const Project = () => {
       .catch((error) => {
         console.log(error);
       });
+    handleCancelClick();
   };
 
   const handleEditFormChange = (event) => {
@@ -120,13 +121,16 @@ const Project = () => {
   };
 
   const handleDeleteClick = (idProject) => {
-    const newContacts = [...project];
-    const index = project.findIndex((contact) => contact.id === idProject);
+    if (window.confirm("Do you really deleting?")) {
+      window.open("exit.html", "I hope you know what you're doing!");
+      const newContacts = [...project];
+      const index = project.findIndex((contact) => contact.id === idProject);
 
-    newContacts.splice(index, 1);
-    setProject(newContacts);
+      newContacts.splice(index, 1);
+      setProject(newContacts);
 
-    apiProject.delete(`/${idProject}`);
+      apiProject.delete(`/${idProject}`);
+    }
   };
 
   const handlGetElement = (data) => {
@@ -170,17 +174,7 @@ const Project = () => {
             ref={nameProjectRef}
           />
         </div>
-        <div className="div__add--wrapper">
-          <label htmlFor="code">code 112</label>
-          <input
-            id="code"
-            name="code112"
-            type="text"
-            placeholder="code 112"
-            onChange={handleChange}
-            ref={code112Ref}
-          />
-        </div>
+
         <button type="submit">add</button>
       </form>
 
