@@ -9,3 +9,12 @@
   justify-content: space-evenly;
   gap: 10px;
 }
+
+.dropdown {
+  display: none;
+}
+
+.show {
+  display: block;
+  position: relative;
+}

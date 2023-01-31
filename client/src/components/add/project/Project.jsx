@@ -5,6 +5,7 @@ import React, {
   useEffect,
   Fragment,
 } from "react";
+import DeleteApI from "../../../delete/DeleteApI";
 import { apiProject } from "../../../url/URL";
 import { EditItem } from "../EditItem";
 import ReadItem from "../ReadItem";

@@ -16,11 +16,13 @@ function App() {
         <Navbar />
       </div>
       <Routes>
-        <Route path="/" exact element={<Warehouse />} />
-        <Route path="/addUser" element={<User />} />
+        <Route index element={<Warehouse />} />
+
+        <Route path="/project" element={<Project />} />
+        <Route path="/user" element={<User />} />
         <Route path="/position" element={<Position />} />
         <Route path="/element" element={<Elements />} />
-        <Route path="/project" element={<Project />} />
+
         <Route path="/wareWork" element={<WarehouseWork />} />
         <Route path="/goodElement" element={<Warehouse />} />
       </Routes>

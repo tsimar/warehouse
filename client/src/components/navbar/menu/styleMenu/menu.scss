@@ -3,3 +3,12 @@
 .ul__menu--pc {
     @include flexCenter;
 }
+.dropdown {
+    display: none;
+    // font-size: 1rem;
+}
+
+.show {
+    display: block;
+    position: relative;
+}
