@@ -24,6 +24,7 @@ public class ElementService {
     private final ElementRepository elementRepository;
 
     private static final String path = "/PDF";
+    File newDir=new File(path);
     private Path foundFile;
 
     public ElementService(ElementRepository elementRepository) {
@@ -34,7 +35,7 @@ public class ElementService {
 
     public void uploadFile(MultipartFile file) throws Exception {
 
-        File newDir=new File(path);
+
         if(!newDir.exists()){
             System.out.println(newDir.mkdir()+" -----"+ newDir.getAbsolutePath());
         }
@@ -60,10 +61,10 @@ public class ElementService {
     }
 
     public Resource getFileAsResource(String fileCode) throws IOException {
-        File pathPdf= new File(path);
-        if (pathPdf.exists()) {
 
-            Path dirPath = Paths.get(pathPdf.getAbsolutePath());
+        if (newDir.exists()) {
+
+            Path dirPath = Paths.get(newDir.getAbsolutePath());
 
             try {
                 Files.list(dirPath).forEach(file -> {
@@ -72,8 +73,7 @@ public class ElementService {
                         return;
                     }
                 });
-            } catch (
-                    IOException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
 
