@@ -7,7 +7,9 @@ export default function Dropdown({ submenus, dropdown }) {
       {submenus.map((submenu, index) => {
         return (
           <li className="menuItems--li" key={index}>
-            <Link to={submenu.Link}>{submenu.value}</Link>;
+            <Link className="menuItems__li--a" to={submenu.Link}>
+              {submenu.value}
+            </Link>
           </li>
         );
       })}

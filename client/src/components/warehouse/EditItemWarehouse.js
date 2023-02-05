@@ -130,11 +130,12 @@ export const EditItemWarehouse = ({
         />
         <input
           key={editValue.id}
-        className="div__div__get--namber"
+          className="div__div__get--namber"
           name="number"
           type="text"
           // placeholder={data[index]}
           required
+          min="1"
           value={editValue.number}
           onChange={handleEditFormChange}
         />

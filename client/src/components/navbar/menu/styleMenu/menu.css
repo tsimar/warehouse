@@ -16,5 +16,38 @@
 
 .show {
   display: block;
+  position: absolute;
+  background-color: black;
+  color: white;
+  z-index: 100;
+  padding: 10px;
+}
+
+.menuItems--li {
+  list-style-type: none;
   position: relative;
+}
+
+.menuItems__li--a {
+  text-decoration: none;
+  padding: 5px;
+}
+
+.menuItems--li::after {
+  content: "";
+  list-style-type: none;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  background-color: red;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 250ms ease-in;
+}
+
+.menuItems--li:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
 }

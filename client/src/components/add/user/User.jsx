@@ -90,14 +90,14 @@ const User = () => {
       password: addUser.password,
       idPosition: editSelectPutPosition,
     };
-  await apiUser
-    .post("", newElement)
-    .then((response) => {
-      fetchGET();
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+    await apiUser
+      .post("", newElement)
+      .then((response) => {
+        fetchGET();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
 
     setAddUser("");
 
@@ -193,11 +193,14 @@ const User = () => {
   };
 
   const handleDeleteClick = (idUser) => {
-    const newContacts = [...user];
-    const index = user.findIndex((contact) => contact.id === idUser);
-    newContacts.splice(index, 1);
-    setUser(newContacts);
-    apiUser.delete(`/${idUser}`);
+    if (window.confirm("Do you really deleting?")) {
+      window.open("exit.html", "I hope you know what you're doing!");
+      const newContacts = [...user];
+      const index = user.findIndex((contact) => contact.id === idUser);
+      newContacts.splice(index, 1);
+      setUser(newContacts);
+      apiUser.delete(`/${idUser}`);
+    }
   };
 
   const handleChangeSelect = (e) => {

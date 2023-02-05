@@ -243,11 +243,14 @@ const Warehouse = () => {
   };
 
   const handleDeleteClick = (idProps) => {
-    const newContacts = [...warehouse];
-    const index = warehouse.findIndex((contact) => contact.id === idProps);
-    newContacts.splice(index, 1);
-    setWarehouse(newContacts);
-    apiWarehouse.delete(`/${idProps}`);
+    if (window.confirm("Do you really deleting?")) {
+      window.open("exit.html", "I hope you know what you're doing!");
+      const newContacts = [...warehouse];
+      const index = warehouse.findIndex((contact) => contact.id === idProps);
+      newContacts.splice(index, 1);
+      setWarehouse(newContacts);
+      apiWarehouse.delete(`/${idProps}`);
+    }
   };
 
   const fetchGETProject = async () => {
@@ -267,6 +270,7 @@ const Warehouse = () => {
       let url = "";
       if (nameFile.urlPicture.length > 0) {
         const res = await apiElementPDF.get(`/${nameFile.urlPicture}`);
+
         setNameLabelFile(nameFile.nameElement);
         url = window.URL.createObjectURL(
           new Blob([res.data], { type: "application/pdf" })
@@ -280,7 +284,7 @@ const Warehouse = () => {
         setNameLabelFile("");
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -309,6 +313,7 @@ const Warehouse = () => {
 
   const selectNameWarehouse = (wareName) => {
     let name;
+    // forech(item i arr)
     if (wareName === "") {
       name = "in";
     } else {
@@ -444,6 +449,7 @@ const Warehouse = () => {
             type="number"
             placeholder="ilość"
             pattern="[0-9]*"
+            min="1"
             required
             ref={numberRef}
             onChange={handleChange}

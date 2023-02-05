@@ -115,13 +115,16 @@ const Position = () => {
   };
 
   const handleDeleteClick = (idPosition) => {
-    const newContacts = [...position];
-    const index = position.findIndex((contact) => contact.id === idPosition);
+    if (window.confirm("Do you really deleting?")) {
+      window.open("exit.html", "I hope you know what you're doing!");
+      const newContacts = [...position];
+      const index = position.findIndex((contact) => contact.id === idPosition);
 
-    newContacts.splice(index, 1);
-    setPosition(newContacts);
+      newContacts.splice(index, 1);
+      setPosition(newContacts);
 
-    apiPosition.delete(`/${idPosition}`);
+      apiPosition.delete(`/${idPosition}`);
+    }
   };
 
   const handlGetElement = (data) => {

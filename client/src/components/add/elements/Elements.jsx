@@ -10,7 +10,7 @@ import { apiElement } from "../../../url/URL";
 import { apiElementPDF } from "../../../url/URL";
 import { EditItem } from "../EditItem";
 import ReadItem from "../ReadItem";
-
+import { motion } from "framer-motion";
 import { Icon } from "react-icons-kit";
 import { plus } from "react-icons-kit/feather/plus";
 import jsPDF from "jspdf";
@@ -47,6 +47,7 @@ const Elements = () => {
   const elementRef = useRef(null);
   const urlPictureRef = useRef(null);
   const [element, setElement] = useState([]);
+  const [nameLabelFile, setNameLabelFile] = useState("");
   const [addElement, setAddElement] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
     { nameElement: "", urlPicture: "" }
@@ -81,14 +82,18 @@ const Elements = () => {
       // setLoading(true);
 
       const res = await apiElementPDF.get(`/${file}`);
-
+      setNameLabelFile(file);
       // res.blob();
       const url = window.URL.createObjectURL(
         new Blob([res.data], { type: "application/pdf" })
       );
       const iframe = document.querySelector("iframe");
-      if (iframe?.src) iframe.src = url;
-      // handleFileCopy(link.download);
+      if (iframe?.src) {
+        iframe.src = url;
+      } else {
+        iframe.src = null;
+        setNameLabelFile("");
+      }
     } catch (error) {
       console.log(error);
     }
@@ -327,13 +332,16 @@ const Elements = () => {
   };
 
   const handleDeleteClick = (idElement) => {
-    const newContacts = [...element];
-    const index = element.findIndex((contact) => contact.id === idElement);
+    if (window.confirm("Do you really deleting?")) {
+      // window.open("exit.html", "I hope you know what you're doing!");
+      const newContacts = [...element];
+      const index = element.findIndex((contact) => contact.id === idElement);
 
-    newContacts.splice(index, 1);
-    setElement(newContacts);
+      newContacts.splice(index, 1);
+      setElement(newContacts);
 
-    apiElement.delete(`/${idElement}`);
+      apiElement.delete(`/${idElement}`);
+    }
   };
 
   const handlGetElement = (data) => {
@@ -436,23 +444,25 @@ const Elements = () => {
       </form>
       <section className="container-getANDshowPdf">
         <div className="div-get">{handlGetElement(element)}</div>
+        <motion.div drag className="conteiner-showPdfFile-element">
+          <label htmlFor="iframe">część: {nameLabelFile}</label>
+          <div className="conteiner-showPdfFile container">
+            <div ref={ref} className="resizeable">
+              <div ref={refLeft} className="resizer resizer-l"></div>
+              <div ref={refTop} className="resizer resizer-t"></div>
+              <div ref={refRight} className="resizer resizer-r"></div>
+              <div ref={refBottom} className="resizer resizer-b"></div>
 
-        <div className="conteiner-showPdfFile container">
-          {/* <div className=" container"> */}
-          <div ref={ref} className="resizeable">
-            <div ref={refLeft} className="resizer resizer-l"></div>
-            <div ref={refTop} className="resizer resizer-t"></div>
-            <div ref={refRight} className="resizer resizer-r"></div>
-            <div ref={refBottom} className="resizer resizer-b"></div>
-            <iframe
-              title="elemntPDF"
-              className="iframe"
-              src=""
-              width="100%"
-              height="100%"
-            ></iframe>
-          </div>
-        </div>
+              <iframe
+                title="elemntPDF"
+                className="iframe"
+                src=""
+                width="100%"
+                height="90%"
+              ></iframe>
+            </div>
+          </div>{" "}
+        </motion.div>
       </section>
     </div>
   );

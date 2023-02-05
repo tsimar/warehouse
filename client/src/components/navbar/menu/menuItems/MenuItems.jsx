@@ -46,7 +46,9 @@ const MenuItems = ({ items }) => {
           <Dropdown submenus={items.subMenu} dropdown={dropdown} />
         </>
       ) : (
-        <Link to={items.Link}>{items.value}</Link>
+        <Link className="menuItems__li--a" to={items.Link}>
+          {items.value}
+        </Link>
       )}
     </li>
   );
