@@ -277,20 +277,23 @@ const WarehouseWork = () => {
   return (
     <div>
       <div className="label_name">
-        <label htmlFor="">Nr</label>
-        <label htmlFor="">projekt</label>
-        <label htmlFor="">detal</label>
-        <label htmlFor="">ilość</label>
-        <label htmlFor="">data początku</label>
-        <label htmlFor="">data zakączenia</label>
-        <label htmlFor="">tokarka</label>
-        <label htmlFor="">fanuc frezarka</label>
-        <label htmlFor="">headehaine</label>
-        <label htmlFor="">baca frezarka</label>
+        <label className="span--id">Nr</label>
+        <label className="span--project">projekt</label>
+        <label className="span--element">detal</label>
+        <label className="span--number">ilość</label>
+        <label className="span--date">początku</label>
+        <label className="span--date">zakączenia</label>
+        <label className="div--button">tokarka</label>
+        <label className="div--button">fanuc frezarka</label>
+        <label className="div--button">headehaine</label>
+        <label className="div--button">baca frezarka</label>
       </div>
-      <div className="div-getWarehouseWork">
-        {handlGetWarehouseWork(warehouseWork)}
-      </div>
+      <form>
+        <div className="div-getWarehouseWork">
+          {handlGetWarehouseWork(warehouseWork)}
+        </div>
+      </form>
+
       <section className="conteiner--warehouse">
         <motion.div drag className="conteiner-showPdfFile-warehouse">
           <label htmlFor="iframe">część: {nameLabelFile}</label>

@@ -56,7 +56,7 @@ public class WarehouseService {
 
     private List<Warehouse> summaElements(List<Warehouse> list) {
         List<Warehouse> totalElements = new ArrayList<>();
-        List<Long> idElementList = new ArrayList<>();
+        List<Long> idProjectList = new ArrayList<>();
 
         for (Warehouse item : list) {
             Warehouse warehouse = new Warehouse();
@@ -68,7 +68,7 @@ public class WarehouseService {
 
                 ) {
                     int select = 0;
-                    for (Long id : idElementList) {
+                    for (Long id : idProjectList) {
                         if (itemIterator.getIdElement() == id) {
                             select++;
                         }
@@ -80,7 +80,7 @@ public class WarehouseService {
                 }
 
             }
-            idElementList.add(item.getIdProject());
+            idProjectList.add(item.getIdProject());
             if (number > 0) {
                 warehouse.setId(item.getId());
                 warehouse.setDataStart(item.getDataStart());

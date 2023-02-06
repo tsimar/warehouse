@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useReducer } from "react";
+import SelectPositionWork from "./SelectPositionWork";
 let k;
 // let p;
 const ReadItemWarehouseWork = ({
@@ -16,28 +17,8 @@ const ReadItemWarehouseWork = ({
   handleDeleteClick,
   showPdfFile,
 }) => {
-  console.log(checkedFanucBaca);
-  // const objName = Object.keys(item);
-  // const count = useRef(null);
-  //   const [addPosition, setAddPosition] = useReducer(
-  //   (state, newState) => ({ ...state, ...newState }),
-  //   {
-  //     position: "",
-  //     permission: "",
-  //   }
-  // );
-  // const addSpan = (data, obj) => {
-  //   return data.map((item, index) => {
-  //     return (index > 0) & (5 > index) ? (
-  //       <span key={index}>{obj[data[index]]}</span>
-  //     ) : null;
-  //   });
-  // };
-  // let index = 1;
-  // useEffect(() => {
-  //   console.log(checkedV);
-  // }, [checked]);
   const [nameFile, setNameFile] = useState("");
+  const [enableSaveEdit, setEnaleSaveEdit] = useState(false);
   const [propsElement, setPropsElement] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
     {
@@ -63,7 +44,9 @@ const ReadItemWarehouseWork = ({
     if (k !== warehouseWork.idProject) {
       return project.map((item, index) => {
         return warehouseWork.idProject === item.id ? (
-          <span key={index}>{item.nameProject}</span>
+          <span className="span--project" key={index}>
+            {item.nameProject}
+          </span>
         ) : null;
       });
     } else {
@@ -88,10 +71,11 @@ const ReadItemWarehouseWork = ({
     }
 
     date = d + "-" + m + "-" + y;
-    return <span>{date}</span>;
+    return <span className="span--date">{date}</span>;
   };
 
   return (
+    // <form onSubmit>
     <div
       className="div__div-get"
       key={item.id}
@@ -99,31 +83,46 @@ const ReadItemWarehouseWork = ({
       onDrag={() => handleDeleteClick(item.id)}
       draggable
     >
-      <span>{index + 1}</span>
+      <span className="span--id">{index + 1}</span>
       {addProject(item, project)}
-      <span onClick={() => showPdfFile(propsElement)}>
+      <span className="span--element" onClick={() => showPdfFile(propsElement)}>
         {propsElement.nameElement}
       </span>
-
-      <span>{item.number}</span>
+      <span className="span--number">{item.number}</span>
       {handleChangeDate(item.dataStart)}
       {handleChangeDate(item.dataFinish)}
-      <button onClick={(e) => handleButton(e, index)} name="bacaFanuc">
-        {checkedFanucBaca}
-      </button>
-      <button onClick={(e) => handleButton(e, index)} name="lathe">
-        {checkedLathe}
-      </button>
-      <button onClick={(e) => handleButton(e, index)} name="heidenhain">
-        {checkedHeidenhain}
-      </button>
-      <button
-        onClick={(e) => handleButton(e, index)}
-        name="millingMachineSmall"
-      >
-        {checkedMillingMachineSmall}
-      </button>
+      <div className="div--button">
+        <SelectPositionWork />
+        {/* <button onClick={(e) => handleButton(e, index)} name="bacaFanuc">
+          {checkedFanucBaca}
+        </button> */}
+      </div>
+      <div className="div--button">
+        <SelectPositionWork />
+        {/* <button onClick={(e) => handleButton(e, index)} name="lathe">
+          {checkedLathe}
+        </button> */}
+      </div>
+      <div className="div--button">
+        <SelectPositionWork />
+        {/* <button onClick={(e) => handleButton(e, index)} name="heidenhain">
+          {checkedHeidenhain}
+        </button> */}
+      </div>
+      <div className="div--button">
+        <SelectPositionWork />
+        {/* <button
+          onClick={(e) => handleButton(e, index)}
+          name="millingMachineSmall"
+        >
+          {checkedMillingMachineSmall}
+        </button> */}
+      </div>
+      {/* <button className={enableSaveEdit} type="submit">
+          save
+        </button> */}
     </div>
+    // </form>
   );
 };
 export default ReadItemWarehouseWork;

@@ -25,7 +25,19 @@
   width: 100%;
   display: flex;
   justify-content: flex-start;
-  gap: 30px;
+  gap: 10px;
   margin-left: 20px;
   box-sizing: border-box;
+}
+
+.span--element,
+.span--project,
+.div--button,
+.span--date,
+.span--number {
+  width: 110px;
+}
+
+.span--id {
+  width: 40px;
 }

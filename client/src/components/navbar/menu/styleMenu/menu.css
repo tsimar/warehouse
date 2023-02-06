@@ -17,7 +17,7 @@
 .show {
   display: block;
   position: absolute;
-  background-color: black;
+  background-color: rgb(245, 241, 241);
   color: white;
   z-index: 100;
   padding: 10px;
