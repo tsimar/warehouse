@@ -18,7 +18,7 @@ const ReadItemWarehouseWork = ({
   showPdfFile,
 }) => {
   const [nameFile, setNameFile] = useState("");
-  const [enableSaveEdit, setEnaleSaveEdit] = useState(false);
+  // const [enableSaveEdit, setEnaleSaveEdit] = useState(false);
   const [propsElement, setPropsElement] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
     {
@@ -28,17 +28,16 @@ const ReadItemWarehouseWork = ({
   );
 
   const addElement = (warehouse, element) => {
-    element.map((item) => {
-      if (warehouse.idElement === item.id) {
-        setPropsElement(item);
-        setNameFile(item.urlPicture);
-      }
-    });
+    element.map((item) =>
+      warehouse.idElement === item.id
+        ? setPropsElement(item)
+        : setNameFile(item.urlPicture)
+    );
   };
 
   useEffect(() => {
     addElement(item, element);
-  }, []);
+  }, [item]);
 
   const addProject = (warehouseWork, project) => {
     if (k !== warehouseWork.idProject) {
@@ -73,9 +72,12 @@ const ReadItemWarehouseWork = ({
     date = d + "-" + m + "-" + y;
     return <span className="span--date">{date}</span>;
   };
+  const handleEditSubmit = (e) => {
+    // e.preventDefault();
+    console.log(e);
+  };
 
   return (
-    // <form onSubmit>
     <div
       className="div__div-get"
       key={item.id}
@@ -93,36 +95,18 @@ const ReadItemWarehouseWork = ({
       {handleChangeDate(item.dataFinish)}
       <div className="div--button">
         <SelectPositionWork />
-        {/* <button onClick={(e) => handleButton(e, index)} name="bacaFanuc">
-          {checkedFanucBaca}
-        </button> */}
       </div>
       <div className="div--button">
         <SelectPositionWork />
-        {/* <button onClick={(e) => handleButton(e, index)} name="lathe">
-          {checkedLathe}
-        </button> */}
       </div>
       <div className="div--button">
         <SelectPositionWork />
-        {/* <button onClick={(e) => handleButton(e, index)} name="heidenhain">
-          {checkedHeidenhain}
-        </button> */}
       </div>
       <div className="div--button">
         <SelectPositionWork />
-        {/* <button
-          onClick={(e) => handleButton(e, index)}
-          name="millingMachineSmall"
-        >
-          {checkedMillingMachineSmall}
-        </button> */}
-      </div>
-      {/* <button className={enableSaveEdit} type="submit">
-          save
-        </button> */}
+      </div>{" "}
+      <button type="submit">save</button>
     </div>
-    // </form>
   );
 };
 export default ReadItemWarehouseWork;
