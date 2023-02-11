@@ -1,15 +1,11 @@
 import React from "react";
 import { useRef } from "react";
 
-function SelectPositionWork() {
+function SelectPositionWork({ handle, name }) {
   let listTypePosition = ["magazyn", "obróbka", "gotowa"];
 
-  const handle = (e) => {
-    console.log(e.target.value);
-  };
   return (
-    // <select value={selectUser} onChange={(e) => setSelectUser(e.target.value)}>
-    <select onChange={handle}>
+    <select name={name} onChange={handle}>
       {listTypePosition.map((item, index) => (
         <option key={index}>{item}</option>
       ))}

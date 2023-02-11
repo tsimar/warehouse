@@ -7,6 +7,9 @@ import warehouse.warehouse.repository.warehouse.WarehouseRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 @Service
 public class WarehouseService {
@@ -69,7 +72,7 @@ public class WarehouseService {
                 ) {
                     int select = 0;
                     for (Long id : idProjectList) {
-                        if (itemIterator.getIdElement() == id) {
+                        if (itemIterator.getIdProject() == id) {
                             select++;
                         }
                     }
@@ -118,6 +121,7 @@ public class WarehouseService {
             warehouse.setId(itemIn.getId());
             warehouse.setIdProject(itemIn.getIdProject());
             warehouse.setIdElement(itemIn.getIdElement());
+            warehouse.setDataStart(itemIn.getDataStart());
             warehouse.setNumber(numbers);
             warehouseJoin.add(warehouse);
         }

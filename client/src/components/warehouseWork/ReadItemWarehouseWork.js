@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useReducer } from "react";
+import React, { useState, useEffect, useReducer, useRef } from "react";
 import SelectPositionWork from "./SelectPositionWork";
-let k;
+import { apiWarehouseWork } from "../../url/URL";
+
 // let p;
 const ReadItemWarehouseWork = ({
   item,
@@ -8,17 +9,21 @@ const ReadItemWarehouseWork = ({
   project,
   element,
   handleEditClick,
-  checked,
-  handleButton,
-  checkedFanucBaca,
-  checkedLathe,
-  checkedHeidenhain,
-  checkedMillingMachineSmall,
+
   handleDeleteClick,
   showPdfFile,
 }) => {
   const [nameFile, setNameFile] = useState("");
-  // const [enableSaveEdit, setEnaleSaveEdit] = useState(false);
+  const [enableSave, setEnableSave] = useState("noneSave");
+  const refId = useRef();
+  const [machina, setMachina] = useState({
+    id: "",
+    bacaFanuc: "",
+    lathe: "",
+    heidenhain: "",
+    millingMachineSmall: "",
+  });
+
   const [propsElement, setPropsElement] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
     {
@@ -26,7 +31,7 @@ const ReadItemWarehouseWork = ({
       urlPicture: "",
     }
   );
-
+  console.log("dataStart", item.dataStart);
   const addElement = (warehouse, element) => {
     element.map((item) =>
       warehouse.idElement === item.id
@@ -40,17 +45,13 @@ const ReadItemWarehouseWork = ({
   }, [item]);
 
   const addProject = (warehouseWork, project) => {
-    if (k !== warehouseWork.idProject) {
-      return project.map((item, index) => {
-        return warehouseWork.idProject === item.id ? (
-          <span className="span--project" key={index}>
-            {item.nameProject}
-          </span>
-        ) : null;
-      });
-    } else {
-      console.log("k", k);
-    }
+    return project.map((item, index) => {
+      return warehouseWork.idProject === item.id ? (
+        <span className="span--project" key={index}>
+          {item.nameProject}
+        </span>
+      ) : null;
+    });
   };
   const handleChangeDate = (data) => {
     let date;
@@ -76,7 +77,34 @@ const ReadItemWarehouseWork = ({
     // e.preventDefault();
     console.log(e);
   };
+  const handle = (e) => {
+    console.log(e.target.value);
+    console.log(e.target.name);
+    console.log("id-work", item.id);
+    const newFormData = { ...machina };
+    newFormData[e.target.name] = e.target.value;
+    refId.current = item.id;
+    setMachina(newFormData);
+    setEnableSave("visibleSave");
+  };
 
+  const handleSaveWork = (e) => {
+    e.preventDefault();
+    const newWarehouseWork = {
+      id: refId.current,
+      bacaFanuc: machina.bacaFanuc,
+      lathe: machina.lathe,
+      heidenhain: machina.heidenhain,
+      millingMachineSmall: machina.millingMachineSmall,
+    };
+    apiWarehouseWork
+      .put("/changeWorkMachine", newWarehouseWork)
+
+      .catch((error) => {
+        console.log(error);
+      });
+    console.log("hi");
+  };
   return (
     <div
       className="div__div-get"
@@ -94,18 +122,20 @@ const ReadItemWarehouseWork = ({
       {handleChangeDate(item.dataStart)}
       {handleChangeDate(item.dataFinish)}
       <div className="div--button">
-        <SelectPositionWork />
+        <SelectPositionWork handle={handle} name="lathe" />
       </div>
       <div className="div--button">
-        <SelectPositionWork />
+        <SelectPositionWork handle={handle} name="bacaFanuc" />
       </div>
       <div className="div--button">
-        <SelectPositionWork />
+        <SelectPositionWork handle={handle} name="heidenhain" />
       </div>
       <div className="div--button">
-        <SelectPositionWork />
-      </div>{" "}
-      <button type="submit">save</button>
+        <SelectPositionWork handle={handle} name="millingMachineSmall" />
+      </div>
+      <button className={enableSave} onClick={(e) => handleSaveWork(e)}>
+        save
+      </button>
     </div>
   );
 };

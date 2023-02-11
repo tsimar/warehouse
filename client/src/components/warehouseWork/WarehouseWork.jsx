@@ -21,14 +21,11 @@ const WarehouseWork = () => {
   const numberRef = useRef(null);
 
   const [nameLabelFile, setNameLabelFile] = useState("");
-  const [valueDateStart, OnChangeStart] = useState(new Date());
   const [valueDateFinish, OnChangeFinish] = useState(new Date());
   const [element, setElement] = useState([]);
   const [project, setProject] = useState([]);
   const [user, setUser] = useState([]);
   const [warehouseWork, setWarehouseWork] = useState([]);
-  const [selectElement, setSelectElement] = useState("");
-  const [selectProject, setSelectProject] = useState("");
   const [checkedFanucBaca, setCheckedFanucBaca] = useState([]);
   const [checkedLathe, setCheckedLathe] = useState([]);
   const [checkedHeidenhain, setCheckedHeidenhain] = useState([]);
@@ -112,20 +109,7 @@ const WarehouseWork = () => {
   const handleCancelClick = () => {
     setEditValue("");
   };
-  const handleDeleteClick = (idProps) => {
-    const newContacts = [...user];
-    const index = warehouseWork.findIndex((contact) => contact.id === idProps);
-    newContacts.splice(index, 1);
-    setAddWarehouseWork(newContacts);
-    apiWarehouseWork.delete(`/${idProps}`);
-  };
-  const handleChangeSelectProject = (e, name) => {
-    if (name === "project") {
-      setSelectProject(e.target.value);
-    } else if (name === "element") {
-      setSelectElement(e.target.value);
-    }
-  };
+
   const fetchGETProject = async () => {
     try {
       // setLoading(true);
@@ -233,6 +217,7 @@ const WarehouseWork = () => {
     // loginRef.current.value = "";
     // passwordRef.current.value = "";
   };
+
   const handleEditClick = (event, edit) => {
     event.preventDefault();
     let dateLocal = new Date();
@@ -262,11 +247,6 @@ const WarehouseWork = () => {
             element={element}
             handleEditClick={handleEditClick}
             handleButton={handleButton}
-            checkedFanucBaca={checkedFanucBaca[index]}
-            checkedLathe={checkedLathe[index]}
-            checkedHeidenhain={checkedHeidenhain[index]}
-            checkedMillingMachineSmall={checkedMillingMachineSmall[index]}
-            handleDeleteClick={handleDeleteClick}
             showPdfFile={showPdfFile}
           />
         </Fragment>
@@ -275,7 +255,7 @@ const WarehouseWork = () => {
   };
 
   return (
-    <div>
+    <div className="body--warehouseWork">
       <div className="label_name">
         <label className="span--id">Nr</label>
         <label className="span--project">projekt</label>

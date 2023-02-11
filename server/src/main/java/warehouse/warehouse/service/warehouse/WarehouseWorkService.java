@@ -2,6 +2,7 @@ package warehouse.warehouse.service.warehouse;
 
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
+import warehouse.warehouse.DTO.ChangeWorkMachine;
 import warehouse.warehouse.entity.warehouse.Warehouse;
 import warehouse.warehouse.entity.warehouse.WarehouseWork;
 import warehouse.warehouse.repository.warehouse.WarehouseWorkRepository;
@@ -21,19 +22,6 @@ public class WarehouseWorkService {
         this.warehouseService = warehouseService;
     }
 
-    public List<WarehouseWork> getAll() {
-
-
-        return warehouseWorkRepository.findAll();
-    }
-
-    public WarehouseWork save(WarehouseWork warehouseWork) {
-        return warehouseWorkRepository.save(warehouseWork);
-    }
-
-    public void delete(Long id) {
-        warehouseWorkRepository.deleteById(id);
-    }
 
     @Transactional
     public void edit(WarehouseWork warehouseWork) {
@@ -60,7 +48,7 @@ public class WarehouseWorkService {
         List<Warehouse> warehouses = warehouseService.getWarehouseByName();
         List<WarehouseWork> warehouseWorks = warehouseWorkRepository.findAllOpen(1);
         List<WarehouseWork> resultWarehouseWork = systemWarehouseWork(warehouses, warehouseWorks);
-
+        warehouseWorkRepository.saveAll(resultWarehouseWork);
         return resultWarehouseWork;
     }
 
@@ -71,7 +59,7 @@ public class WarehouseWorkService {
             WarehouseWork warehouseWork = new WarehouseWork();
             int k = 0;
 
-            for (WarehouseWork itemWork : warehouseWorks) {
+            for (WarehouseWork itemWork : resultWarehouseWork) {
                 if (itemWork.getIdProject() == item.getIdProject() && itemWork.getIdElement() == item.getIdElement()) {
                     k++;
                 }
@@ -87,10 +75,28 @@ public class WarehouseWorkService {
                 warehouseWork.setLathe("false");
                 warehouseWork.setBacaFanuc("false");
                 warehouseWork.setMillingMachineSmall("false");
+                warehouseWork.setWarehouseOpen(1);
                 resultWarehouseWork.add(warehouseWork);
             }
             idNew++;
         }
         return resultWarehouseWork;
+    }
+
+    public void changeMachine(ChangeWorkMachine changeWorkMachine) {
+        int statusDetailed = 1;
+        if (changeWorkMachine.getBacaFanuc() == "gotowo"
+                && changeWorkMachine.getLathe() == "gotowo"
+                && changeWorkMachine.getMillingMachineSmall() == "gotowo"
+                && changeWorkMachine.getHeidenhain() == "gotowo") {
+            statusDetailed = 2;
+
+        }
+        System.out.println(changeWorkMachine.getBacaFanuc()+"  "+
+                changeWorkMachine.getHeidenhain()+"  "+
+                changeWorkMachine.getLathe()+"  "+
+                changeWorkMachine.getMillingMachineSmall()+"  "+
+                statusDetailed+"  "+ changeWorkMachine.getId());
+
     }
 }

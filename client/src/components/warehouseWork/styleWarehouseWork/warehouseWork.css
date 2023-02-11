@@ -41,3 +41,12 @@
 .span--id {
   width: 40px;
 }
+
+.noneSave {
+  display: none;
+}
+
+.visibleSave {
+  display: block;
+  width: 40px;
+}

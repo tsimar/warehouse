@@ -2,6 +2,7 @@ package warehouse.warehouse.controller.warehouse;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import warehouse.warehouse.DTO.ChangeWorkMachine;
 import warehouse.warehouse.entity.warehouse.Warehouse;
 import warehouse.warehouse.entity.warehouse.WarehouseWork;
 import warehouse.warehouse.service.warehouse.WarehouseService;
@@ -27,20 +28,17 @@ public class WarehouseWorkController {
         return ResponseEntity.ok(warehouseWorkService.getSelectWarehouseWork());
     }
 
-    @PostMapping
-    public ResponseEntity<WarehouseWork> save(@RequestBody WarehouseWork warehouseWork){
-        return ResponseEntity.ok(warehouseWorkService.save(warehouseWork));
+//    @PostMapping
+//    public ResponseEntity<WarehouseWork> save(@RequestBody WarehouseWork warehouseWork){
+//        return ResponseEntity.ok(warehouseWorkService.save(warehouseWork));
+//    }
+    @PutMapping("/changeWorkMachine")
+    public void changeMachine(@RequestBody ChangeWorkMachine changeWorkMachine){
+
+       warehouseWorkService.changeMachine(changeWorkMachine);
     }
 
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
 
-        if (id == null) {
-            throw new RuntimeException("You must define new user");
-        } else {
-            warehouseWorkService.delete(id);
-        }
-    }
     @PutMapping() public void edit(@RequestBody WarehouseWork warehouseWork) {
         warehouseWorkService.edit(warehouseWork);
     }
