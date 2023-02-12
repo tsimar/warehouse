@@ -9,13 +9,13 @@ const ReadItemWarehouseWork = ({
   project,
   element,
   handleEditClick,
-
   handleDeleteClick,
   showPdfFile,
 }) => {
   const [nameFile, setNameFile] = useState("");
   const [enableSave, setEnableSave] = useState("noneSave");
-  const refId = useRef();
+  const refId = useRef(0);
+
   const [machina, setMachina] = useState({
     id: "",
     bacaFanuc: "",
@@ -42,6 +42,17 @@ const ReadItemWarehouseWork = ({
 
   useEffect(() => {
     addElement(item, element);
+  }, [item]);
+
+  useEffect(() => {
+    const data = {
+      id: item.id,
+      bacaFanuc: item.bacaFanuc,
+      lathe: item.lathe,
+      heidenhain: item.heidenhain,
+      millingMachineSmall: item.millingMachineSmall,
+    };
+    setMachina(data);
   }, [item]);
 
   const addProject = (warehouseWork, project) => {
@@ -79,7 +90,7 @@ const ReadItemWarehouseWork = ({
   };
   const handle = (e) => {
     console.log(e.target.value);
-    console.log(e.target.name);
+    console.log("fanuc status", item.bacaFanuc);
     console.log("id-work", item.id);
     const newFormData = { ...machina };
     newFormData[e.target.name] = e.target.value;
@@ -103,7 +114,7 @@ const ReadItemWarehouseWork = ({
       .catch((error) => {
         console.log(error);
       });
-    console.log("hi");
+    setEnableSave("noneSave");
   };
   return (
     <div
@@ -121,17 +132,29 @@ const ReadItemWarehouseWork = ({
       <span className="span--number">{item.number}</span>
       {handleChangeDate(item.dataStart)}
       {handleChangeDate(item.dataFinish)}
-      <div className="div--button">
-        <SelectPositionWork handle={handle} name="lathe" />
+      <div className="div--button" key={2}>
+        <SelectPositionWork handle={handle} name="lathe" status={item.lathe} />
       </div>
-      <div className="div--button">
-        <SelectPositionWork handle={handle} name="bacaFanuc" />
+      <div className="div--button" key={3}>
+        <SelectPositionWork
+          handle={handle}
+          name="bacaFanuc"
+          status={item.bacaFanuc}
+        />
       </div>
-      <div className="div--button">
-        <SelectPositionWork handle={handle} name="heidenhain" />
+      <div className="div--button" key={4}>
+        <SelectPositionWork
+          handle={handle}
+          name="heidenhain"
+          status={item.heidenhain}
+        />
       </div>
-      <div className="div--button">
-        <SelectPositionWork handle={handle} name="millingMachineSmall" />
+      <div className="div--button" key={5}>
+        <SelectPositionWork
+          handle={handle}
+          name="millingMachineSmall"
+          status={item.millingMachineSmall}
+        />
       </div>
       <button className={enableSave} onClick={(e) => handleSaveWork(e)}>
         save

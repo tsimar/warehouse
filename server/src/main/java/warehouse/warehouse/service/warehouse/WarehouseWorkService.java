@@ -29,15 +29,9 @@ public class WarehouseWorkService {
             warehouseWorkRepository
                     .findById(warehouseWork.getId())
                     .ifPresent(warehouse1 -> {
-                        warehouse1.setIdProject(warehouseWork.getIdProject());
-                        warehouse1.setIdElement(warehouseWork.getIdElement());
-                        warehouse1.setNumber(warehouseWork.getNumber());
-                        warehouse1.setDataStart(warehouseWork.getDataStart());
+
                         warehouse1.setDataFinish(warehouseWork.getDataFinish());
-                        warehouse1.setBacaFanuc(warehouseWork.getBacaFanuc());
-                        warehouse1.setLathe(warehouseWork.getLathe());
-                        warehouse1.setHeidenhain(warehouseWork.getHeidenhain());
-                        warehouse1.setMillingMachineSmall(warehouseWork.getMillingMachineSmall());
+
                     });
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -45,58 +39,98 @@ public class WarehouseWorkService {
     }
 
     public List<WarehouseWork> getSelectWarehouseWork() {
+
         List<Warehouse> warehouses = warehouseService.getWarehouseByName();
         List<WarehouseWork> warehouseWorks = warehouseWorkRepository.findAllOpen(1);
-        List<WarehouseWork> resultWarehouseWork = systemWarehouseWork(warehouses, warehouseWorks);
-        warehouseWorkRepository.saveAll(resultWarehouseWork);
-        return resultWarehouseWork;
+        List<WarehouseWork> result = resultWarehouseWork(warehouses, warehouseWorks);
+
+        return result;
     }
 
-    private List<WarehouseWork> systemWarehouseWork(List<Warehouse> warehouses, List<WarehouseWork> warehouseWorks) {
-        List<WarehouseWork> resultWarehouseWork = warehouseWorks;
-        Long idNew = 3L;
-        for (Warehouse item : warehouses) {
-            WarehouseWork warehouseWork = new WarehouseWork();
-            int k = 0;
+    private List<WarehouseWork> resultWarehouseWork(List<Warehouse> warehouses, List<WarehouseWork> warehouseWorks) {
+        List<WarehouseWork> workList = new ArrayList<>();
 
-            for (WarehouseWork itemWork : resultWarehouseWork) {
-                if (itemWork.getIdProject() == item.getIdProject() && itemWork.getIdElement() == item.getIdElement()) {
+        Long idNew = 3L;
+
+
+        for (Warehouse item : warehouses) {
+            WarehouseWork saveWork = new WarehouseWork();
+            int k = 0;
+            for (WarehouseWork itemWork : warehouseWorks) {
+                WarehouseWork work = new WarehouseWork();
+                if (itemWork.getIdProject().equals(item.getIdProject()) && itemWork.getIdElement().equals(item.getIdElement())) {
                     k++;
+                    work.setId(itemWork.getId());
+                    work.setIdProject(itemWork.getIdProject());
+                    work.setIdElement(itemWork.getIdElement());
+                    work.setNumber(itemWork.getNumber());
+                    work.setDataStart(itemWork.getDataStart());
+                    work.setDataFinish(itemWork.getDataFinish());
+                    work.setHeidenhain(itemWork.getHeidenhain());
+                    work.setLathe(itemWork.getLathe());
+                    work.setBacaFanuc(itemWork.getBacaFanuc());
+                    work.setMillingMachineSmall(itemWork.getMillingMachineSmall());
+                    work.setWarehouseOpen(itemWork.getWarehouseOpen());
+                    workList.add(work);
                 }
             }
             if (k == 0) {
-                warehouseWork.setId(idNew);
-                warehouseWork.setIdProject(item.getIdProject());
-                warehouseWork.setIdElement(item.getIdElement());
-                warehouseWork.setNumber(item.getNumber());
-                warehouseWork.setDataStart(item.getDataStart());
-                warehouseWork.setDataFinish(Date.valueOf(LocalDate.now()));
-                warehouseWork.setHeidenhain("false");
-                warehouseWork.setLathe("false");
-                warehouseWork.setBacaFanuc("false");
-                warehouseWork.setMillingMachineSmall("false");
-                warehouseWork.setWarehouseOpen(1);
-                resultWarehouseWork.add(warehouseWork);
+
+                saveWork.setIdProject(item.getIdProject());
+                saveWork.setIdElement(item.getIdElement());
+                saveWork.setNumber(item.getNumber());
+                saveWork.setDataStart(item.getDataStart());
+                saveWork.setDataFinish(Date.valueOf(LocalDate.now()));
+                saveWork.setHeidenhain("magazyn");
+                saveWork.setLathe("magazyn");
+                saveWork.setBacaFanuc("magazyn");
+                saveWork.setMillingMachineSmall("magazyn");
+                saveWork.setWarehouseOpen(1);
+                workList.add(saveWork);
+
+
             }
             idNew++;
         }
-        return resultWarehouseWork;
+
+        return workList;
+    }
+
+
+    public void save(Warehouse warehouse) {
+WarehouseWork saveWork=new WarehouseWork();
+
+        saveWork.setIdProject(warehouse.getIdProject());
+        saveWork.setIdElement(warehouse.getIdElement());
+        saveWork.setNumber(warehouse.getNumber());
+        saveWork.setDataStart(warehouse.getDataStart());
+        saveWork.setDataFinish(Date.valueOf(LocalDate.now()));
+        saveWork.setHeidenhain("magazyn");
+        saveWork.setLathe("magazyn");
+        saveWork.setBacaFanuc("magazyn");
+        saveWork.setMillingMachineSmall("magazyn");
+        saveWork.setWarehouseOpen(1);
+
+        warehouseWorkRepository.save(saveWork);
     }
 
     public void changeMachine(ChangeWorkMachine changeWorkMachine) {
         int statusDetailed = 1;
-        if (changeWorkMachine.getBacaFanuc() == "gotowo"
-                && changeWorkMachine.getLathe() == "gotowo"
-                && changeWorkMachine.getMillingMachineSmall() == "gotowo"
-                && changeWorkMachine.getHeidenhain() == "gotowo") {
+
+        if (changeWorkMachine.getBacaFanuc().equals("gotowo")
+                && changeWorkMachine.getLathe().equals("gotowo")
+                && changeWorkMachine.getMillingMachineSmall().equals("gotowo")
+                && changeWorkMachine.getHeidenhain().equals("gotowo")) {
             statusDetailed = 2;
 
         }
-        System.out.println(changeWorkMachine.getBacaFanuc()+"  "+
-                changeWorkMachine.getHeidenhain()+"  "+
-                changeWorkMachine.getLathe()+"  "+
-                changeWorkMachine.getMillingMachineSmall()+"  "+
-                statusDetailed+"  "+ changeWorkMachine.getId());
+        warehouseWorkRepository.update(
+                changeWorkMachine.getBacaFanuc(),
+                changeWorkMachine.getHeidenhain(),
+                changeWorkMachine.getLathe(),
+                changeWorkMachine.getMillingMachineSmall(),
+                statusDetailed, changeWorkMachine.getId()
+        );
 
     }
 }

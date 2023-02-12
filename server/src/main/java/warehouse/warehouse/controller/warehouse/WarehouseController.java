@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import warehouse.warehouse.entity.warehouse.Warehouse;
 import warehouse.warehouse.service.warehouse.WarehouseService;
+import warehouse.warehouse.service.warehouse.WarehouseWorkService;
 
 import java.util.Collection;
 import java.util.List;
@@ -14,9 +15,11 @@ import java.util.List;
 @CrossOrigin
 public class WarehouseController {
     private final WarehouseService warehouseService;
+    private final WarehouseWorkService warehouseServiceWork;
 
-    public WarehouseController(WarehouseService warehouseService) {
+    public WarehouseController(WarehouseService warehouseService, WarehouseWorkService warehouseServiceWork) {
         this.warehouseService = warehouseService;
+        this.warehouseServiceWork = warehouseServiceWork;
     }
 
     @GetMapping("/{warehouseName}")
@@ -31,6 +34,7 @@ public class WarehouseController {
 
     @PostMapping
     public ResponseEntity<Warehouse> save(@RequestBody Warehouse warehouse){
+        warehouseServiceWork.save(warehouse);
         return ResponseEntity.ok(warehouseService.save(warehouse));
     }
 

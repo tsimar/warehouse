@@ -3,12 +3,9 @@ package warehouse.warehouse.controller.warehouse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import warehouse.warehouse.DTO.ChangeWorkMachine;
-import warehouse.warehouse.entity.warehouse.Warehouse;
 import warehouse.warehouse.entity.warehouse.WarehouseWork;
-import warehouse.warehouse.service.warehouse.WarehouseService;
 import warehouse.warehouse.service.warehouse.WarehouseWorkService;
 
-import java.util.Collection;
 import java.util.List;
 
 

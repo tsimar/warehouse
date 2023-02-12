@@ -18,20 +18,13 @@ import "./styleWarehouseWork/warehouseWork.css";
 import { motion } from "framer-motion";
 
 const WarehouseWork = () => {
-  const numberRef = useRef(null);
-
   const [nameLabelFile, setNameLabelFile] = useState("");
   const [valueDateFinish, OnChangeFinish] = useState(new Date());
   const [element, setElement] = useState([]);
   const [project, setProject] = useState([]);
-  const [user, setUser] = useState([]);
+
   const [warehouseWork, setWarehouseWork] = useState([]);
-  const [checkedFanucBaca, setCheckedFanucBaca] = useState([]);
-  const [checkedLathe, setCheckedLathe] = useState([]);
-  const [checkedHeidenhain, setCheckedHeidenhain] = useState([]);
-  const [checkedMillingMachineSmall, setCheckedMillingMachineSmall] = useState(
-    []
-  );
+
   const [addWarehouseWork, setAddWarehouseWork] = useReducer({
     idProject: "",
     idElement: "",
@@ -46,53 +39,28 @@ const WarehouseWork = () => {
 
   const [editValue, setEditValue] = useState({
     editId: "",
-    idProject: "",
-    idElement: "",
-    number: "",
-    dateStart: "",
+
     dateFinish: "",
-    bacaFanuc: "",
-    lathe: "",
-    heidenhain: "",
-    millingMachineSmall: "",
   });
-  const handleButton = (e, index) => {
-    const fieldName = e.target.name;
-    let fieldValue = e.target.innerText;
 
-    if (fieldValue === "false") {
-      fieldValue = "true";
-    } else {
-      fieldValue = "false";
-    }
-    let newValue;
+  const editEditFinishDateDB = (date) => {
+    const editedContact = {
+      id: editValue.id,
 
-    switch (fieldName) {
-      case "bacaFanuc":
-        newValue = { ...checkedFanucBaca };
-        newValue[index] = fieldValue;
-        setCheckedFanucBaca(newValue);
-        break;
-      case "lathe":
-        newValue = { ...checkedLathe };
-        newValue[index] = fieldValue;
-        setCheckedLathe(newValue);
-        break;
-      case "heidenhain":
-        newValue = { ...checkedHeidenhain };
-        newValue[index] = fieldValue;
-        setCheckedHeidenhain(newValue);
-        break;
-      case "millingMachineSmall":
-        newValue = { ...checkedMillingMachineSmall };
-        newValue[index] = fieldValue;
-        setCheckedMillingMachineSmall(newValue);
-        break;
+      dataFinish: date,
+    };
 
-      default:
-        break;
-    }
+    apiWarehouseWork
+      .put("", editedContact)
+      .then((response) => {
+        fetchGetWarehouseWork();
+        handleCancelClick();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
+
   const handleChange = (e) => {
     e.preventDefault();
 
@@ -108,6 +76,18 @@ const WarehouseWork = () => {
 
   const handleCancelClick = () => {
     setEditValue("");
+  };
+
+  const handleDeleteClick = (idProps) => {
+    if (window.confirm("Do you really deleting?")) {
+      const newContacts = [...warehouseWork];
+      const index = warehouseWork.findIndex(
+        (contact) => contact.id === idProps
+      );
+      newContacts.splice(index, 1);
+      setWarehouseWork(newContacts);
+      apiWarehouseWork.delete(`/${idProps}`);
+    }
   };
 
   const fetchGETProject = async () => {
@@ -174,81 +154,50 @@ const WarehouseWork = () => {
     fetchGetWarehouseWork();
   }, []);
 
-  useEffect(() => {
-    // const value = { ...warehouseWork };
-    let bacaFanuc = { ...warehouseWork };
-    let lathe = { ...warehouseWork };
-    let heidenhain = { ...warehouseWork };
-    let millingMachineSmall = { ...warehouseWork };
-    warehouseWork.map((item, index) => {
-      bacaFanuc[index] = item.bacaFanuc;
-      setCheckedFanucBaca(bacaFanuc);
-      lathe[index] = item.lathe;
-      setCheckedLathe(lathe);
-      heidenhain[index] = item.heidenhain;
-      setCheckedHeidenhain(heidenhain);
-      millingMachineSmall[index] = item.millingMachineSmall;
-      setCheckedMillingMachineSmall(millingMachineSmall);
-    });
-  }, [warehouseWork]);
-
-  const handleAddSubmit = async (e) => {
-    e.preventDefault();
-    const newWarehouseWork = {
-      nameUser: addWarehouseWork.nameUser,
-      lastName: addWarehouseWork.lastName,
-      login: addWarehouseWork.login,
-      password: addWarehouseWork.password,
-      idPosition: addWarehouseWork.password,
-    };
-    apiWarehouseWork
-      .post("", newWarehouseWork)
-      .then((response) => {
-        fetchGetWarehouseWork();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-
-    addWarehouseWork("");
-
-    // numberRef.current.value = "";
-    // lastNameRef.current.value = "";
-    // loginRef.current.value = "";
-    // passwordRef.current.value = "";
-  };
-
   const handleEditClick = (event, edit) => {
     event.preventDefault();
+
     let dateLocal = new Date();
+
+    let date = edit.dataStart.split("-");
+    dateLocal.setDate(date[2]);
+    // console.log(dateLocal.getDate());
+    dateLocal.setMonth(date[1] - 1);
+    // console.log(dateLocal.getMonth() + 1);
+    dateLocal.setFullYear(date[0]);
+    // console.log(dateLocal.getFullYear());
 
     const formValues = {
       id: edit.id,
-      idProject: edit.idProject,
-      idElement: edit.idElement,
-      number: edit.number,
-      dataStart: dateLocal,
-      idUser: edit.idUser,
+
+      dateFinish: dateLocal,
     };
+
     setEditValue(formValues);
-    // changeIdByNameProject(edit.idProject);
-    // changeIdByNameUser(edit.idUser);
-    // changeIdByNameElement(edit.idElement);
   };
 
   const handlGetWarehouseWork = (data) => {
+    console.log("data work", data);
     return data.map((item, index) => {
       return (
         <Fragment key={item.id}>
-          <ReadItemWarehouseWork
-            item={item}
-            index={index}
-            project={project}
-            element={element}
-            handleEditClick={handleEditClick}
-            handleButton={handleButton}
-            showPdfFile={showPdfFile}
-          />
+          {editValue.id === item.id ? (
+            <EditItemWarehouseWork
+              editValue={editValue}
+              handleCancelClick={handleCancelClick}
+              handleDeleteClick={handleDeleteClick}
+              editEditFinishDateDB={editEditFinishDateDB}
+            />
+          ) : (
+            <ReadItemWarehouseWork
+              item={item}
+              index={index}
+              project={project}
+              element={element}
+              handleEditClick={handleEditClick}
+              showPdfFile={showPdfFile}
+            />
+          )}
         </Fragment>
       );
     });
@@ -268,11 +217,10 @@ const WarehouseWork = () => {
         <label className="div--button">headehaine</label>
         <label className="div--button">baca frezarka</label>
       </div>
-      <form>
-        <div className="div-getWarehouseWork">
-          {handlGetWarehouseWork(warehouseWork)}
-        </div>
-      </form>
+
+      <div className="div-getWarehouseWork">
+        {handlGetWarehouseWork(warehouseWork)}
+      </div>
 
       <section className="conteiner--warehouse">
         <motion.div drag className="conteiner-showPdfFile-warehouse">
