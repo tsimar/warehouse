@@ -42,7 +42,7 @@ export const EditItemWarehouseWork = ({
         <button
           className="size"
           name="save"
-          onClick={() => editEditFinishDateDB(editSelectDate)}
+          onClick={(e) => editEditFinishDateDB(e, editSelectDate)}
         >
           save
         </button>

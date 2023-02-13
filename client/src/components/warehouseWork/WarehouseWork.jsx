@@ -43,7 +43,8 @@ const WarehouseWork = () => {
     dateFinish: "",
   });
 
-  const editEditFinishDateDB = (date) => {
+  const editEditFinishDateDB = (e, date) => {
+    e.preventDefault();
     const editedContact = {
       id: editValue.id,
 

@@ -65,15 +65,18 @@ const Warehouse = () => {
     changeNameProjectById(selectProject);
     changeNameElementById(selectElement);
     changeNameUserById(selectUser);
+   wareName = location.pathname.split("/");
 
-    const newWarehouse = {
-      number: addWarehouse.number,
-      dataStart: valueDate,
-      idProject: editSelectPutProject,
-      idElement: editSelectPutElement,
-      idUser: editSelectPutUser,
-      warehouseName: warehouseName,
-    };
+   wareName = wareName[1];
+   let name = selectNameWarehouse(wareName);
+   const newWarehouse = {
+     number: addWarehouse.number,
+     dataStart: valueDate,
+     idProject: editSelectPutProject,
+     idElement: editSelectPutElement,
+     idUser: editSelectPutUser,
+     warehouseName: name,
+   };
     console.log(newWarehouse);
     await apiWarehouse
       .post("", newWarehouse)

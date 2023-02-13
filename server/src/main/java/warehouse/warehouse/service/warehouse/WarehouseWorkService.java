@@ -97,8 +97,8 @@ public class WarehouseWorkService {
     }
 
 
-    public void save(Warehouse warehouse) {
-WarehouseWork saveWork=new WarehouseWork();
+    public void saveWork(Warehouse warehouse) {
+        WarehouseWork saveWork = new WarehouseWork();
 
         saveWork.setIdProject(warehouse.getIdProject());
         saveWork.setIdElement(warehouse.getIdElement());

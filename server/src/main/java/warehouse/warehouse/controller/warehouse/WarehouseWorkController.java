@@ -25,10 +25,7 @@ public class WarehouseWorkController {
         return ResponseEntity.ok(warehouseWorkService.getSelectWarehouseWork());
     }
 
-//    @PostMapping
-//    public ResponseEntity<WarehouseWork> save(@RequestBody WarehouseWork warehouseWork){
-//        return ResponseEntity.ok(warehouseWorkService.save(warehouseWork));
-//    }
+
     @PutMapping("/changeWorkMachine")
     public void changeMachine(@RequestBody ChangeWorkMachine changeWorkMachine){
 
@@ -36,7 +33,8 @@ public class WarehouseWorkController {
     }
 
 
-    @PutMapping() public void edit(@RequestBody WarehouseWork warehouseWork) {
+    @PutMapping
+    public void edit(@RequestBody WarehouseWork warehouseWork) {
         warehouseWorkService.edit(warehouseWork);
     }
 }

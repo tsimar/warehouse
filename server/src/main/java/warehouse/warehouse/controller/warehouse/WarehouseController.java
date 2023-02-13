@@ -34,7 +34,11 @@ public class WarehouseController {
 
     @PostMapping
     public ResponseEntity<Warehouse> save(@RequestBody Warehouse warehouse){
-        warehouseServiceWork.save(warehouse);
+        System.out.println(warehouse.getWarehouseName().equals("in"));
+        if (warehouse.getWarehouseName().equals("in")){
+            warehouseServiceWork.saveWork(warehouse);
+        }
+
         return ResponseEntity.ok(warehouseService.save(warehouse));
     }
 
