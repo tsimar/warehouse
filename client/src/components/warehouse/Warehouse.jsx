@@ -13,7 +13,7 @@ import {
   apiUser,
   apiWarehouse,
 } from "../../url/URL";
-import { GetUseFetch } from "../../url/GetUseFetch";
+// import { GetUseFetch } from "../../url/GetUseFetch";
 
 let wareName;
 
@@ -65,18 +65,18 @@ const Warehouse = () => {
     changeNameProjectById(selectProject);
     changeNameElementById(selectElement);
     changeNameUserById(selectUser);
-   wareName = location.pathname.split("/");
+    wareName = location.pathname.split("/");
 
-   wareName = wareName[1];
-   let name = selectNameWarehouse(wareName);
-   const newWarehouse = {
-     number: addWarehouse.number,
-     dataStart: valueDate,
-     idProject: editSelectPutProject,
-     idElement: editSelectPutElement,
-     idUser: editSelectPutUser,
-     warehouseName: name,
-   };
+    wareName = wareName[1];
+    let name = selectNameWarehouse(wareName);
+    const newWarehouse = {
+      number: addWarehouse.number,
+      dataStart: valueDate,
+      idProject: editSelectPutProject,
+      idElement: editSelectPutElement,
+      idUser: editSelectPutUser,
+      warehouseName: name,
+    };
     console.log(newWarehouse);
     await apiWarehouse
       .post("", newWarehouse)
@@ -133,6 +133,7 @@ const Warehouse = () => {
       }
     }
   };
+
   const changeIdByNameUser = (data) => {
     for (let index = 0; index < project.length; index++) {
       if (project[index].id === data) {
@@ -142,6 +143,7 @@ const Warehouse = () => {
       }
     }
   };
+
   const changeIdByNameElement = (data) => {
     for (let index = 0; index < element.length; index++) {
       if (element[index].id === data) {
@@ -151,6 +153,7 @@ const Warehouse = () => {
       }
     }
   };
+
   const handleChange = (e) => {
     e.preventDefault();
     setSelectUser(user[0].nameUser);
@@ -218,11 +221,9 @@ const Warehouse = () => {
 
     let date = edit.dataStart.split("-");
     dateLocal.setDate(date[2]);
-    // console.log(dateLocal.getDate());
     dateLocal.setMonth(date[1] - 1);
-    // console.log(dateLocal.getMonth() + 1);
     dateLocal.setFullYear(date[0]);
-    // console.log(dateLocal.getFullYear());
+
     const formValues = {
       id: edit.id,
       idProject: edit.idProject,
@@ -232,11 +233,13 @@ const Warehouse = () => {
       idUser: edit.idUser,
       warehouseName: warehouseName,
     };
+
     setEditValue(formValues);
     changeIdByNameProject(edit.idProject);
     changeIdByNameUser(edit.idUser);
     changeIdByNameElement(edit.idElement);
   };
+
   const handleCancelClick = () => {
     setEditValue("");
   };
@@ -269,12 +272,12 @@ const Warehouse = () => {
       let url = "";
       if (nameFile.urlPicture.length > 0) {
         const res = await apiElementPDF.get(`/${nameFile.urlPicture}`);
-
         setNameLabelFile(nameFile.nameElement);
         url = window.URL.createObjectURL(
           new Blob([res.data], { type: "application/pdf" })
         );
       }
+
       const iframe = document.querySelector("iframe");
       if (iframe?.src) {
         iframe.src = url;
@@ -298,6 +301,7 @@ const Warehouse = () => {
       console.log(error);
     }
   };
+
   const fetchGetUser = async () => {
     try {
       // setLoading(true);

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import { motion } from "framer-motion";
 
 const ReadItemWarehouse = ({
   item,
@@ -11,7 +11,7 @@ const ReadItemWarehouse = ({
   handleDeleteClick,
   showPdfFile,
 }) => {
-  // const [nameFile, setNameFile] = useState("");
+  const [nameFile, setNameFile] = useState("");
   const [propsElement, setPropsElement] = useState({
     nameElement: "",
     urlPicture: "",
@@ -26,27 +26,27 @@ const ReadItemWarehouse = ({
     });
   };
 
-  // const addElement = (warehouse, element) => {
-  //   element.map((item) => {
-  //     if (warehouse.idElement === item.id) {
-  //       setPropsElement(item);
-  //       // setNameFile(item.urlPicture);
-  //     }
-  //   });
-  // };
-  // useEffect(() => {
-  //   addElement(item, element);
-  // }, []);
+  useEffect(() => {
+    addElement(item, element);
+  }, []);
 
-  // const addProject = (warehouse, project) => {
-  //   console.log(warehouse);
-  //   return project.map((item, index) => {
-  //     return warehouse.idProject === item.id ? (
-  //       <span key={index}>{item.nameProject}</span>
-  //     ) : null;
-  //   });
-  // };
+  const addElement = (warehouse, element) => {
+    element.map((item) => {
+      if (warehouse.idElement === item.id) {
+        setPropsElement(item);
+        setNameFile(item.urlPicture);
+      }
+    });
+  };
 
+  const addProject = (warehouse, project) => {
+    console.log(warehouse);
+    return project.map((item, index) => {
+      return warehouse.idProject === item.id ? (
+        <span key={index}>{item.nameProject}</span>
+      ) : null;
+    });
+  };
   const handleChangeDate = (data) => {
     let date;
     let d;
@@ -76,7 +76,7 @@ const ReadItemWarehouse = ({
       draggable
     >
       <span>{index + 1}</span>
-      {/* {addProject(item, project)} */}
+      {addProject(item, project)}
       {/* {addElement(item, element)} */}
 
       <span onClick={() => showPdfFile(propsElement)}>

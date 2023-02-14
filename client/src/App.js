@@ -8,6 +8,7 @@ import Warehouse from "./components/warehouse/Warehouse";
 import Elements from "./components/add/elements/Elements";
 import Project from "./components/add/project/Project";
 import WarehouseWork from "./components/warehouseWork/WarehouseWork";
+import GoodElements from "./components/goodElement/GoodElements";
 
 function App() {
   return (
@@ -24,7 +25,7 @@ function App() {
         <Route path="/element" element={<Elements />} />
 
         <Route path="/wareWork" element={<WarehouseWork />} />
-        <Route path="/goodElement" element={<Warehouse />} />
+        <Route path="/goodElement" element={<GoodElements />} />
       </Routes>
     </Router>
   );
