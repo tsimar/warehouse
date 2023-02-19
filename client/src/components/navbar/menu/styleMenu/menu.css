@@ -7,7 +7,7 @@
 .ul__menu--pc {
   display: flex;
   justify-content: space-evenly;
-  gap: 10px;
+  gap: 50px;
 }
 
 .dropdown {
@@ -17,8 +17,10 @@
 .show {
   display: block;
   position: absolute;
-  background-color: rgb(245, 241, 241);
-  color: white;
+  border-left: 0.5px solid grey;
+  border-top: 0.5px solid rgb(218, 217, 217);
+  box-shadow: 2px 2px 15px 0 black;
+  background-color: rgb(241, 230, 230);
   z-index: 100;
   padding: 10px;
 }
@@ -31,6 +33,7 @@
 .menuItems__li--a {
   text-decoration: none;
   padding: 5px;
+  color: rgb(44, 4, 139);
 }
 
 .menuItems--li::after {
@@ -41,7 +44,7 @@
   bottom: 0;
   width: 100%;
   height: 2px;
-  background-color: red;
+  background-color: blue;
   transform: scaleX(0);
   transform-origin: right;
   transition: transform 250ms ease-in;
@@ -50,4 +53,15 @@
 .menuItems--li:hover::after {
   transform: scaleX(1);
   transform-origin: left;
+}
+
+.menuItems--button {
+  cursor: pointer;
+  padding: 2px;
+  background-color: bisque;
+  color: inherit;
+  border: none;
+  color: rgb(44, 4, 139);
+  font: inherit;
+  outline: inherit;
 }

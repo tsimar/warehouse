@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 const MenuItems = ({ items }) => {
   const [dropdown, setDropdown] = useState(false);
   let ref = useRef();
+
   useEffect(() => {
     const handler = (event) => {
       if (dropdown && ref.current && !ref.current.contains(event.target)) {
@@ -19,6 +20,7 @@ const MenuItems = ({ items }) => {
       document.removeEventListener("touchstart", handler);
     };
   }, [dropdown]);
+
   const onMouseEnter = () => {
     window.innerWidth > 960 && setDropdown(true);
   };
@@ -36,6 +38,7 @@ const MenuItems = ({ items }) => {
       {items && items.subMenu ? (
         <>
           <button
+            className="menuItems--button"
             type="button"
             aria-haspopup="listbox"
             aria-expanded={dropdown ? "true" : "false"}
@@ -43,7 +46,11 @@ const MenuItems = ({ items }) => {
           >
             {items.value}
           </button>
-          <Dropdown submenus={items.subMenu} dropdown={dropdown} />
+          <Dropdown
+            className="dropdown-shadow"
+            submenus={items.subMenu}
+            dropdown={dropdown}
+          />
         </>
       ) : (
         <Link className="menuItems__li--a" to={items.Link}>

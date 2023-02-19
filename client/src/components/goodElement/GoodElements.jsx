@@ -3,12 +3,20 @@ import DatePicker from "react-date-picker";
 import { motion } from "framer-motion";
 
 import { EditItemWarehouse } from "./EditItemGoodElement";
-import ReadItemWarehouse from "./ReadItemGoodElement";
-import { apiElementPDF, apiWarehouseWork } from "../../url/URL";
+import ReadItemGoodElement from "./ReadItemGoodElement";
+import {
+  apiProject,
+  apiElementPDF,
+  apiElement,
+  apiWarehouseWork,
+} from "../../url/URL";
 
 export default function GoodElements() {
   const [warehouseWork, setWarehouseWork] = useState([]);
   const [nameLabelFile, setNameLabelFile] = useState("");
+
+  const [element, setElement] = useState([]);
+  const [project, setProject] = useState([]);
   const [editValue, setEditValue] = useState({
     editId: "",
     number: "",
@@ -63,6 +71,35 @@ export default function GoodElements() {
     }
   };
 
+  const fetchGETProject = async () => {
+    try {
+      // setLoading(true);
+      const res = await apiProject.get();
+      setProject(res.data);
+      console.log("project", res.data);
+      // setLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchGetElement = async () => {
+    try {
+      // setLoading(true);
+      const res = await apiElement.get();
+      setElement(res.data);
+      console.log("element", res.data);
+      // setLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchGetElement();
+    fetchGETProject();
+  }, []);
+
   useEffect(() => {
     fetchGetWarehouseWork();
   }, []);
@@ -89,12 +126,12 @@ export default function GoodElements() {
               //   editSelectDateById={editSelect.dataStart}
             />
           ) : (
-            <ReadItemWarehouse
+            <ReadItemGoodElement
               item={item}
               index={index}
-              //   project={project}
-              //   user={user}
-              //   element={element}
+              project={project}
+              // user={user}
+              element={element}
               handleEditClick={handleEditClick}
               handleDeleteClick={handleDeleteClick}
               showPdfFile={showPdfFile}
@@ -131,7 +168,7 @@ export default function GoodElements() {
   const fetchGetWarehouseWork = async () => {
     try {
       // setLoading(true);
-      const res = await apiWarehouseWork.get();
+      const res = await apiWarehouseWork.get("/all");
       setWarehouseWork(res.data);
       console.log("goodElements", res.data);
       // setLoading(false);

@@ -8,9 +8,7 @@ export default function MenuPc() {
     <>
       <ul className="ul__menu--pc">
         {menuItems.map((menu, index) => {
-          return (
-                    <MenuItems items={menu} key={index} />
-          );
+          return <MenuItems items={menu} key={index} />;
         })}
       </ul>
     </>

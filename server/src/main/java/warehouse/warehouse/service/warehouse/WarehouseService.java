@@ -47,6 +47,20 @@ public class WarehouseService {
     }
 
 
+    public void editWarehouseName(Long idProject, Long idElement) {
+
+    warehouseRepository.findAll()
+                .stream()
+                .filter(warehouse -> idProject== warehouse.getIdProject()&&idElement== warehouse.getIdElement())
+                .map(i->{i.setWarehouseName("out");return i;})
+                .forEach(warehouseRepository::save);
+
+
+
+
+    }
+
+
     public List<Warehouse> getTypeWarehouse(String warehouseName) {
         return warehouseRepository.getWarehouse(warehouseName);
     }
@@ -67,7 +81,7 @@ public class WarehouseService {
 
             for (Warehouse itemIterator : list) {
                 if (item.getIdElement() == itemIterator.getIdElement()
-                        &&item.getIdProject()== itemIterator.getIdProject()
+                        && item.getIdProject() == itemIterator.getIdProject()
 
                 ) {
                     int select = 0;
@@ -130,5 +144,6 @@ public class WarehouseService {
         return warehouseJoin;
 
     }
+
 
 }

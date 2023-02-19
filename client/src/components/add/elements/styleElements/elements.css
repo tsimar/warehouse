@@ -6,14 +6,9 @@
 
 .container-element {
   width: 100%;
+  height: 100vh;
   margin-left: 20px;
   margin-right: 20px;
-}
-
-.div-get {
-  width: 50%;
-  display: flex;
-  flex-wrap: wrap;
 }
 
 .form--wrapper {
@@ -22,6 +17,10 @@
   justify-content: flex-start;
   margin: 20px;
   gap: 10px;
+}
+
+.div-get {
+  width: 50%;
 }
 
 .div__div-get {
@@ -53,76 +52,21 @@
   width: 100%;
 }
 
-.conteiner-showPdfFile {
-  position: relative;
-  width: 45%;
-  margin-right: 10px;
-}
-
 .iframe {
-  position: absolute;
+  position: relative;
+  cursor: col-resize;
   width: 90%;
   height: 90%;
-  cursor: col-resize;
 }
 
 .container {
   position: relative;
 }
 
-.resizeable {
-  border: 2px solid black;
-  width: 400px;
-  height: 400px;
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-width: 15px;
-  min-height: 15px;
-}
-
-.resizer {
-  position: absolute;
-  background: black;
-}
-
-.resizer-r {
-  cursor: col-resize;
-  height: 100%;
-  right: 0;
-  top: 0;
-  width: 5px;
-}
-
-.resizer-l {
-  cursor: col-resize;
-  height: 100%;
-  left: 0;
-  top: 0;
-  width: 5px;
-}
-
-.resizer-t {
-  cursor: row-resize;
-  height: 5px;
-  left: 0;
-  top: 0;
-  width: 100%;
-}
-
-.resizer-b {
-  cursor: row-resize;
-  height: 5px;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-}
-
 .conteiner-showPdfFile-element {
   display: flex;
   flex-direction: column;
   position: relative;
-  width: 100%;
-  height: 100%;
+  width: 50%;
+  height: 500px;
 }

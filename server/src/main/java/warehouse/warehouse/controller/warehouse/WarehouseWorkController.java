@@ -20,12 +20,16 @@ public class WarehouseWorkController {
     }
 
     @GetMapping
-    public ResponseEntity<List<WarehouseWork>> getAll(){
+    public ResponseEntity<List<WarehouseWork>> getSelectOpen(){
 
         return ResponseEntity.ok(warehouseWorkService.getSelectWarehouseWork());
     }
 
+@GetMapping ("/all")
+public ResponseEntity<List<WarehouseWork>> getAll(){
 
+    return ResponseEntity.ok(warehouseWorkService.getAll());
+}
     @PutMapping("/changeWorkMachine")
     public void changeMachine(@RequestBody ChangeWorkMachine changeWorkMachine){
 

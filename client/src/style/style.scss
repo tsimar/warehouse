@@ -4,6 +4,9 @@
     padding: 0;
 }
 
+$nav-color: bisque;
+$menu-line-color: blue;
+$text-menu-color: rgb(44, 4, 139);
 
 @mixin flexCenter {
     display: flex;

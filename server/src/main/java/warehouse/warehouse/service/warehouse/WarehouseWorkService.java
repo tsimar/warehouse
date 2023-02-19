@@ -117,11 +117,12 @@ public class WarehouseWorkService {
     public void changeMachine(ChangeWorkMachine changeWorkMachine) {
         int statusDetailed = 1;
 
-        if (changeWorkMachine.getBacaFanuc().equals("gotowo")
-                && changeWorkMachine.getLathe().equals("gotowo")
-                && changeWorkMachine.getMillingMachineSmall().equals("gotowo")
-                && changeWorkMachine.getHeidenhain().equals("gotowo")) {
+        if (changeWorkMachine.getBacaFanuc().equals("gotowa")
+                && changeWorkMachine.getLathe().equals("gotowa")
+                && changeWorkMachine.getMillingMachineSmall().equals("gotowa")
+                && changeWorkMachine.getHeidenhain().equals("gotowa")) {
             statusDetailed = 2;
+           warehouseService.editWarehouseName(changeWorkMachine.getIdProject(), changeWorkMachine.getIdElement());
 
         }
         warehouseWorkRepository.update(
@@ -132,5 +133,9 @@ public class WarehouseWorkService {
                 statusDetailed, changeWorkMachine.getId()
         );
 
+    }
+
+    public List<WarehouseWork>  getAll() {
+       return warehouseWorkRepository.findAll();
     }
 }

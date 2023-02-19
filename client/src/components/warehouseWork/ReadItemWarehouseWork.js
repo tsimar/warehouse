@@ -107,6 +107,8 @@ const ReadItemWarehouseWork = ({
       lathe: machina.lathe,
       heidenhain: machina.heidenhain,
       millingMachineSmall: machina.millingMachineSmall,
+      idProject: item.idProject,
+      idElement: item.idElement,
     };
     apiWarehouseWork
       .put("/changeWorkMachine", newWarehouseWork)

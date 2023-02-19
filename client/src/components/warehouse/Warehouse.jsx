@@ -68,7 +68,7 @@ const Warehouse = () => {
     wareName = location.pathname.split("/");
 
     wareName = wareName[1];
-    let name = selectNameWarehouse(wareName);
+    let name = "in";
     const newWarehouse = {
       number: addWarehouse.number,
       dataStart: valueDate,
@@ -314,23 +314,8 @@ const Warehouse = () => {
     }
   };
 
-  const selectNameWarehouse = (wareName) => {
-    let name;
-    // forech(item i arr)
-    if (wareName === "") {
-      name = "in";
-    } else {
-      name = "out";
-    }
-    setWarehouseName(name);
-    return name;
-  };
-
   const fetchGetWarehouse = async () => {
-    wareName = location.pathname.split("/");
-
-    wareName = wareName[1];
-    let name = selectNameWarehouse(wareName);
+    let name = "in";
     try {
       // setLoading(true);
       const res = await apiWarehouse.get(`/${name}`);
@@ -382,7 +367,7 @@ const Warehouse = () => {
             />
           ) : (
             <ReadItemWarehouse
-              item={item}
+              warehouse={item}
               index={index}
               project={project}
               user={user}

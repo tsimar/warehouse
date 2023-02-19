@@ -1,20 +1,21 @@
 @import "../../../../style/style.scss";
 
 .ul__menu--pc {
-    @include flexCenter;
+    @include flexStart(50px, space-evenly);
 }
 
 .dropdown {
     display: none;
-    // font-size: 1rem;
-    // position: absolute;
+
 }
 
 .show {
     display: block;
     position: absolute;
-        background-color: rgb(245, 241, 241);
-        color: white;
+    border-left: 0.5px solid grey;
+        border-top: 0.5px solid rgb(218, 217, 217);
+        box-shadow: 2px 2px 15px 0 black;
+        background-color: rgb(241, 230, 230);
         z-index: 100;
         padding: 10px;
     }
@@ -22,21 +23,25 @@
     .menuItems--li {
         list-style-type: none;
     position: relative;
+
 }
+
 .menuItems__li--a {
     text-decoration: none;
     padding: 5px;
+    color: $text-menu-color;
 }
 
 .menuItems--li::after {
     content: "";
     list-style-type: none;
     position: absolute;
+
     left: 0;
     bottom: 0;
     width: 100%;
     height: 2px;
-    background-color: red;
+    background-color: $menu-line-color;
     transform: scaleX(0);
     transform-origin: right;
     transition: transform 250ms ease-in;
@@ -45,4 +50,15 @@
 .menuItems--li:hover::after {
     transform: scaleX(1);
     transform-origin: left;
+}
+.menuItems--button {
+    cursor: pointer;
+    padding: 2px;
+    background-color: $nav-color;
+    color: inherit;
+    border: none;
+    color: $text-menu-color;
+    font: inherit;
+    outline: inherit;
+
 }

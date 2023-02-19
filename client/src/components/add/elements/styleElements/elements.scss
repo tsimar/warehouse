@@ -1,30 +1,31 @@
 @import "../../../../style/style.scss";
 
 .container-element {
+
     width: 100%;
+    height: 100vh;
     margin-left: 20px;
     margin-right: 20px;
 
 }
 
-.div-get {
-    width: 50%;
-    display: flex;
 
-    flex-wrap: wrap;
-
-}
 
 .form--wrapper {
     width: 50%;
+
     display: flex;
     justify-content: flex-start;
     margin: 20px;
     gap: 10px;
 }
 
+.div-get {
+    width: 50%;
+}
 .div__div-get {
     width: 100%;
+
     margin-left: 20px;
     display: flex;
     justify-content: flex-start;
@@ -35,8 +36,7 @@
         gap: 20px;
     }
 
-    & span:not(:first-child) {
-        // margin-left: 20px;
+                                & span:not(:first-child) {
         width: 100px;
     }
 }
@@ -52,83 +52,78 @@
 .container-getANDshowPdf {
     @include flexStart(20px, flex-start);
     width: 100%;
-}
-
-.conteiner-showPdfFile {
-    position: relative;
-    width: 45%;
-    margin-right: 10px;
-    // height: 400px;
 
 }
 
 .iframe {
-    position: absolute;
+    position: relative;
+        cursor: col-resize;
     width: 90%;
-    // top: 10px;
     height: 90%;
-    cursor: col-resize;
-    }
-    
-    
-    .container {
-        position: relative;
-    }
-    
-    .resizeable {
-        border: 2px solid black;
-        width: 400px;
-            height: 400px;
-        position: absolute;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-width: 15px;
-        min-height: 15px;
-    }
-    
-    .resizer {
-        position: absolute;
-        background: black;
-    }
-    
-    .resizer-r {
-        cursor: col-resize;
-        height: 100%;
-        right: 0;
-        top: 0;
-        width: 5px;
-    }
-    
-    .resizer-l {
-        cursor: col-resize;
-        height: 100%;
-        left: 0;
-        top: 0;
-        width: 5px;
-    }
-    
-    .resizer-t {
-        cursor: row-resize;
-        height: 5px;
-        left: 0;
-        top: 0;
-        width: 100%;
-    }
-    
-    .resizer-b {
-        cursor: row-resize;
-        height: 5px;
-        left: 0;
-        bottom: 0;
-        width: 100%;
+}
+
+
+.container {
+    position: relative;
+
 }
 .conteiner-showPdfFile-element {
     display: flex;
     flex-direction: column;
     position: relative;
-    width: 100%;
+    width: 50%;
+        height: 500px;
+    }
 
-    height: 100%;
+// .conteiner-showPdfFile {
+//     // position: relative;
+//     width: 45%;
+//     margin-right: 10px;
+//     height: 100%;
 
-}
+// }
+    // .resizeable {
+    //     border: 2px solid black;
+    //     width: 400px;
+    //     height: 100%;
+    //         position: absolute;
+    //         display: flex;
+    //         justify-content: center;
+    //         align-items: center;
+    //     min-width: 30%;
+    //         height: 100%;
+    //     }
+
+    //     .resizer {
+    //         position: absolute;
+    //         background: black;
+    //     height: 100%;
+    // }
+    // .resizer-r {
+    //     cursor: col-resize;
+    //     height: 100%;
+    //     right: 0;
+    //     top: 0;
+    //     width: 5px;
+    // }
+    // .resizer-l {
+    //     cursor: col-resize;
+    //     height: 100%;
+    //     left: 0;
+    //     top: 0;
+    //     width: 5px;
+    // }
+    // .resizer-t {
+    //     cursor: row-resize;
+    //     height: 5px;
+    //     left: 0;
+    //     top: 0;
+    //     width: 100%;
+    // }
+    // .resizer-b {
+    //     cursor: row-resize;
+    //     height: 5px;
+    //     left: 0;
+    //     bottom: 0;
+    //     width: 100%;
+    // }

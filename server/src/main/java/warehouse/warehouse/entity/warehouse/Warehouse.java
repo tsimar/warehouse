@@ -14,6 +14,7 @@ import java.sql.Date;
 
 public class Warehouse {
 
+   
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

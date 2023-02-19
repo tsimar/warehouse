@@ -9,4 +9,6 @@ public class ChangeWorkMachine {
     private String lathe;
     private String heidenhain;
     private String millingMachineSmall;
+    private Long idElement;
+    private Long idProject;
 }

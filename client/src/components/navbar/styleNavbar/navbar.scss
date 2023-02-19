@@ -1,0 +1,17 @@
+@import "../../../style/style.scss";
+
+.main-header {
+    display: flex;
+    justify-content: center;
+
+    width: 50%;
+
+    height: 50px;
+    font-weight: 600;
+    font-size: 1.4rem;
+}
+
+.main__header--nav {
+    margin: auto 0;
+
+}

@@ -23,7 +23,7 @@ import java.util.List;
 public class ElementService {
     private final ElementRepository elementRepository;
 
-    private static final String path = "/PDF";
+    private static final String path = "./PDF";
     File newDir=new File(path);
     private Path foundFile;
 
