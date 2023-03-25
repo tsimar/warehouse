@@ -9,6 +9,7 @@ import warehouse.warehouse.service.warehouse.WarehouseWorkService;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/warehouse")
@@ -23,7 +24,7 @@ public class WarehouseController {
     }
 
     @GetMapping("/{warehouseName}")
-    public ResponseEntity<Collection<Warehouse>> getAll(@PathVariable String warehouseName){
+    public ResponseEntity<Map<Long,List<Warehouse>>> getAll(@PathVariable String warehouseName){
         return ResponseEntity.ok(warehouseService.getTypeWarehouse(warehouseName));
     }
 

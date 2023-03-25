@@ -23,6 +23,7 @@ public class Warehouse {
     private int number;
     private Date dataStart;
     private Long idProject;
+    private Long idModule;
     private Long idElement;
     private Long idUser;
     private String warehouseName;

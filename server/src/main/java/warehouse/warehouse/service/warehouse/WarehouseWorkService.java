@@ -1,6 +1,7 @@
 package warehouse.warehouse.service.warehouse;
 
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import warehouse.warehouse.DTO.ChangeWorkMachine;
 import warehouse.warehouse.entity.warehouse.Warehouse;
@@ -13,14 +14,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class WarehouseWorkService {
     private final WarehouseWorkRepository warehouseWorkRepository;
     private final WarehouseService warehouseService;
 
-    public WarehouseWorkService(WarehouseWorkRepository warehouseWorkRepository, WarehouseService warehouseService) {
-        this.warehouseWorkRepository = warehouseWorkRepository;
-        this.warehouseService = warehouseService;
-    }
+
 
 
     @Transactional
@@ -109,6 +108,10 @@ public class WarehouseWorkService {
         saveWork.setLathe("magazyn");
         saveWork.setBacaFanuc("magazyn");
         saveWork.setMillingMachineSmall("magazyn");
+        saveWork.setTimeFanuc(0);
+        saveWork.setTimeHeidenhain(0);
+        saveWork.setTimeLathe(0);
+        saveWork.setTimeSmall(0);
         saveWork.setWarehouseOpen(1);
 
         warehouseWorkRepository.save(saveWork);
@@ -122,7 +125,7 @@ public class WarehouseWorkService {
                 && changeWorkMachine.getMillingMachineSmall().equals("gotowa")
                 && changeWorkMachine.getHeidenhain().equals("gotowa")) {
             statusDetailed = 2;
-           warehouseService.editWarehouseName(changeWorkMachine.getIdProject(), changeWorkMachine.getIdElement());
+            warehouseService.editWarehouseName(changeWorkMachine.getIdProject(), changeWorkMachine.getIdElement());
 
         }
         warehouseWorkRepository.update(
@@ -135,7 +138,7 @@ public class WarehouseWorkService {
 
     }
 
-    public List<WarehouseWork>  getAll() {
-       return warehouseWorkRepository.findAll();
+    public List<WarehouseWork> getAll() {
+        return  warehouseWorkRepository.findAll();
     }
 }

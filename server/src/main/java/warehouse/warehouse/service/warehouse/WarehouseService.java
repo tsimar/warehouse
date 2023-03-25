@@ -2,13 +2,11 @@ package warehouse.warehouse.service.warehouse;
 
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
+import warehouse.warehouse.controller.add.ModuleOfProjectController;
 import warehouse.warehouse.entity.warehouse.Warehouse;
 import warehouse.warehouse.repository.warehouse.WarehouseRepository;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -61,13 +59,33 @@ public class WarehouseService {
     }
 
 
-    public List<Warehouse> getTypeWarehouse(String warehouseName) {
-        return warehouseRepository.getWarehouse(warehouseName);
+    public Map<Long,List<Warehouse>> getTypeWarehouse(String warehouseName) {
+        List<Warehouse>warehouses=warehouseRepository.getWarehouse(warehouseName);
+        Map<Long,List<Warehouse>> moduleMap=new TreeMap<>();
+        Map<Long,List<Warehouse>> projectMap=new TreeMap<>();
+//        Map<Long,Map<Long,List<Warehouse>> bothMap=new TreeMap<>();
+        for (Warehouse item: warehouses) {
+//            moduleMap.put(item.getIdModule(),warehouses.stream().filter(id->id.getIdModule()== item.getIdModule()).collect(Collectors.toList()));
+
+             projectMap.put(item.getIdProject(), warehouses.stream()
+                     .filter(id -> Objects.equals(id.getIdProject(), item.getIdProject()))
+                     .filter(idModule-> Objects.equals(idModule.getIdModule(), item.getIdModule()))
+                     .collect(Collectors.toList()));
+        }
+        System.out.println(projectMap.toString());
+        return projectMap;
+//        return warehouseRepository.getWarehouse(warehouseName);
     }
 
 
     public List<Warehouse> getAll() {
-        return warehouseRepository.findAll();
+        List<Warehouse>warehouses=new ArrayList<Warehouse>(warehouseRepository.findAll());
+        Map<Long,List<Warehouse>> warehouseMap=new TreeMap<>();
+        for (Warehouse item: warehouses) {
+            warehouseMap.put(item.getIdProject(),warehouses);
+        }
+        System.out.println(warehouseMap);
+        return null;
     }
 
 
@@ -114,9 +132,18 @@ public class WarehouseService {
     }
 
     public List<Warehouse> getWarehouseByName() {
-        List<Warehouse> warehouseIn = summaElements(warehouseRepository.getIn("in"));
-        List<Warehouse> warehouseOut = summaElements(warehouseRepository.getOut("out"));
-        return warehouseJoin(warehouseIn, warehouseOut);
+        List<Warehouse>warehouses=new ArrayList<Warehouse>(warehouseRepository.findAll());
+        Map<Long,List<Warehouse>> warehouseMap=new TreeMap<>();
+        for (Warehouse item: warehouses) {
+            warehouseMap.put(item.getIdProject(),warehouses);
+        }
+        System.out.println(warehouseMap);
+        return null;
+
+//
+//        List<Warehouse> warehouseIn = summaElements(warehouseRepository.getIn("in"));
+//        List<Warehouse> warehouseOut = summaElements(warehouseRepository.getOut("out"));
+//        return warehouseJoin(warehouseIn, warehouseOut);
     }
 
     private List<Warehouse> warehouseJoin(List<Warehouse> warehouseIn, List<Warehouse> warehouseOut) {
@@ -144,6 +171,7 @@ public class WarehouseService {
         return warehouseJoin;
 
     }
+
 
 
 }

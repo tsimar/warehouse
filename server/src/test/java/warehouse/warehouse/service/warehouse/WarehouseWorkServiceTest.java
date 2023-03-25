@@ -1,22 +1,50 @@
 package warehouse.warehouse.service.warehouse;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import warehouse.warehouse.entity.warehouse.Warehouse;
 import warehouse.warehouse.entity.warehouse.WarehouseWork;
+import warehouse.warehouse.repository.warehouse.WarehouseWorkRepository;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 
+
+@ExtendWith(MockitoExtension.class)
+
+@DataJpaTest
 class WarehouseWorkServiceTest {
 
+    @InjectMocks
+    private WarehouseService warehouseService;
+
+    @Mock
+  WarehouseWorkRepository warehouseWorkRepository;
+
+
+
+
     @Test
-    void getAll() {
-        var warehouseWork= new WarehouseWork();
-//       assertNotNull();
+    void getAll() throws Exception {
+//       when(warehouseWorkRepository.findAll().thenReturn(List.of(new WarehouseWork(),new WarehouseWork()))) List<WarehouseWork> result=warehouseWorkRepository.findAll();
+//        () -> assertThat(warehouseService.getAll())
+    }
+
+    private void assertThat() {
     }
 
     @Test
-    void save() {
+    void save() throws Exception{
+
+warehouseWorkRepository.save(new WarehouseWork());
     }
 
     @Test
@@ -29,5 +57,13 @@ class WarehouseWorkServiceTest {
 
     @Test
     void getSelectWarehouseWork() {
+    }
+
+    @BeforeEach
+    void setUp() {
+    }
+
+    @AfterEach
+    void tearDown() {
     }
 }
