@@ -2,6 +2,7 @@
 
 .ul__menu--pc {
     @include flexStart(50px, space-evenly);
+    align-items: center;
 }
 
 .dropdown {

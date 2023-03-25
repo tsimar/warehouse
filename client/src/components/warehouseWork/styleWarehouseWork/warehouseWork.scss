@@ -49,15 +49,14 @@ $width: calc(100% - 120px);
     display: block;
     width: 40px;
 }
+.show-time {
+    display: block;
+}
 
-// .label_name,
-// .div-getWarehouseWork {
-//     display: grid;
-//     grid-template-columns: repeat(10, 1fr);
+.none-time {
+    display: none;
+}
 
-//     grid-gap: 20px;
-// }
-
-// .div-getWarehouseWork {
-//     grid-template-rows: repeat(5, 1fr);
-// }
+.worehouse__form--machine {
+    display: flex;
+}

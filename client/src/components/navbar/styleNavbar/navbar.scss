@@ -2,14 +2,13 @@
 
 .main-header {
     display: flex;
-    justify-content: center;
-
+    justify-content: flex-start;
     width: 50%;
-
-    height: 50px;
     font-weight: 600;
     font-size: 1.4rem;
+margin-left: 20px;
 }
+
 
 .main__header--nav {
     margin: auto 0;

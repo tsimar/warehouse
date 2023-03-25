@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useReducer, useRef } from "react";
 import SelectPositionWork from "./SelectPositionWork";
 import { apiWarehouseWork } from "../../url/URL";
+import { Form } from "react-bootstrap";
 
 // let p;
 const ReadItemWarehouseWork = ({
@@ -14,8 +15,9 @@ const ReadItemWarehouseWork = ({
 }) => {
   const [nameFile, setNameFile] = useState("");
   const [enableSave, setEnableSave] = useState("noneSave");
+  const [timeMachina, setTimeMachina] = useState("");
   const refId = useRef(0);
-
+  const enableSaveRef = useRef("");
   const [machina, setMachina] = useState({
     id: "",
     bacaFanuc: "",
@@ -84,23 +86,33 @@ const ReadItemWarehouseWork = ({
     date = d + "-" + m + "-" + y;
     return <span className="span--date">{date}</span>;
   };
-  const handleEditSubmit = (e) => {
-    // e.preventDefault();
-    console.log(e);
-  };
+  // const handleEditSubmit = (e) => {
+  //   // e.preventDefault();
+  //   console.log(e);
+  // };
+
   const handle = (e) => {
     console.log(e.target.value);
-    console.log("fanuc status", item.bacaFanuc);
+    console.log("fanuc status", e.target.name);
     console.log("id-work", item.id);
+
+    setTimeMachina(e.target.name);
+
     const newFormData = { ...machina };
     newFormData[e.target.name] = e.target.value;
     refId.current = item.id;
     setMachina(newFormData);
-    setEnableSave("visibleSave");
+    enableSaveRef.current = "visibleSave";
   };
 
   const handleSaveWork = (e) => {
     e.preventDefault();
+    // if (
+    //   machina.timeFanuc > 0 ||
+    //   machina.timeSmall > 0 ||
+    //   machina.timeLathe > 0 ||
+    //   machina.timeHeidenhain > 0
+    // ) {
     const newWarehouseWork = {
       id: refId.current,
       bacaFanuc: machina.bacaFanuc,
@@ -116,7 +128,10 @@ const ReadItemWarehouseWork = ({
       .catch((error) => {
         console.log(error);
       });
-    setEnableSave("noneSave");
+    // setEnableSave("noneSave");
+    enableSaveRef.current = "noneSave";
+    setTimeMachina("none-time");
+    // }
   };
   return (
     <div
@@ -134,33 +149,78 @@ const ReadItemWarehouseWork = ({
       <span className="span--number">{item.number}</span>
       {handleChangeDate(item.dataStart)}
       {handleChangeDate(item.dataFinish)}
-      <div className="div--button" key={2}>
-        <SelectPositionWork handle={handle} name="lathe" status={item.lathe} />
-      </div>
-      <div className="div--button" key={3}>
-        <SelectPositionWork
-          handle={handle}
-          name="bacaFanuc"
-          status={item.bacaFanuc}
-        />
-      </div>
-      <div className="div--button" key={4}>
-        <SelectPositionWork
-          handle={handle}
-          name="heidenhain"
-          status={item.heidenhain}
-        />
-      </div>
-      <div className="div--button" key={5}>
-        <SelectPositionWork
-          handle={handle}
-          name="millingMachineSmall"
-          status={item.millingMachineSmall}
-        />
-      </div>
-      <button className={enableSave} onClick={(e) => handleSaveWork(e)}>
-        save
-      </button>
+      <form onSubmit={handleSaveWork} className="worehouseWork__form--machine">
+        <div className="div--button" key={2}>
+          <SelectPositionWork
+            handle={handle}
+            name="lathe"
+            status={item.lathe}
+          />
+          <input
+            className={`${timeMachina === "lathe" ? "show-time" : "none-time"}`}
+            placeholder="time"
+            type="number"
+            pattern="[0-9]*"
+            min="1"
+            required
+          />
+        </div>
+        <div className="div--button" key={3}>
+          <SelectPositionWork
+            handle={handle}
+            name="bacaFanuc"
+            status={item.bacaFanuc}
+          />
+          <input
+            className={`${
+              timeMachina === "bacaFanuc" ? "show-time" : "none-time"
+            }`}
+            placeholder="time"
+            type="number"
+            pattern="[0-9]*"
+            min="1"
+            required
+          />
+        </div>
+        <div className="div--button" key={4}>
+          <SelectPositionWork
+            handle={handle}
+            name="heidenhain"
+            status={item.heidenhain}
+          />
+          <input
+            className={`${
+              timeMachina === "heidenhain" ? "show-time" : "none-time"
+            }`}
+            placeholder="time"
+            type="number"
+            pattern="[0-9]*"
+            min="1"
+            required
+          />
+        </div>
+        <div className="div--button" key={5}>
+          <SelectPositionWork
+            handle={handle}
+            name="millingMachineSmall"
+            status={item.millingMachineSmall}
+          />
+          <input
+            className={`${
+              timeMachina === "millingMachineSmall" ? "show-time" : "none-time"
+            }`}
+            placeholder="time"
+            type="number"
+            pattern="[0-9]*"
+            min="1"
+            required
+          />
+        </div>
+
+        <button className={enableSaveRef.current} type="submit">
+          save
+        </button>
+      </form>
     </div>
   );
 };

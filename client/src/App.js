@@ -9,6 +9,7 @@ import Elements from "./components/add/elements/Elements";
 import Project from "./components/add/project/Project";
 import WarehouseWork from "./components/warehouseWork/WarehouseWork";
 import GoodElements from "./components/goodElement/GoodElements";
+import ModuleOfProject from "./components/add/moduleOfProject/ModuleOfProject";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/user" element={<User />} />
         <Route path="/position" element={<Position />} />
         <Route path="/element" element={<Elements />} />
+        <Route path="/module" element={<ModuleOfProject />} />
 
         <Route path="/wareWork" element={<WarehouseWork />} />
         <Route path="/goodElement" element={<GoodElements />} />

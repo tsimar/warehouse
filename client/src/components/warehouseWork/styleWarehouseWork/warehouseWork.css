@@ -50,3 +50,15 @@
   display: block;
   width: 40px;
 }
+
+.show-time {
+  display: block;
+}
+
+.none-time {
+  display: none;
+}
+
+.worehouse__form--machine {
+  display: flex;
+}

@@ -4,7 +4,9 @@ import DatePicker from "react-date-picker";
 import { motion } from "framer-motion";
 
 import { EditItemWarehouse } from "./EditItemWarehouse";
-import ReadItemWarehouse from "./ReadItemWarehouse";
+import ReadItemProjectWarehouse from "./ReadItemProjectWarehouse";
+import ReadItemModuleWarehouse from "./ReadItemModuleWarehouse";
+import ReadItemElementWarehouse from "./ReadItemElementWarehouse";
 import "./styleWarehouse/warehouse.css";
 import {
   apiProject,
@@ -12,6 +14,7 @@ import {
   apiElement,
   apiUser,
   apiWarehouse,
+  apiModuleOfProject,
 } from "../../url/URL";
 // import { GetUseFetch } from "../../url/GetUseFetch";
 
@@ -21,6 +24,7 @@ const Warehouse = () => {
   let editSelectPutProject = "";
   let editSelectPutUser = "";
   let editSelectPutElement = "";
+  let editSelectPutModule = "";
   const location = useLocation();
   const [warehouseName, setWarehouseName] = useState("in");
   const numberRef = useRef(null);
@@ -29,14 +33,17 @@ const Warehouse = () => {
 
   const [element, setElement] = useState([]);
   const [project, setProject] = useState([]);
+  const [module, setModule] = useState([]);
   const [user, setUser] = useState([]);
   const [warehouse, setWarehouse] = useState([]);
   const [selectElement, setSelectElement] = useState("");
   const [nameLabelFile, setNameLabelFile] = useState("");
   const [selectProject, setSelectProject] = useState("");
   const [selectUser, setSelectUser] = useState("");
+  const [selectModule, setSelectModule] = useState("");
   const [editSelect, setEditSelect] = useState({
     project: "",
+    module: "",
     element: "",
     user: "",
     dataStart: "",
@@ -45,6 +52,7 @@ const Warehouse = () => {
     number: "",
     dataStart: "",
     idProject: "",
+    idModule: "",
     idElement: "",
     idUser: "",
     warehouseName: "",
@@ -55,6 +63,7 @@ const Warehouse = () => {
     number: "",
     dataStart: "",
     idProject: "",
+    idModule: "",
     idElement: "",
     idUser: "",
     warehouseName: "",
@@ -63,6 +72,7 @@ const Warehouse = () => {
   const handleAddSubmit = async (e) => {
     e.preventDefault();
     changeNameProjectById(selectProject);
+    changeNameModuleById(selectModule);
     changeNameElementById(selectElement);
     changeNameUserById(selectUser);
     wareName = location.pathname.split("/");
@@ -73,6 +83,7 @@ const Warehouse = () => {
       number: addWarehouse.number,
       dataStart: valueDate,
       idProject: editSelectPutProject,
+      idModule: editSelectPutModule,
       idElement: editSelectPutElement,
       idUser: editSelectPutUser,
       warehouseName: name,
@@ -100,6 +111,16 @@ const Warehouse = () => {
         return (editSelectPutProject = project[index].id);
       } else {
         editSelectPutProject = project[0].id;
+      }
+    }
+  };
+  const changeNameModuleById = (data) => {
+    editSelect.module = "";
+    for (let index = 0; index < module.length; index++) {
+      if (module[index].nameModule === data) {
+        return (editSelectPutModule = module[index].id);
+      } else {
+        editSelectPutModule = module[0].id;
       }
     }
   };
@@ -134,6 +155,16 @@ const Warehouse = () => {
     }
   };
 
+  const changeIdByNameModule = (data) => {
+    for (let index = 0; index < module.length; index++) {
+      if (module[index].id === data) {
+        return (editSelect.module = module[index].nameModule);
+      } else {
+        editSelect.module = module[0].nameModule;
+      }
+    }
+  };
+
   const changeIdByNameUser = (data) => {
     for (let index = 0; index < project.length; index++) {
       if (project[index].id === data) {
@@ -158,6 +189,7 @@ const Warehouse = () => {
     e.preventDefault();
     setSelectUser(user[0].nameUser);
     setSelectProject(project[0].nameProject);
+    setSelectProject(module[0].nameModule);
     setSelectElement(element[0].nameElement);
 
     const fieldName = e.target.name;
@@ -174,6 +206,7 @@ const Warehouse = () => {
     event.preventDefault();
     let data;
     changeNameProjectById(editSelect.project);
+    changeNameModuleById(editSelect.module);
     changeNameUserById(editSelect.user);
     changeNameElementById(editSelect.element);
     if (editSelect.dataStart === "") {
@@ -184,6 +217,7 @@ const Warehouse = () => {
     const editedContact = {
       id: editValue.id,
       idProject: editSelectPutProject,
+      idModule: editSelectPutModule,
       idElement: editSelectPutElement,
       number: editValue.number,
       dataStart: data,
@@ -227,6 +261,7 @@ const Warehouse = () => {
     const formValues = {
       id: edit.id,
       idProject: edit.idProject,
+      idModule: edit.idModule,
       idElement: edit.idElement,
       number: edit.number,
       dataStart: dateLocal,
@@ -236,6 +271,7 @@ const Warehouse = () => {
 
     setEditValue(formValues);
     changeIdByNameProject(edit.idProject);
+    changeIdByNameModule(edit.idModule);
     changeIdByNameUser(edit.idUser);
     changeIdByNameElement(edit.idElement);
   };
@@ -266,7 +302,17 @@ const Warehouse = () => {
       console.log(error);
     }
   };
-
+  const fetchGETModule = async () => {
+    try {
+      // setLoading(true);
+      const res = await apiModuleOfProject.get();
+      setModule(res.data);
+      console.log("module", res.data);
+      // setLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const showPdfFile = async (nameFile) => {
     try {
       let url = "";
@@ -331,6 +377,7 @@ const Warehouse = () => {
     fetchGetElement();
     fetchGETProject();
     fetchGetUser();
+    fetchGETModule();
   }, []);
 
   useEffect(() => {
@@ -343,42 +390,42 @@ const Warehouse = () => {
 
     setEditSelect(newFormData);
   };
+  const handlGetModule = (data) => {};
+  const handlGetElement = (data) => {};
 
-  const handlGetElement = (data) => {
-    return data.map((item, index) => {
+  const getProject = (index, data, count) => {
+    console.log(parseInt(count) - 1);
+    console.log(index);
+    console.log(index === parseInt(count) - 1);
+    return data[count[index]].map((item, countItems) => {
       return (
         <Fragment key={item.id}>
           {editValue.id === item.id ? (
-            <EditItemWarehouse
-              editValue={editValue}
-              handleCancelClick={handleCancelClick}
-              handleEditFormChange={handleEditFormChange}
-              handleEditFormSubmit={handleEditFormSubmit}
-              handleDeleteClick={handleDeleteClick}
-              handleAddSubmit={handleAddSubmit}
-              project={project}
-              element={element}
-              user={user}
-              handleEditSelect={handleEditSelect}
-              editSelectProjectById={editSelect.project}
-              editSelectElementById={editSelect.element}
-              editSelectUserById={editSelect.user}
-              editSelectDateById={editSelect.dataStart}
-            />
-          ) : (
-            <ReadItemWarehouse
+            <EditItemWarehouse />
+          ) : countItems <= 0 ? (
+            <ReadItemProjectWarehouse
+              idProject={item.idProject}
               warehouse={item}
-              index={index}
+              count={index}
               project={project}
+              module={module}
               user={user}
               element={element}
               handleEditClick={handleEditClick}
               handleDeleteClick={handleDeleteClick}
               showPdfFile={showPdfFile}
             />
+          ) : (
+            <ReadItemModuleWarehouse />
           )}
         </Fragment>
       );
+    });
+  };
+  const handlGetProject = (data) => {
+    let count = Object.keys(data);
+    return Object.keys(data).map((_, index) => {
+      return getProject(index, data, count);
     });
   };
 
@@ -394,6 +441,19 @@ const Warehouse = () => {
             {project.map((item, index) => (
               <option key={index} value={item.nameProject}>
                 {item.nameProject}
+              </option>
+            ))}
+          </select>
+        </section>
+        <section>
+          <label htmlFor="module">module</label>
+          <select
+            value={selectModule}
+            onChange={(e) => setSelectModule(e.target.value)}
+          >
+            {module.map((item, index) => (
+              <option key={index} value={item.nameModule}>
+                {item.nameModule}
               </option>
             ))}
           </select>
@@ -450,7 +510,11 @@ const Warehouse = () => {
         <button type="submit">add</button>
       </form>
       <section className="conteiner--warehouse">
-        <div className="div-getWorhouse">{handlGetElement(warehouse)}</div>
+        <div className="div-getWorhouse">
+          {handlGetProject(warehouse)}
+          {handlGetModule(warehouse)}
+          {handlGetElement(warehouse)}
+        </div>
         <motion.div drag className="conteiner-showPdfFile-warehouse">
           <label htmlFor="iframe">część: {nameLabelFile}</label>
           <iframe
@@ -468,3 +532,49 @@ const Warehouse = () => {
 };
 
 export default Warehouse;
+
+// const handlGetProject = (data) => {
+//   var count = Object.keys(data);
+//   for (let index = 0; index < count.length; index++) {
+//     console.log(data[count[index]]);
+//     return data[count[index]].map((item, index) => {
+//       return (
+//         <Fragment key={index}>
+//           {editValue.id === item.id ? (
+//             <EditItemWarehouse
+//               editValue={editValue}
+//               handleCancelClick={handleCancelClick}
+//               handleEditFormChange={handleEditFormChange}
+//               handleEditFormSubmit={handleEditFormSubmit}
+//               handleDeleteClick={handleDeleteClick}
+//               handleAddSubmit={handleAddSubmit}
+//               project={project}
+//               module={module}
+//               element={element}
+//               user={user}
+//               handleEditSelect={handleEditSelect}
+//               editSelectProjectById={editSelect.project}
+//               editSelectModuleById={editSelect.module}
+//               editSelectElementById={editSelect.element}
+//               editSelectUserById={editSelect.user}
+//               editSelectDateById={editSelect.dataStart}
+//             />
+//           ) : (
+//             <ReadItemWarehouse
+//               idProject={item.idProject}
+//               warehouse={item}
+//               count={index}
+//               project={project}
+//               module={module}
+//               user={user}
+//               element={element}
+//               handleEditClick={handleEditClick}
+//               handleDeleteClick={handleDeleteClick}
+//               showPdfFile={showPdfFile}
+//             />
+//           )}
+//         </Fragment>
+//       );
+//     });
+//   }
+// };

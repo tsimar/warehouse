@@ -16,6 +16,9 @@ export const apiUser = axios.create({
 export const apiProject = axios.create({
   baseURL: `${process.env.REACT_APP_BASE_URL}/project`,
 });
+export const apiModuleOfProject = axios.create({
+  baseURL: `${process.env.REACT_APP_BASE_URL}/module`,
+});
 export const apiPosition = axios.create({
   baseURL: `${process.env.REACT_APP_BASE_URL}/position`,
 });

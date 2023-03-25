@@ -6,7 +6,7 @@ export const menuItems = [
   },
   {
     value: "dodać",
- 
+
     subMenu: [
       {
         value: "pracownik",
@@ -23,6 +23,10 @@ export const menuItems = [
       {
         value: "projekt",
         Link: "/project",
+      },
+      {
+        value: "module",
+        Link: "/module",
       },
     ],
   },
