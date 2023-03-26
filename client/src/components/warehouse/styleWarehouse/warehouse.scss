@@ -5,7 +5,9 @@ $width: calc(100% - 120px);
 .wropper--div {
     margin: 20px;
 }
-
+.eelem {
+    margin-left: 50px;
+}
 .form--add {
     width: 250px;
     line-height: 1.8rem;
@@ -85,4 +87,11 @@ cursor: col-resize;
 
 .div__div__get--namber {
     width: 50px;
+}
+span {
+    margin: 0 15px;
+}
+
+br {
+    border: 2px solid rgb(235, 20, 20);
 }

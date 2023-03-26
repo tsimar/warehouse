@@ -394,18 +394,17 @@ const Warehouse = () => {
   const handlGetElement = (data) => {};
 
   const getProject = (index, data, count) => {
-    console.log(parseInt(count) - 1);
-    console.log(index);
-    console.log(index === parseInt(count) - 1);
+
     return data[count[index]].map((item, countItems) => {
       return (
         <Fragment key={item.id}>
           {editValue.id === item.id ? (
             <EditItemWarehouse />
-          ) : countItems <= 0 ? (
+          ) : (
             <ReadItemProjectWarehouse
-              idProject={item.idProject}
+              boleanProject={countItems <= 0}
               warehouse={item}
+              allWarehouse={data[index + 1]}
               count={index}
               project={project}
               module={module}
@@ -415,8 +414,6 @@ const Warehouse = () => {
               handleDeleteClick={handleDeleteClick}
               showPdfFile={showPdfFile}
             />
-          ) : (
-            <ReadItemModuleWarehouse />
           )}
         </Fragment>
       );

@@ -1,17 +1,23 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, Fragment } from "react";
+import ReadItemModuleWarehouse from "./ReadItemModuleWarehouse";
 
 const ReadItemProjectWarehouse = ({
-  idProject,
+  boleanProject,
+  allWarehouse,
   warehouse,
   project,
+  module,
   count,
   handleEditClick,
   handleDeleteClick,
+  user,
+  element,
+  showPdfFile,
 }) => {
   const [nameFile, setNameFile] = useState("");
   const [propsElement, setPropsElement] = useState([]);
   const warehouseRef = useRef(warehouse);
-  console.log(idProject);
+
   const addProject = (itemsWarehouse, project) => {
     return project.map((item, index) => {
       return itemsWarehouse.idProject === item.id ? (
@@ -19,6 +25,36 @@ const ReadItemProjectWarehouse = ({
       ) : null;
     });
   };
+
+  const handleGetModule = (data, moduleData, checkModule, idProject) => {
+    let count = 0;
+    // let checkModule = data[0].idModule;
+    return data.map((items, key) => {
+      if (items.idModule != checkModule) {
+        checkModule = items.idModule;
+        count = 0;
+      }
+      count++;
+      if (count === 1) {
+        return (
+          <Fragment key={items.id}>
+            <ReadItemModuleWarehouse
+              idModule={checkModule}
+              module={moduleData}
+              warehouse={data}
+              idProject={idProject}
+              user={user}
+              element={element}
+              handleEditClick={handleEditClick}
+              handleDeleteClick={handleDeleteClick}
+              showPdfFile={showPdfFile}
+            />
+          </Fragment>
+        );
+      }
+    });
+  };
+
   return (
     <div
       className="div__div-get"
@@ -27,9 +63,21 @@ const ReadItemProjectWarehouse = ({
       onDrag={() => handleDeleteClick(warehouse.id)}
       draggable
     >
-      <span>{count + 1}</span>
-      {/* {addProject(warehouseRef.current, project)} */}
-      <span>{warehouse.idProject}</span>
+      {boleanProject ? (
+        <>
+          <span>{count + 1}</span>
+          {addProject(warehouse, project)}
+          <div key={warehouse.id + 56}>
+            {handleGetModule(
+              allWarehouse,
+              module,
+              warehouse.idModule,
+              warehouse.idProject
+            )}
+          </div>
+          <br />
+        </>
+      ) : null}
     </div>
   );
 };
