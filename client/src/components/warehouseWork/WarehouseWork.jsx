@@ -13,6 +13,7 @@ import {
   apiElement,
   apiElementPDF,
   apiWarehouseWork,
+  apiModuleOfProject,
 } from "../../url/URL";
 import "./styleWarehouseWork/warehouseWork.css";
 import { motion } from "framer-motion";
@@ -22,11 +23,13 @@ const WarehouseWork = () => {
   const [valueDateFinish, OnChangeFinish] = useState(new Date());
   const [element, setElement] = useState([]);
   const [project, setProject] = useState([]);
+  const [module, setModule] = useState([]);
 
   const [warehouseWork, setWarehouseWork] = useState([]);
 
   const [addWarehouseWork, setAddWarehouseWork] = useReducer({
     idProject: "",
+    idModule: "",
     idElement: "",
     number: "",
     dateStart: "",
@@ -102,6 +105,17 @@ const WarehouseWork = () => {
       console.log(error);
     }
   };
+  const fetchGETModule = async () => {
+    try {
+      // setLoading(true);
+      const res = await apiModuleOfProject.get();
+      setModule(res.data);
+      console.log("module", res.data);
+      // setLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const fetchGetElement = async () => {
     try {
       // setLoading(true);
@@ -152,6 +166,7 @@ const WarehouseWork = () => {
   useEffect(() => {
     fetchGetElement();
     fetchGETProject();
+    fetchGETModule();
     fetchGetWarehouseWork();
   }, []);
 
@@ -178,7 +193,7 @@ const WarehouseWork = () => {
   };
 
   const handlGetWarehouseWork = (data) => {
-    console.log("data work", data);
+    console.log("data work module", data);
     return data.map((item, index) => {
       return (
         <Fragment key={item.id}>
@@ -194,6 +209,7 @@ const WarehouseWork = () => {
               item={item}
               index={index}
               project={project}
+              module={module}
               element={element}
               handleEditClick={handleEditClick}
               showPdfFile={showPdfFile}
@@ -209,6 +225,7 @@ const WarehouseWork = () => {
       <div className="label_name">
         <label className="span--id">Nr</label>
         <label className="span--project">projekt</label>
+        <label className="span--project">module</label>
         <label className="span--element">detal</label>
         <label className="span--number">ilość</label>
         <label className="span--date">początku</label>

@@ -10,6 +10,7 @@ import {
   apiElement,
   apiWarehouseWork,
 } from "../../url/URL";
+import "./styleGoodElement/goodElement.css";
 
 export default function GoodElements() {
   const [warehouseWork, setWarehouseWork] = useState([]);
@@ -109,22 +110,7 @@ export default function GoodElements() {
       return (
         <Fragment key={item.id}>
           {editValue.id === item.id ? (
-            <EditItemWarehouse
-              editValue={editValue}
-              //   handleCancelClick={handleCancelClick}
-              //   handleEditFormChange={handleEditFormChange}
-              //   handleEditFormSubmit={handleEditFormSubmit}
-              //   handleDeleteClick={handleDeleteClick}
-              //   handleAddSubmit={handleAddSubmit}
-              //   project={project}
-              //   element={element}
-              //   user={user}
-              //   handleEditSelect={handleEditSelect}
-              //   editSelectProjectById={editSelect.project}
-              //   editSelectElementById={editSelect.element}
-              //   editSelectUserById={editSelect.user}
-              //   editSelectDateById={editSelect.dataStart}
-            />
+            <EditItemWarehouse editValue={editValue} />
           ) : (
             <ReadItemGoodElement
               item={item}

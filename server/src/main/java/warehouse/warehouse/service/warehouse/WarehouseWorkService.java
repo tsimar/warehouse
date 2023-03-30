@@ -61,6 +61,7 @@ public class WarehouseWorkService {
                     k++;
                     work.setId(itemWork.getId());
                     work.setIdProject(itemWork.getIdProject());
+                    work.setIdModule(itemWork.getIdModule());
                     work.setIdElement(itemWork.getIdElement());
                     work.setNumber(itemWork.getNumber());
                     work.setDataStart(itemWork.getDataStart());
@@ -76,6 +77,7 @@ public class WarehouseWorkService {
             if (k == 0) {
 
                 saveWork.setIdProject(item.getIdProject());
+                saveWork.setIdModule(item.getIdModule());
                 saveWork.setIdElement(item.getIdElement());
                 saveWork.setNumber(item.getNumber());
                 saveWork.setDataStart(item.getDataStart());
@@ -100,6 +102,7 @@ public class WarehouseWorkService {
         WarehouseWork saveWork = new WarehouseWork();
 
         saveWork.setIdProject(warehouse.getIdProject());
+        saveWork.setIdModule(warehouse.getIdModule());
         saveWork.setIdElement(warehouse.getIdElement());
         saveWork.setNumber(warehouse.getNumber());
         saveWork.setDataStart(warehouse.getDataStart());

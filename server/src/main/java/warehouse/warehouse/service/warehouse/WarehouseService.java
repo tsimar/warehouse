@@ -47,42 +47,41 @@ public class WarehouseService {
 
     public void editWarehouseName(Long idProject, Long idElement) {
 
-    warehouseRepository.findAll()
+        warehouseRepository.findAll()
                 .stream()
-                .filter(warehouse -> idProject== warehouse.getIdProject()&&idElement== warehouse.getIdElement())
-                .map(i->{i.setWarehouseName("out");return i;})
+                .filter(warehouse -> idProject == warehouse.getIdProject() && idElement == warehouse.getIdElement())
+                .map(i -> {
+                    i.setWarehouseName("out");
+                    return i;
+                })
                 .forEach(warehouseRepository::save);
-
-
 
 
     }
 
 
-    public Map<Long,List<Warehouse>> getTypeWarehouse(String warehouseName) {
-        List<Warehouse>warehouses=warehouseRepository.getWarehouse(warehouseName);
-        Map<Long,List<Warehouse>> moduleMap=new TreeMap<>();
-        Map<Long,List<Warehouse>> projectMap=new TreeMap<>();
-//        Map<Long,Map<Long,List<Warehouse>> bothMap=new TreeMap<>();
-        for (Warehouse item: warehouses) {
-//            moduleMap.put(item.getIdModule(),warehouses.stream().filter(id->id.getIdModule()== item.getIdModule()).collect(Collectors.toList()));
+    public Map<Long, List<Warehouse>> getTypeWarehouse(String warehouseName) {
+        List<Warehouse> warehouses = warehouseRepository.getWarehouse(warehouseName);
 
-             projectMap.put(item.getIdProject(), warehouses.stream()
-                     .filter(id -> Objects.equals(id.getIdProject(), item.getIdProject()))
-//                     .filter(idModule-> Objects.equals(idModule.getIdModule(), item.getIdModule()))
-                     .collect(Collectors.toList()));
+        Map<Long, List<Warehouse>> projectMap = new TreeMap<>();
+
+        for (Warehouse item : warehouses) {
+
+            projectMap.put(item.getIdProject(), warehouses.stream()
+                    .filter(id -> Objects.equals(id.getIdProject(), item.getIdProject()))
+                    .collect(Collectors.toList()));
         }
         System.out.println(projectMap.toString());
         return projectMap;
-//        return warehouseRepository.getWarehouse(warehouseName);
+
     }
 
 
     public List<Warehouse> getAll() {
-        List<Warehouse>warehouses=new ArrayList<Warehouse>(warehouseRepository.findAll());
-        Map<Long,List<Warehouse>> warehouseMap=new TreeMap<>();
-        for (Warehouse item: warehouses) {
-            warehouseMap.put(item.getIdProject(),warehouses);
+        List<Warehouse> warehouses = new ArrayList<Warehouse>(warehouseRepository.findAll());
+        Map<Long, List<Warehouse>> warehouseMap = new TreeMap<>();
+        for (Warehouse item : warehouses) {
+            warehouseMap.put(item.getIdProject(), warehouses);
         }
         System.out.println(warehouseMap);
         return null;
@@ -121,6 +120,7 @@ public class WarehouseService {
                 warehouse.setDataStart(item.getDataStart());
                 warehouse.setIdUser(item.getIdUser());
                 warehouse.setIdProject(item.getIdProject());
+                warehouse.setIdModule(item.getIdModule());
                 warehouse.setIdElement(item.getIdElement());
                 warehouse.setNumber(number);
                 warehouse.setWarehouseName(item.getWarehouseName());
@@ -152,6 +152,7 @@ public class WarehouseService {
             }
             warehouse.setId(itemIn.getId());
             warehouse.setIdProject(itemIn.getIdProject());
+            warehouse.setIdModule(itemIn.getIdModule());
             warehouse.setIdElement(itemIn.getIdElement());
             warehouse.setDataStart(itemIn.getDataStart());
             warehouse.setNumber(numbers);
@@ -162,7 +163,6 @@ public class WarehouseService {
         return warehouseJoin;
 
     }
-
 
 
 }

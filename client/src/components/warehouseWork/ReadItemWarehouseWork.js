@@ -8,11 +8,13 @@ const ReadItemWarehouseWork = ({
   item,
   index,
   project,
+  module,
   element,
   handleEditClick,
   handleDeleteClick,
   showPdfFile,
 }) => {
+  console.log("item:", item);
   const [nameFile, setNameFile] = useState("");
   const [enableSave, setEnableSave] = useState("noneSave");
   const [timeMachina, setTimeMachina] = useState("");
@@ -62,6 +64,16 @@ const ReadItemWarehouseWork = ({
       return warehouseWork.idProject === item.id ? (
         <span className="span--project" key={index}>
           {item.nameProject}
+        </span>
+      ) : null;
+    });
+  };
+  const addModule = (warehouseWork, module) => {
+    console.log(module[0].name);
+    return module.map((item, index) => {
+      return warehouseWork.idModule === item.id ? (
+        <span className="span--module" key={index}>
+          {item.nameModule}
         </span>
       ) : null;
     });
@@ -143,6 +155,7 @@ const ReadItemWarehouseWork = ({
     >
       <span className="span--id">{index + 1}</span>
       {addProject(item, project)}
+      {addModule(item, module)}
       <span className="span--element" onClick={() => showPdfFile(propsElement)}>
         {propsElement.nameElement}
       </span>
@@ -158,7 +171,7 @@ const ReadItemWarehouseWork = ({
           />
           <input
             className={`${timeMachina === "lathe" ? "show-time" : "none-time"}`}
-            placeholder="time"
+            placeholder="work time in minutes"
             type="number"
             pattern="[0-9]*"
             min="1"
