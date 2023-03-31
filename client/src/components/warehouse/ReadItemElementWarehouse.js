@@ -11,11 +11,7 @@ const ReadItemElementWarehouse = ({
   // handleDeleteClick,
   showPdfFile,
 }) => {
-  console.log("element-------------");
-  console.log("element : %d", warehouse);
-  // const [nameFile, setNameFile] = useState("");
-  // const [propsElement, setPropsElement] = useState([]);
-  // const warehouseRef = useRef(warehouse);
+
 
   const addUser = (warehouse, user) => {
     return user.map((item, index) => {
@@ -27,14 +23,7 @@ const ReadItemElementWarehouse = ({
     });
   };
 
-  // const addElement = (itemsWarehouse, element) => {
-  //   element.map((data) => {
-  //     if (itemsWarehouse.idElement === data.id) {
-  //       setPropsElement(data);
-  //       // setNameFile(data.urlPicture);
-  //     }
-  //   });
-  // };
+
   const addElement = (itemsWarehouse, element) => {
     return element.map((item, index) => {
       return itemsWarehouse.idElement === item.id ? (

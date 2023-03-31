@@ -14,7 +14,6 @@ const ReadItemWarehouseWork = ({
   handleDeleteClick,
   showPdfFile,
 }) => {
-  console.log("item:", item);
   const [nameFile, setNameFile] = useState("");
   const [enableSave, setEnableSave] = useState("noneSave");
   const [timeMachina, setTimeMachina] = useState("");

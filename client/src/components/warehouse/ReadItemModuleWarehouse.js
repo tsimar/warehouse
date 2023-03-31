@@ -10,10 +10,11 @@ const ReadItemModuleWarehouse = ({
   element,
   showPdfFile,
 }) => {
-  console.log("modul");
   const addElement = (idModule, warehouse, idProject) => {
+    let count = -1;
     return warehouse.map((items, index) => {
       if (items.idModule === idModule && items.idProject === idProject) {
+        count++;
         return (
           <Fragment key={items.id}>
             <ReadItemElementWarehouse
@@ -21,7 +22,7 @@ const ReadItemModuleWarehouse = ({
               element={element}
               user={user}
               showPdfFile={showPdfFile}
-              count={index}
+              count={count}
             />
           </Fragment>
         );
