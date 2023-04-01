@@ -56,4 +56,5 @@ public class WarehouseController {
     public void edit(@RequestBody Warehouse warehouse) {
         warehouseService.edit(warehouse);
     }
+
 }

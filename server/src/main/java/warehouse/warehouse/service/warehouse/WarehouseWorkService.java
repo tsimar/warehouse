@@ -9,17 +9,18 @@ import warehouse.warehouse.entity.warehouse.WarehouseWork;
 import warehouse.warehouse.repository.warehouse.WarehouseWorkRepository;
 
 import java.sql.Date;
+import java.sql.Time;
+import java.time.Instant;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalTime;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class WarehouseWorkService {
     private final WarehouseWorkRepository warehouseWorkRepository;
     private final WarehouseService warehouseService;
-
-
 
 
     @Transactional
@@ -37,18 +38,18 @@ public class WarehouseWorkService {
         }
     }
 
-    public List<WarehouseWork> getSelectWarehouseWork() {
+    public Map<Long, List<WarehouseWork>> getSelectWarehouseWork() {
 
         List<Warehouse> warehouses = warehouseService.getWarehouseByName();
         List<WarehouseWork> warehouseWorks = warehouseWorkRepository.findAllOpen(1);
-        List<WarehouseWork> result = resultWarehouseWork(warehouses, warehouseWorks);
+        Map<Long, List<WarehouseWork>> result = resultWarehouseWork(warehouses, warehouseWorks);
 
         return result;
     }
 
-    private List<WarehouseWork> resultWarehouseWork(List<Warehouse> warehouses, List<WarehouseWork> warehouseWorks) {
+    private Map<Long, List<WarehouseWork>> resultWarehouseWork(List<Warehouse> warehouses, List<WarehouseWork> warehouseWorks) {
         List<WarehouseWork> workList = new ArrayList<>();
-
+        Map<Long, List<WarehouseWork>> projectMap = new TreeMap<>();
         Long idNew = 3L;
 
 
@@ -94,7 +95,13 @@ public class WarehouseWorkService {
             idNew++;
         }
 
-        return workList;
+        for (WarehouseWork item : workList) {
+            projectMap.put(item.getIdProject(), workList.stream()
+                    .filter(id -> Objects.equals(id.getIdProject(), item.getIdProject()))
+                    .collect(Collectors.toList()));
+        }
+
+        return projectMap;
     }
 
 
@@ -111,10 +118,10 @@ public class WarehouseWorkService {
         saveWork.setLathe("magazyn");
         saveWork.setBacaFanuc("magazyn");
         saveWork.setMillingMachineSmall("magazyn");
-        saveWork.setTimeFanuc(0);
-        saveWork.setTimeHeidenhain(0);
-        saveWork.setTimeLathe(0);
-        saveWork.setTimeSmall(0);
+        saveWork.setFanucTime(0);
+        saveWork.setHeidenhainTime(0);
+        saveWork.setLatheTime(0);
+        saveWork.setSmallTime(0);
         saveWork.setWarehouseOpen(1);
 
         warehouseWorkRepository.save(saveWork);
@@ -142,6 +149,6 @@ public class WarehouseWorkService {
     }
 
     public List<WarehouseWork> getAll() {
-        return  warehouseWorkRepository.findAll();
+        return warehouseWorkRepository.findAll();
     }
 }

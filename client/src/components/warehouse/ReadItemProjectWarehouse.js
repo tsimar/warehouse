@@ -1,6 +1,5 @@
-import React, { useState, useRef, Fragment } from "react";
+import React, { Fragment } from "react";
 import ReadItemModuleWarehouse from "./ReadItemModuleWarehouse";
-
 
 const ReadItemProjectWarehouse = ({
   boleanProject,
@@ -15,10 +14,9 @@ const ReadItemProjectWarehouse = ({
   element,
   showPdfFile,
 }) => {
-  const [nameFile, setNameFile] = useState("");
-  const [propsElement, setPropsElement] = useState([]);
-  const warehouseRef = useRef(warehouse);
-  const countModul = useRef(0);
+  // const [nameFile, setNameFile] = useState("");
+  // const [propsElement, setPropsElement] = useState([]);
+
   const addProject = (itemsWarehouse, project) => {
     return project.map((item, index) => {
       return itemsWarehouse.idProject === item.id ? (
@@ -34,7 +32,7 @@ const ReadItemProjectWarehouse = ({
       .sort((a, b) => (a.idModule < b.idModule ? -1 : 1));
 
     return sortData.map((items, key) => {
-      if (items.idModule != checkModule) {
+      if (items.idModule !== checkModule) {
         checkModule = items.idModule;
         count = 0;
       }
@@ -81,7 +79,6 @@ const ReadItemProjectWarehouse = ({
               warehouse.idProject
             )}
           </div>
-          <br />
         </>
       ) : null}
     </div>

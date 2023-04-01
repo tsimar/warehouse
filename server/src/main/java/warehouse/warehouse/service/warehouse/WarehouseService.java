@@ -62,10 +62,7 @@ public class WarehouseService {
 
     public Map<Long, List<Warehouse>> getTypeWarehouse(String warehouseName) {
         List<Warehouse> warehouses = warehouseRepository.getWarehouse(warehouseName);
-        warehouses.sort(Comparator
-                .comparing(a -> a.getIdProject())
-//                .thenComparing(a -> a.get)
-        );
+
         Map<Long, List<Warehouse>> projectMap = new TreeMap<>();
 
         for (Warehouse item : warehouses) {
@@ -77,7 +74,7 @@ public class WarehouseService {
 
                             .collect(Collectors.toList()));
         }
-        System.out.println(projectMap.toString());
+
         return projectMap;
 
     }

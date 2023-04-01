@@ -1,13 +1,7 @@
-import React, {
-  useState,
-  useEffect,
-  useReducer,
-  useRef,
-  Fragment,
-} from "react";
-import DatePicker from "react-date-picker";
+import React, { useState, useEffect, Fragment } from "react";
+// import DatePicker from "react-date-picker";
 import { EditItemWarehouseWork } from "./EditItemWarehouseWork";
-import ReadItemWarehouseWork from "./ReadItemWarehouseWork";
+import ReadItemProjectWarehouseWork from "./ReadItemProjectWarehouseWork";
 import {
   apiProject,
   apiElement,
@@ -20,25 +14,25 @@ import { motion } from "framer-motion";
 
 const WarehouseWork = () => {
   const [nameLabelFile, setNameLabelFile] = useState("");
-  const [valueDateFinish, OnChangeFinish] = useState(new Date());
+  // const [valueDateFinish, OnChangeFinish] = useState(new Date());
   const [element, setElement] = useState([]);
   const [project, setProject] = useState([]);
   const [module, setModule] = useState([]);
 
   const [warehouseWork, setWarehouseWork] = useState([]);
 
-  const [addWarehouseWork, setAddWarehouseWork] = useReducer({
-    idProject: "",
-    idModule: "",
-    idElement: "",
-    number: "",
-    dateStart: "",
-    dateFinish: "",
-    bacaFanuc: "",
-    lathe: "",
-    heidenhain: "",
-    millingMachineSmall: "",
-  });
+  // const [addWarehouseWork, setAddWarehouseWork] = useReducer({
+  //   idProject: "",
+  //   idModule: "",
+  //   idElement: "",
+  //   number: "",
+  //   dateStart: "",
+  //   dateFinish: "",
+  //   bacaFanuc: "",
+  //   lathe: "",
+  //   heidenhain: "",
+  //   millingMachineSmall: "",
+  // });
 
   const [editValue, setEditValue] = useState({
     editId: "",
@@ -65,18 +59,18 @@ const WarehouseWork = () => {
       });
   };
 
-  const handleChange = (e) => {
-    e.preventDefault();
+  // const handleChange = (e) => {
+  //   e.preventDefault();
 
-    const fieldName = e.target.name;
+  //   const fieldName = e.target.name;
 
-    const fieldValue = e.target.value;
+  //   const fieldValue = e.target.value;
 
-    const newFormData = { ...addWarehouseWork };
-    newFormData[fieldName] = fieldValue;
+  //   const newFormData = { ...addWarehouseWork };
+  //   newFormData[fieldName] = fieldValue;
 
-    setAddWarehouseWork(newFormData);
-  };
+  //   setAddWarehouseWork(newFormData);
+  // };
 
   const handleCancelClick = () => {
     setEditValue("");
@@ -192,32 +186,62 @@ const WarehouseWork = () => {
     setEditValue(formValues);
   };
 
-  const handlGetWarehouseWork = (data) => {
-    console.log("data work module", data);
-    return data.map((item, index) => {
+  const getProject = (index, data, count) => {
+    return data[count[index]].map((item, countItems) => {
       return (
         <Fragment key={item.id}>
           {editValue.id === item.id ? (
-            <EditItemWarehouseWork
-              editValue={editValue}
-              handleCancelClick={handleCancelClick}
-              handleDeleteClick={handleDeleteClick}
-              editEditFinishDateDB={editEditFinishDateDB}
-            />
+            <EditItemWarehouseWork />
           ) : (
-            <ReadItemWarehouseWork
+            <ReadItemProjectWarehouseWork
+              boleanProject={countItems <= 0}
               item={item}
+              allWarehouse={data[index + 1]}
               index={index}
               project={project}
               module={module}
               element={element}
               handleEditClick={handleEditClick}
+              handleDeleteClick={handleDeleteClick}
               showPdfFile={showPdfFile}
             />
           )}
         </Fragment>
       );
     });
+  };
+
+  const handlGetProject = (data) => {
+    console.log("data work module", data);
+    let count = Object.keys(data);
+    return Object.keys(data).map((_, index) => {
+      return getProject(index, data, count);
+    });
+
+    // return data.map((item, index) => {
+    //   return (
+    //     <Fragment key={item.id}>
+    //       {editValue.id === item.id ? (
+    //         <EditItemWarehouseWork
+    //           editValue={editValue}
+    //           handleCancelClick={handleCancelClick}
+    //           handleDeleteClick={handleDeleteClick}
+    //           editEditFinishDateDB={editEditFinishDateDB}
+    //         />
+    //       ) : (
+    //         <ReadItemProjectWarehouseWork
+    //           item={item}
+    //           index={index}
+    //           project={project}
+    //           module={module}
+    //           element={element}
+    //           handleEditClick={handleEditClick}
+    //           showPdfFile={showPdfFile}
+    //         />
+    //       )}
+    //     </Fragment>
+    //   );
+    // });
   };
 
   return (
@@ -237,7 +261,7 @@ const WarehouseWork = () => {
       </div>
 
       <div className="div-getWarehouseWork">
-        {handlGetWarehouseWork(warehouseWork)}
+        {handlGetProject(warehouseWork)}
       </div>
 
       <section className="conteiner--warehouse">

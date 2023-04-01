@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React from "react";
 
 const ReadItemElementWarehouse = ({
   // idProject,
@@ -11,8 +11,6 @@ const ReadItemElementWarehouse = ({
   // handleDeleteClick,
   showPdfFile,
 }) => {
-
-
   const addUser = (warehouse, user) => {
     return user.map((item, index) => {
       return warehouse.idUser === item.id ? (
@@ -22,7 +20,6 @@ const ReadItemElementWarehouse = ({
       ) : null;
     });
   };
-
 
   const addElement = (itemsWarehouse, element) => {
     return element.map((item, index) => {

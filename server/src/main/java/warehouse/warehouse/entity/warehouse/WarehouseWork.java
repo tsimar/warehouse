@@ -7,6 +7,7 @@ import jakarta.persistence.Id;
 import lombok.Data;
 
 import java.sql.Date;
+import java.sql.Time;
 
 @Data
 @Entity
@@ -25,10 +26,14 @@ public class WarehouseWork {
     private String lathe;
     private String heidenhain;
     private String millingMachineSmall;
-    private int timeLathe = 0;
-    private int timeHeidenhain = 0;
-    private int timeSmall = 0;
-    private int timeFanuc = 0;
+
+    private int LatheTime;
+
+    private int HeidenhainTime;
+
+    private int SmallTime;
+
+    private int FanucTime;
 
     private int warehouseOpen;
 

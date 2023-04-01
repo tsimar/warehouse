@@ -5,8 +5,6 @@ import { motion } from "framer-motion";
 
 import { EditItemWarehouse } from "./EditItemWarehouse";
 import ReadItemProjectWarehouse from "./ReadItemProjectWarehouse";
-import ReadItemModuleWarehouse from "./ReadItemModuleWarehouse";
-import ReadItemElementWarehouse from "./ReadItemElementWarehouse";
 import "./styleWarehouse/warehouse.css";
 import {
   apiProject,
@@ -202,52 +200,52 @@ const Warehouse = () => {
     setAddWarehouse(newFormData);
   };
 
-  const handleEditFormSubmit = (event) => {
-    event.preventDefault();
-    let data;
-    changeNameProjectById(editSelect.project);
-    changeNameModuleById(editSelect.module);
-    changeNameUserById(editSelect.user);
-    changeNameElementById(editSelect.element);
-    if (editSelect.dataStart === "") {
-      data = editValue.dataStart;
-    } else {
-      data = editSelect.dataStart;
-    }
-    const editedContact = {
-      id: editValue.id,
-      idProject: editSelectPutProject,
-      idModule: editSelectPutModule,
-      idElement: editSelectPutElement,
-      number: editValue.number,
-      dataStart: data,
-      idUser: editSelectPutUser,
-      warehouseName: editValue.warehouseName,
-    };
+  // const handleEditFormSubmit = (event) => {
+  //   event.preventDefault();
+  //   let data;
+  //   changeNameProjectById(editSelect.project);
+  //   changeNameModuleById(editSelect.module);
+  //   changeNameUserById(editSelect.user);
+  //   changeNameElementById(editSelect.element);
+  //   if (editSelect.dataStart === "") {
+  //     data = editValue.dataStart;
+  //   } else {
+  //     data = editSelect.dataStart;
+  //   }
+  //   const editedContact = {
+  //     id: editValue.id,
+  //     idProject: editSelectPutProject,
+  //     idModule: editSelectPutModule,
+  //     idElement: editSelectPutElement,
+  //     number: editValue.number,
+  //     dataStart: data,
+  //     idUser: editSelectPutUser,
+  //     warehouseName: editValue.warehouseName,
+  //   };
 
-    apiWarehouse
-      .put("", editedContact)
-      .then((response) => {
-        fetchGetWarehouse();
-        handleCancelClick();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+  //   apiWarehouse
+  //     .put("", editedContact)
+  //     .then((response) => {
+  //       fetchGetWarehouse();
+  //       handleCancelClick();
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // };
 
-  const handleEditFormChange = (event) => {
-    event.preventDefault();
+  // const handleEditFormChange = (event) => {
+  //   event.preventDefault();
 
-    const fieldName = event.target.name;
+  //   const fieldName = event.target.name;
 
-    const fieldValue = event.target.value;
+  //   const fieldValue = event.target.value;
 
-    const newFormData = { ...editValue };
-    newFormData[fieldName] = fieldValue;
+  //   const newFormData = { ...editValue };
+  //   newFormData[fieldName] = fieldValue;
 
-    setEditValue(newFormData);
-  };
+  //   setEditValue(newFormData);
+  // };
 
   const handleEditClick = (event, edit) => {
     event.preventDefault();
@@ -276,9 +274,9 @@ const Warehouse = () => {
     changeIdByNameElement(edit.idElement);
   };
 
-  const handleCancelClick = () => {
-    setEditValue("");
-  };
+  // const handleCancelClick = () => {
+  //   setEditValue("");
+  // };
 
   const handleDeleteClick = (idProps) => {
     if (window.confirm("Do you really deleting?")) {
@@ -384,17 +382,14 @@ const Warehouse = () => {
     fetchGetWarehouse();
   }, [location]);
 
-  const handleEditSelect = (name, value) => {
-    const newFormData = { ...editSelect };
-    newFormData[name] = value;
+  // const handleEditSelect = (name, value) => {
+  //   const newFormData = { ...editSelect };
+  //   newFormData[name] = value;
 
-    setEditSelect(newFormData);
-  };
-  const handlGetModule = (data) => {};
-  const handlGetElement = (data) => {};
+  //   setEditSelect(newFormData);
+  // };
 
   const getProject = (index, data, count) => {
-
     return data[count[index]].map((item, countItems) => {
       return (
         <Fragment key={item.id}>
@@ -507,11 +502,7 @@ const Warehouse = () => {
         <button type="submit">add</button>
       </form>
       <section className="conteiner--warehouse">
-        <div className="div-getWorhouse">
-          {handlGetProject(warehouse)}
-          {handlGetModule(warehouse)}
-          {handlGetElement(warehouse)}
-        </div>
+        <div className="div-getWorhouse">{handlGetProject(warehouse)}</div>
         <motion.div drag className="conteiner-showPdfFile-warehouse">
           <label htmlFor="iframe">część: {nameLabelFile}</label>
           <iframe

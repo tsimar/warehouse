@@ -7,6 +7,7 @@ import warehouse.warehouse.entity.warehouse.WarehouseWork;
 import warehouse.warehouse.service.warehouse.WarehouseWorkService;
 
 import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -20,20 +21,21 @@ public class WarehouseWorkController {
     }
 
     @GetMapping
-    public ResponseEntity<List<WarehouseWork>> getSelectOpen(){
+    public ResponseEntity<Map<Long, List<WarehouseWork>>> getSelectOpen() {
 
         return ResponseEntity.ok(warehouseWorkService.getSelectWarehouseWork());
     }
 
-@GetMapping ("/all")
-public ResponseEntity<List<WarehouseWork>> getAll(){
+    @GetMapping("/all")
+    public ResponseEntity<List<WarehouseWork>> getAll() {
 
-    return ResponseEntity.ok(warehouseWorkService.getAll());
-}
+        return ResponseEntity.ok(warehouseWorkService.getAll());
+    }
+
     @PutMapping("/changeWorkMachine")
-    public void changeMachine(@RequestBody ChangeWorkMachine changeWorkMachine){
+    public void changeMachine(@RequestBody ChangeWorkMachine changeWorkMachine) {
 
-       warehouseWorkService.changeMachine(changeWorkMachine);
+        warehouseWorkService.changeMachine(changeWorkMachine);
     }
 
 
