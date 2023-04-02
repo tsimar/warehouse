@@ -11,4 +11,9 @@ public class ChangeWorkMachine {
     private String millingMachineSmall;
     private Long idElement;
     private Long idProject;
+    private int latheTime;
+    private int heidenhainTime;
+    private int smallTime;
+    private int fanucTime;
+
 }

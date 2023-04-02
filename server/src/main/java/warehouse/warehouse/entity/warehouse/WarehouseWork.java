@@ -27,13 +27,13 @@ public class WarehouseWork {
     private String heidenhain;
     private String millingMachineSmall;
 
-    private int LatheTime;
+    private int latheTime;
 
-    private int HeidenhainTime;
+    private int heidenhainTime;
 
-    private int SmallTime;
+    private int smallTime;
 
-    private int FanucTime;
+    private int fanucTime;
 
     private int warehouseOpen;
 

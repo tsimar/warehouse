@@ -16,9 +16,23 @@ public interface WarehouseWorkRepository extends JpaRepository<WarehouseWork, Lo
 
     @Transactional
     @Modifying(clearAutomatically = true)
-    @Query(value = "UPDATE WarehouseWork w SET  w.bacaFanuc=?1, w.heidenhain=?2, w.lathe=?3, w.millingMachineSmall=?4, w.warehouseOpen=?5 WHERE w.id=?6"
+    @Query(value = "UPDATE WarehouseWork w SET " +
+            " w.latheTime=?1, " +
+            "w.fanucTime=?2, " +
+            "w.heidenhainTime=?3, " +
+            "w.smallTime=?4, " +
+            " w.bacaFanuc=?5, " +
+            "w.heidenhain=?6, " +
+            "w.lathe=?7, " +
+            "w.millingMachineSmall=?8, " +
+            "w.warehouseOpen=?9 " +
+            "WHERE w.id=?10"
     )
-int update(
+    int update(
+            int latheTime,
+            int fanucTime,
+            int heidenhainTime,
+            int smallTime,
             String bacaFanuc,
             String heidenhain,
             String lathe,
@@ -27,7 +41,6 @@ int update(
             long id
 
     );
-
 
 
 }

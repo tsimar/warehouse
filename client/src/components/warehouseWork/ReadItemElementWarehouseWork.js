@@ -13,7 +13,7 @@ const ReadItemWarehouseWork = ({
 }) => {
   const [nameFile, setNameFile] = useState("");
 
-  const [timeMachina, setTimeMachina] = useState("");
+  const [nameClassShow, setNameClassShow] = useState("");
   const refId = useRef(0);
   const enableSaveRef = useRef("");
   const [machina, setMachina] = useState({
@@ -22,6 +22,12 @@ const ReadItemWarehouseWork = ({
     lathe: "",
     heidenhain: "",
     millingMachineSmall: "",
+  });
+  const [machinaTime, setMachinaTime] = useState({
+    fanucTime: "",
+    smallTime: "",
+    heidenhainTime: "",
+    latheTime: "",
   });
 
   const [propsElement, setPropsElement] = useReducer(
@@ -51,6 +57,10 @@ const ReadItemWarehouseWork = ({
       lathe: warehouseWork.lathe,
       heidenhain: warehouseWork.heidenhain,
       millingMachineSmall: warehouseWork.millingMachineSmall,
+      fanucTime: warehouseWork.fanucTime,
+      smallTime: warehouseWork.smallTime,
+      heidenhainTime: warehouseWork.heidenhainTime,
+      latheTime: warehouseWork.latheTime,
     };
     setMachina(data);
   }, [warehouseWork]);
@@ -77,17 +87,19 @@ const ReadItemWarehouseWork = ({
   };
 
   const handle = (e) => {
-    console.log(e.target.value);
-    console.log("fanuc status", e.target.name);
-    console.log("id-work", warehouseWork.id);
-
-    setTimeMachina(e.target.name);
-
+    setNameClassShow(e.target.name);
     const newFormData = { ...machina };
     newFormData[e.target.name] = e.target.value;
     refId.current = warehouseWork.id;
     setMachina(newFormData);
     enableSaveRef.current = "visibleSave";
+  };
+
+  const handleOnChange = (e) => {
+    const newFormData = { ...machinaTime };
+    newFormData[e.target.name] = e.target.value;
+    refId.current = warehouseWork.id;
+    setMachinaTime(newFormData);
   };
 
   const handleSaveWork = (e) => {
@@ -101,6 +113,10 @@ const ReadItemWarehouseWork = ({
       millingMachineSmall: machina.millingMachineSmall,
       idProject: warehouseWork.idProject,
       idElement: warehouseWork.idElement,
+      fanucTime: machinaTime.fanucTime,
+      smallTime: machinaTime.smallTime,
+      heidenhainTime: machinaTime.heidenhainTime,
+      latheTime: machinaTime.latheTime,
     };
     apiWarehouseWork
       .put("/changeWorkMachine", newWarehouseWork)
@@ -110,7 +126,7 @@ const ReadItemWarehouseWork = ({
       });
 
     enableSaveRef.current = "noneSave";
-    setTimeMachina("none-time");
+    setNameClassShow("none-time");
   };
   return (
     <div
@@ -136,13 +152,16 @@ const ReadItemWarehouseWork = ({
             status={warehouseWork.lathe}
           />
           <input
-            className={`${timeMachina === "lathe" ? "show-time" : "none-time"}`}
+            className={`${
+              nameClassShow === "lathe" ? "show-time" : "none-time"
+            }`}
             placeholder="work time in minutes"
             type="number"
             pattern="[0-9]*"
             min="1"
-            // onChange={handleTimeMichine}
+            name="latheTime"
             required
+            onChange={handleOnChange}
           />
         </div>
         <div className="div--button" key={3}>
@@ -153,13 +172,15 @@ const ReadItemWarehouseWork = ({
           />
           <input
             className={`${
-              timeMachina === "bacaFanuc" ? "show-time" : "none-time"
+              nameClassShow === "bacaFanuc" ? "show-time" : "none-time"
             }`}
+            name="fanucTime"
             placeholder="work time in minutes"
             type="number"
             pattern="[0-9]*"
             min="1"
             required
+            onChange={handleOnChange}
           />
         </div>
         <div className="div--button" key={4}>
@@ -170,13 +191,15 @@ const ReadItemWarehouseWork = ({
           />
           <input
             className={`${
-              timeMachina === "heidenhain" ? "show-time" : "none-time"
+              nameClassShow === "heidenhain" ? "show-time" : "none-time"
             }`}
+            name="heidenhainTime"
             placeholder="work time in minutes"
             type="number"
             pattern="[0-9]*"
             min="1"
             required
+            onChange={handleOnChange}
           />
         </div>
         <div className="div--button" key={5}>
@@ -187,13 +210,17 @@ const ReadItemWarehouseWork = ({
           />
           <input
             className={`${
-              timeMachina === "millingMachineSmall" ? "show-time" : "none-time"
+              nameClassShow === "millingMachineSmall"
+                ? "show-time"
+                : "none-time"
             }`}
+            name="smallTime"
             placeholder="work time in minutes"
             type="number"
             pattern="[0-9]*"
             min="1"
             required
+            onChange={handleOnChange}
           />
         </div>
         <button className={enableSaveRef.current} type="submit">

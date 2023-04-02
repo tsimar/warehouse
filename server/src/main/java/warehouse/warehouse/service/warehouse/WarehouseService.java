@@ -69,10 +69,10 @@ public class WarehouseService {
 
             projectMap.put(item.getIdProject(), warehouses.stream()
 //                    .sort(Comparator.comparing((a, b) -> a.getIdModule().compareTo(b.getIdModule()))
-                            .filter(id -> Objects.equals(id.getIdProject(), item.getIdProject()))
+                    .filter(id -> Objects.equals(id.getIdProject(), item.getIdProject()))
 
 
-                            .collect(Collectors.toList()));
+                    .collect(Collectors.toList()));
         }
 
         return projectMap;
@@ -94,6 +94,7 @@ public class WarehouseService {
     private List<Warehouse> summaElements(List<Warehouse> list) {
         List<Warehouse> totalElements = new ArrayList<>();
         List<Long> idProjectList = new ArrayList<>();
+        List<Long> idModuleList = new ArrayList<>();
 
         for (Warehouse item : list) {
             Warehouse warehouse = new Warehouse();
@@ -104,13 +105,19 @@ public class WarehouseService {
                         && item.getIdProject() == itemIterator.getIdProject()
 
                 ) {
-                    int select = 0;
+                    int selectIdProject = 0;
+                    int selectIdModule = 0;
                     for (Long id : idProjectList) {
                         if (itemIterator.getIdProject() == id) {
-                            select++;
+                            selectIdProject++;
                         }
                     }
-                    if (select == 0) {
+                    for (Long id : idModuleList) {
+                        if (itemIterator.getIdModule() == id) {
+                            selectIdModule++;
+                        }
+                    }
+                    if (selectIdModule == 0 || selectIdProject == 0) {
                         number += itemIterator.getNumber();
                     }
 
@@ -118,6 +125,7 @@ public class WarehouseService {
 
             }
             idProjectList.add(item.getIdProject());
+            idModuleList.add(item.getIdModule());
             if (number > 0) {
                 warehouse.setId(item.getId());
                 warehouse.setDataStart(item.getDataStart());

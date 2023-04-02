@@ -43,4 +43,9 @@ public class WarehouseWorkController {
     public void edit(@RequestBody WarehouseWork warehouseWork) {
         warehouseWorkService.edit(warehouseWork);
     }
+
+    @GetMapping("/timeMachine")
+    public ResponseEntity<List<WarehouseWork>> getTimeMachine(){
+        return ResponseEntity.ok(warehouseWorkService.getTimeMachine());
+    }
 }

@@ -59,7 +59,7 @@ public class WarehouseWorkService {
             for (WarehouseWork itemWork : warehouseWorks) {
                 WarehouseWork work = new WarehouseWork();
                 if (itemWork.getIdProject().equals(item.getIdProject()) && itemWork.getIdElement().equals(item.getIdElement())) {
-                    k++;
+//                    k++;
                     work.setId(itemWork.getId());
                     work.setIdProject(itemWork.getIdProject());
                     work.setIdModule(itemWork.getIdModule());
@@ -73,24 +73,24 @@ public class WarehouseWorkService {
                     work.setMillingMachineSmall(itemWork.getMillingMachineSmall());
                     work.setWarehouseOpen(itemWork.getWarehouseOpen());
                     workList.add(work);
+
+                } else {
+                    saveWork.setIdProject(itemWork.getId());
+                    saveWork.setIdProject(itemWork.getIdProject());
+                    saveWork.setIdModule(itemWork.getIdModule());
+                    saveWork.setIdElement(itemWork.getIdElement());
+                    saveWork.setNumber(itemWork.getNumber());
+                    saveWork.setDataStart(itemWork.getDataStart());
+                    saveWork.setDataFinish(Date.valueOf(LocalDate.now()));
+                    saveWork.setHeidenhain("magazyn");
+                    saveWork.setLathe("magazyn");
+                    saveWork.setBacaFanuc("magazyn");
+                    saveWork.setMillingMachineSmall("magazyn");
+                    saveWork.setWarehouseOpen(1);
+                    workList.add(saveWork);
+
+
                 }
-            }
-            if (k == 0) {
-
-                saveWork.setIdProject(item.getIdProject());
-                saveWork.setIdModule(item.getIdModule());
-                saveWork.setIdElement(item.getIdElement());
-                saveWork.setNumber(item.getNumber());
-                saveWork.setDataStart(item.getDataStart());
-                saveWork.setDataFinish(Date.valueOf(LocalDate.now()));
-                saveWork.setHeidenhain("magazyn");
-                saveWork.setLathe("magazyn");
-                saveWork.setBacaFanuc("magazyn");
-                saveWork.setMillingMachineSmall("magazyn");
-                saveWork.setWarehouseOpen(1);
-                workList.add(saveWork);
-
-
             }
             idNew++;
         }
@@ -139,6 +139,10 @@ public class WarehouseWorkService {
 
         }
         warehouseWorkRepository.update(
+                changeWorkMachine.getLatheTime(),
+                changeWorkMachine.getFanucTime(),
+                changeWorkMachine.getHeidenhainTime(),
+                changeWorkMachine.getSmallTime(),
                 changeWorkMachine.getBacaFanuc(),
                 changeWorkMachine.getHeidenhain(),
                 changeWorkMachine.getLathe(),
@@ -150,5 +154,15 @@ public class WarehouseWorkService {
 
     public List<WarehouseWork> getAll() {
         return warehouseWorkRepository.findAll();
+    }
+
+    public List<WarehouseWork> getTimeMachine() {
+        List<WarehouseWork> warehouseWorks = new ArrayList<>(warehouseWorkRepository.findAll());
+        warehouseWorks.stream().sorted(Comparator.comparing(WarehouseWork::getIdProject)
+                        .thenComparing(WarehouseWork::getIdModule))
+                .collect(Collectors.toList());
+
+
+        return warehouseWorks;
     }
 }
