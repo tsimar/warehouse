@@ -10,6 +10,7 @@ import Project from "./components/add/project/Project";
 import WarehouseWork from "./components/warehouseWork/WarehouseWork";
 import GoodElements from "./components/goodElement/GoodElements";
 import ModuleOfProject from "./components/add/moduleOfProject/ModuleOfProject";
+import TimeMachine from "./components/timeMachine/TimeMachine";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
 
         <Route path="/wareWork" element={<WarehouseWork />} />
         <Route path="/goodElement" element={<GoodElements />} />
+        <Route path="/timeMachine" element={<TimeMachine />} />
       </Routes>
     </Router>
   );

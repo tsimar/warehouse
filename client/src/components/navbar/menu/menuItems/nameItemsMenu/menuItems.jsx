@@ -39,4 +39,8 @@ export const menuItems = [
     value: "odbiór",
     Link: "/goodElement",
   },
+  {
+    value: "harmonogram",
+    Link: "/timeMachine",
+  },
 ];

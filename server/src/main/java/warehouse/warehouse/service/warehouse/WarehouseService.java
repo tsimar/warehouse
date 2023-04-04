@@ -86,7 +86,7 @@ public class WarehouseService {
         for (Warehouse item : warehouses) {
             warehouseMap.put(item.getIdProject(), warehouses);
         }
-        System.out.println(warehouseMap);
+
         return null;
     }
 

@@ -6,6 +6,7 @@ import warehouse.warehouse.DTO.ChangeWorkMachine;
 import warehouse.warehouse.entity.warehouse.WarehouseWork;
 import warehouse.warehouse.service.warehouse.WarehouseWorkService;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -45,7 +46,7 @@ public class WarehouseWorkController {
     }
 
     @GetMapping("/timeMachine")
-    public ResponseEntity<List<WarehouseWork>> getTimeMachine(){
+    public ResponseEntity< Map<Date,List<WarehouseWork>>> getTimeMachine(){
         return ResponseEntity.ok(warehouseWorkService.getTimeMachine());
     }
 }

@@ -156,13 +156,20 @@ public class WarehouseWorkService {
         return warehouseWorkRepository.findAll();
     }
 
-    public List<WarehouseWork> getTimeMachine() {
+    public  Map<Date,List<WarehouseWork>> getTimeMachine() {
         List<WarehouseWork> warehouseWorks = new ArrayList<>(warehouseWorkRepository.findAll());
-        warehouseWorks.stream().sorted(Comparator.comparing(WarehouseWork::getIdProject)
-                        .thenComparing(WarehouseWork::getIdModule))
+        Map<Date,List<WarehouseWork>> keyDateFinishMap=new TreeMap<>();
+        warehouseWorks.stream().sorted(Comparator.comparing(WarehouseWork::getDataFinish)
+                        .thenComparing(WarehouseWork::getIdProject)
+                        .thenComparing(WarehouseWork::getIdModule)
+                        .thenComparing(WarehouseWork::getId))
                 .collect(Collectors.toList());
 
-
-        return warehouseWorks;
+        for (WarehouseWork item:warehouseWorks) {
+            keyDateFinishMap.put(item.getDataFinish(),warehouseWorks.stream()
+                    .filter(date->Objects.equals(date.getDataFinish(),item.getDataFinish()))
+                    .collect(Collectors.toList()));
+        }
+        return keyDateFinishMap;
     }
 }
