@@ -10,7 +10,7 @@ import ReadItemModuleWarehouse from "./ReadItemModuleWarehouseWork";
 // import { Form } from "react-bootstrap";
 
 // let p;
-const ReadItemWarehouseWork = ({
+const ReadItemProjectWarehouseWork = ({
   item,
   index,
   project,
@@ -91,7 +91,7 @@ const ReadItemWarehouseWork = ({
 
       if (count === 1) {
         return (
-          <Fragment key={items.id}>
+          <Fragment key={key + 1}>
             <ReadItemModuleWarehouse
               idModule={checkModule}
               module={moduleData}
@@ -134,4 +134,4 @@ const ReadItemWarehouseWork = ({
     </div>
   );
 };
-export default ReadItemWarehouseWork;
+export default ReadItemProjectWarehouseWork;

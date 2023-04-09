@@ -189,7 +189,7 @@ const WarehouseWork = () => {
   const getProject = (index, data, count) => {
     return data[count[index]].map((item, countItems) => {
       return (
-        <Fragment key={item.id}>
+        <Fragment key={countItems}>
           {editValue.id === item.id ? (
             <EditItemWarehouseWork />
           ) : (

@@ -3,7 +3,7 @@ import SelectPositionWork from "./SelectPositionWork";
 import { apiWarehouseWork } from "../../url/URL";
 
 // let p;
-const ReadItemWarehouseWork = ({
+const ReadItemElementWarehouseWork = ({
   warehouseWork,
   count,
   element,
@@ -11,6 +11,7 @@ const ReadItemWarehouseWork = ({
   handleDeleteClick,
   showPdfFile,
 }) => {
+  console.log(element);
   const [nameFile, setNameFile] = useState("");
 
   const [nameClassShow, setNameClassShow] = useState("");
@@ -39,6 +40,7 @@ const ReadItemWarehouseWork = ({
   );
 
   const addElement = (data, element) => {
+    console.log(data);
     element.map((item) =>
       data.idElement === item.id
         ? setPropsElement(item)
@@ -230,4 +232,4 @@ const ReadItemWarehouseWork = ({
     </div>
   );
 };
-export default ReadItemWarehouseWork;
+export default ReadItemElementWarehouseWork;

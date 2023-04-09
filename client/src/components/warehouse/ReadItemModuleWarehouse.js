@@ -39,10 +39,10 @@ const ReadItemModuleWarehouse = ({
   };
 
   return (
-    <>
+    <Fragment key={warehouse.id}>
       {addModule(idModule, module)}
-      <div className="eelem">{addElement(idModule, warehouse, idProject)}</div>
-    </>
+      <div className="elem">{addElement(idModule, warehouse, idProject)}</div>
+    </Fragment>
   );
 };
 export default ReadItemModuleWarehouse;

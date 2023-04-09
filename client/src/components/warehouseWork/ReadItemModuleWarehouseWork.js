@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import ReadItemElementWarehouseWork from "./ReadItemElementWarehouseWork";
 
 // let p;
-const ReadItemWarehouseWork = ({
+const ReadItemModuleWarehouseWork = ({
   warehouseWork,
   index,
   idProject,
@@ -13,13 +13,16 @@ const ReadItemWarehouseWork = ({
   handleDeleteClick,
   showPdfFile,
 }) => {
+  console.log("warehouseWork", warehouseWork);
+
   const addElement = (idModule, warehouseWork, idProject) => {
     let count = -1;
     return warehouseWork.map((items, index) => {
       if (items.idModule === idModule && items.idProject === idProject) {
+        console.log("items", items);
         count++;
         return (
-          <Fragment key={items.id}>
+          <Fragment key={index}>
             <ReadItemElementWarehouseWork
               warehouseWork={items}
               element={element}
@@ -36,17 +39,19 @@ const ReadItemWarehouseWork = ({
     return module.map((item, index) => {
       return idModule === item.id ? (
         <span key={index}>{item.nameModule}</span>
-      ) : null;
+      ) : (
+        ""
+      );
     });
   };
 
   return (
-    <>
+    <Fragment key={warehouseWork.id + 2}>
       {addModule(idModule, module)}
-      <div className="eelem">
+      <div className="elem">
         {addElement(idModule, warehouseWork, idProject)}
       </div>
-    </>
+    </Fragment>
   );
 };
-export default ReadItemWarehouseWork;
+export default ReadItemModuleWarehouseWork;
