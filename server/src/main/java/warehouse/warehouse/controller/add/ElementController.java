@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import warehouse.warehouse.entity.add.Element;
-import warehouse.warehouse.repository.add.NewElementRepo;
+
 import warehouse.warehouse.service.add.ElementService;
 
 import java.io.IOException;

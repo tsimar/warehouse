@@ -2,13 +2,10 @@ package warehouse.warehouse.service.add;
 
 import org.springframework.stereotype.Service;
 import warehouse.warehouse.entity.add.ModuleOfProject;
-import warehouse.warehouse.entity.add.Position;
 import warehouse.warehouse.repository.add.ModuleOfProjectRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.TreeSet;
 
 @Service
 public class ModuleOfProjectService<T> {

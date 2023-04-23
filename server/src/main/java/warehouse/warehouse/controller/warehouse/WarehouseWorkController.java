@@ -7,6 +7,8 @@ import warehouse.warehouse.entity.warehouse.WarehouseWork;
 import warehouse.warehouse.service.warehouse.WarehouseWorkService;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -46,7 +48,7 @@ public class WarehouseWorkController {
     }
 
     @GetMapping("/timeMachine")
-    public ResponseEntity< Map<Date,List<WarehouseWork>>> getTimeMachine(){
+    public ResponseEntity<HashMap<Date, ArrayList<WarehouseWork>>> getTimeMachine(){
         return ResponseEntity.ok(warehouseWorkService.getTimeMachine());
     }
 }

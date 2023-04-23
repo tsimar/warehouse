@@ -22,13 +22,7 @@ const TimeMachine = () => {
     fetchGetTimeMachine();
   }, []);
 
-  const LLL = (id) => {
-    return "sss";
-  };
-
   const getProjectModuleElement = (item) => {
-    console.log(item);
-    // return <span>{NameOfIdProject(item.idProject)} </span>;
     try {
       NameOfIdProject(item.idProject);
     } catch (error) {
@@ -36,11 +30,12 @@ const TimeMachine = () => {
     }
   };
   const getTime = (index, data, count) => {
+    // getProjectModuleElement(data);
     return data[count[index]].map((item, countItems) => {
       return (
         <Fragment key={index}>
           <span>{item.dataFinish}</span>
-          {getProjectModuleElement(item)}
+          {/* <span>{getProjectModuleElement(item)}</span> */}
           {item.heidenhain === "obróbka" ? (
             <span>{item.heidenhainTime}</span>
           ) : null}
@@ -55,11 +50,10 @@ const TimeMachine = () => {
   };
 
   const handleShow = (data) => {
-    // e.preventDefault();
     let count = Object.keys(data);
 
     return Object.keys(data).map((_, index) => {
-      return getTime(index, data, count);
+      return <div key={index}>{getTime(index, data, count)}</div>;
     });
   };
 

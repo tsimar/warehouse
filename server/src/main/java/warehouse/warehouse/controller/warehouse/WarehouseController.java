@@ -7,7 +7,6 @@ import warehouse.warehouse.entity.warehouse.Warehouse;
 import warehouse.warehouse.service.warehouse.WarehouseService;
 import warehouse.warehouse.service.warehouse.WarehouseWorkService;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -35,7 +34,7 @@ public class WarehouseController {
 
     @PostMapping
     public ResponseEntity<Warehouse> save(@RequestBody Warehouse warehouse){
-        System.out.println(warehouse.getWarehouseName().equals("in"));
+
         if (warehouse.getWarehouseName().equals("in")){
             warehouseServiceWork.saveWork(warehouse);
         }

@@ -9,10 +9,20 @@ import warehouse.warehouse.entity.warehouse.WarehouseWork;
 
 import java.util.List;
 
+
 @Repository
 public interface WarehouseWorkRepository extends JpaRepository<WarehouseWork, Long> {
-    @Query(value = "SELECT w FROM WarehouseWork w WHERE w.warehouseOpen=?1 ")
+    @Query(value = "SELECT w FROM WarehouseWork w WHERE w.warehouseOpen=?1 ORDER BY idProject")
     List<WarehouseWork> findAllOpen(int number);
+
+    @Query(value = "SELECT dataFinish," +
+            "sum(latheTime),sum(heidenhainTime),sum(smallTime),sum(fanucTime)" +
+            "FROM WarehouseWork " +
+            "WHERE " +
+            "warehouseOpen=?1 and bacaFanuc=\"obróbka\" or heidenhain=\"obróbka\" " +
+            "or lathe=\"obróbka\" or millingMachineSmall=\"obróbka\" " +
+            "ORDER BY dataFinish, idProject, idModule, id" )
+    List sortTimeMachineOfData(int number);
 
     @Transactional
     @Modifying(clearAutomatically = true)

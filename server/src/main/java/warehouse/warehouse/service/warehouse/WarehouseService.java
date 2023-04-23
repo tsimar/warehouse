@@ -2,7 +2,6 @@ package warehouse.warehouse.service.warehouse;
 
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
-import warehouse.warehouse.controller.add.ModuleOfProjectController;
 import warehouse.warehouse.entity.warehouse.Warehouse;
 import warehouse.warehouse.repository.warehouse.WarehouseRepository;
 

@@ -1,9 +1,7 @@
 package warehouse.warehouse.controller.add;
 
 
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import warehouse.warehouse.entity.add.Project;
 import warehouse.warehouse.service.add.NameProjectService;

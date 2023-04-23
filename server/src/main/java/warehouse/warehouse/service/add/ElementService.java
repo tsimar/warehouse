@@ -7,11 +7,12 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import warehouse.warehouse.entity.add.Element;
-import warehouse.warehouse.entity.add.NewElement;
 import warehouse.warehouse.repository.add.ElementRepository;
-import warehouse.warehouse.repository.add.NewElementRepo;
 
-import java.io.*;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;

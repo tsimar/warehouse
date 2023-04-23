@@ -3,6 +3,7 @@ package warehouse.warehouse.service.warehouse;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
 import warehouse.warehouse.DTO.ChangeWorkMachine;
 import warehouse.warehouse.entity.warehouse.Warehouse;
 import warehouse.warehouse.entity.warehouse.WarehouseWork;
@@ -36,51 +37,18 @@ public class WarehouseWorkService {
 
     public Map<Long, List<WarehouseWork>> getSelectWarehouseWork() {
 
-        List<Warehouse> warehouses = warehouseService.getWarehouseByName();
+
         List<WarehouseWork> warehouseWorks = warehouseWorkRepository.findAllOpen(1);
-        Map<Long, List<WarehouseWork>> result = resultWarehouseWork(warehouses, warehouseWorks);
+        Map<Long, List<WarehouseWork>> result = resultWarehouseWork(warehouseWorks);
 
         return result;
+
     }
 
-    private Map<Long, List<WarehouseWork>> resultWarehouseWork(List<Warehouse> warehouses, List<WarehouseWork> warehouseWorks) {
-        List<WarehouseWork> workList = new ArrayList<>();
-        Map<Long, List<WarehouseWork>> projectMap = new TreeMap<>();
+    private Map<Long, List<WarehouseWork>> resultWarehouseWork(List<WarehouseWork> warehouseWorks) {
+        Map<Long, List<WarehouseWork>> projectMap;
 
-        for (Warehouse item : warehouses) {
-            WarehouseWork saveWork = new WarehouseWork();
-
-            for (WarehouseWork itemWork : warehouseWorks) {
-                WarehouseWork work = new WarehouseWork();
-                if (itemWork.getIdProject().equals(item.getIdProject())
-                        && itemWork.getIdElement().equals(item.getIdElement())) {
-
-                    work.setDataFinish(itemWork.getDataFinish());
-                    work.setHeidenhain(itemWork.getHeidenhain());
-                    work.setLathe(itemWork.getLathe());
-                    work.setBacaFanuc(itemWork.getBacaFanuc());
-                    work.setMillingMachineSmall(itemWork.getMillingMachineSmall());
-                    work.setWarehouseOpen(itemWork.getWarehouseOpen());
-                } else {
-                    work.setDataFinish(Date.valueOf(LocalDate.now()));
-                    work.setHeidenhain("magazyn");
-                    work.setLathe("magazyn");
-                    work.setBacaFanuc("magazyn");
-                    work.setMillingMachineSmall("magazyn");
-                    work.setWarehouseOpen(1);
-                }
-
-                work.setId(itemWork.getId());
-                work.setIdProject(itemWork.getIdProject());
-                work.setIdModule(itemWork.getIdModule());
-                work.setIdElement(itemWork.getIdElement());
-                work.setNumber(itemWork.getNumber());
-                work.setDataStart(itemWork.getDataStart());
-                workList.add(work);
-            }
-
-        }
-        projectMap = workList.stream()
+        projectMap = warehouseWorks.stream()
                 .collect(Collectors.groupingBy(
                         WarehouseWork::getIdProject,
                         HashMap::new,
@@ -142,27 +110,18 @@ public class WarehouseWorkService {
         return warehouseWorkRepository.findAll();
     }
 
-    public Map<Date, List<WarehouseWork>> getTimeMachine() {
-        List<WarehouseWork> warehouseWorks = new ArrayList<>(warehouseWorkRepository.findAll());
-        Map<Date, List<WarehouseWork>> keyDateFinishMap = new TreeMap<>();
+    public HashMap<Date, ArrayList<WarehouseWork>> getTimeMachine() {
+        List<WarehouseWork> timeMachineOfData = new ArrayList<>(warehouseWorkRepository.sortTimeMachineOfData(1));
 
-        keyDateFinishMap = warehouseWorks.stream()
-                .sorted(Comparator.comparing(WarehouseWork::getDataFinish)
-                        .thenComparing(WarehouseWork::getIdProject)
-                        .thenComparing(WarehouseWork::getIdModule)
-                        .thenComparing(WarehouseWork::getId))
-                .filter(machina->machina.getHeidenhain().contains("obr")
-                        || machina.getBacaFanuc().contains("obr")
-                        || machina.getMillingMachineSmall().contains("obr")
-                        || machina.getLathe().contains("obr")
-                )
+
+     var  keyDateFinishMap = timeMachineOfData.stream()
+
                 .collect(Collectors.groupingBy(
                         WarehouseWork::getDataFinish,
-                        HashMap::new,Collectors.toCollection(ArrayList::new))
+                        HashMap::new, Collectors.toCollection(ArrayList::new))
                 );
         return keyDateFinishMap;
     }
 
-//    private List
 
 }

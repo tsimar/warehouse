@@ -91,7 +91,7 @@ const Elements = () => {
       if (iframe?.src) {
         iframe.src = url;
       } else {
-        iframe.src = null;
+        iframe.src =null;
         setNameLabelFile("");
       }
     } catch (error) {
