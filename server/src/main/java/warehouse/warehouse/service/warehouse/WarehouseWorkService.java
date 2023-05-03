@@ -110,6 +110,7 @@ public class WarehouseWorkService {
         return warehouseWorkRepository.findAll();
     }
 
+
     public HashMap<Date, ArrayList<WarehouseWork>> getTimeMachine() {
         List<WarehouseWork> timeMachineOfData = new ArrayList<>(warehouseWorkRepository.sortTimeMachineOfData(1));
 

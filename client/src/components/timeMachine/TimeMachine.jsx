@@ -1,6 +1,8 @@
 import React, { useState, useEffect, Fragment } from "react";
 import { apiWarehouseWork } from "../../url/URL";
 import { NameOfIdProject } from "../nameOfId/NameOfIdProject";
+import { NameOfIdModule } from "../nameOfId/NameOfIdModule";
+import { NameOfIdElement } from "../nameOfId/NameOfIdElement";
 
 const TimeMachine = () => {
   const [timeData, setTimeData] = useState([]);
@@ -22,28 +24,43 @@ const TimeMachine = () => {
     fetchGetTimeMachine();
   }, []);
 
-  const getProjectModuleElement = (item) => {
-    try {
-      NameOfIdProject(item.idProject);
-    } catch (error) {
-      console.error(error);
-    }
-  };
   const getTime = (index, data, count) => {
     // getProjectModuleElement(data);
     return data[count[index]].map((item, countItems) => {
       return (
         <Fragment key={index}>
           <span>{item.dataFinish}</span>
-          {/* <span>{getProjectModuleElement(item)}</span> */}
+          <span>
+            <NameOfIdProject id={item.idProject} />
+          </span>
+          <span>
+            <NameOfIdModule id={item.idModule} />
+          </span>
+          <span>
+            <NameOfIdElement id={item.idElement} />
+          </span>
           {item.heidenhain === "obróbka" ? (
-            <span>{item.heidenhainTime}</span>
-          ) : null}
-          {item.lathe === "obróbka" ? <span>{item.latheTime}</span> : null}
-          {item.bacaFanuc === "obróbka" ? <span>{item.fanucTime}</span> : null}
+            <>
+              <span>{item.heidenhainTime} min</span>
+            </>
+          ) : (
+            <span>0 min</span>
+          )}
+          {item.lathe === "obróbka" ? (
+            <span> {item.latheTime} min</span>
+          ) : (
+            <span>0 min</span>
+          )}
+          {item.bacaFanuc === "obróbka" ? (
+            <span> {item.fanucTime} min</span>
+          ) : (
+            <span>0 min</span>
+          )}
           {item.millingMachineSmall === "obróbka" ? (
-            <span>{item.smallTime}</span>
-          ) : null}
+            <span> {item.smallTime} min</span>
+          ) : (
+            <span>0 min</span>
+          )}
         </Fragment>
       );
     });
@@ -57,6 +74,19 @@ const TimeMachine = () => {
     });
   };
 
-  return <div key={1}>{handleShow(timeData)}</div>;
+  return (
+    <>
+      <div>
+        <span> date</span>
+        <span> project</span>
+        <span> module</span>
+        <span> Frezarka 4m</span>
+        <span> tokarka</span>
+        <span> Baca</span>
+        <span> mała frezarka</span>
+      </div>
+      <div key={1}>{handleShow(timeData)}</div>
+    </>
+  );
 };
 export default TimeMachine;

@@ -1,19 +1,26 @@
 package warehouse.warehouse.service.warehouse;
 
 import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import warehouse.warehouse.entity.warehouse.Warehouse;
 import warehouse.warehouse.repository.warehouse.WarehouseRepository;
+import warehouse.warehouse.repository.warehouse.WarehouseWorkRepository;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
+
 @Service
+@Slf4j
 public class WarehouseService {
+
+private final WarehouseWorkRepository warehouseWorkRepository;
     private final WarehouseRepository warehouseRepository;
 
 
-    public WarehouseService(WarehouseRepository warehouseRepository) {
+    public WarehouseService(WarehouseWorkRepository warehouseWorkRepository, WarehouseRepository warehouseRepository) {
+        this.warehouseWorkRepository = warehouseWorkRepository;
         this.warehouseRepository = warehouseRepository;
     }
 
@@ -26,18 +33,26 @@ public class WarehouseService {
     }
 
     @Transactional
-    public void edit(Warehouse warehouse) {
+    public void editProject(Warehouse warehouse) {
         try {
+        var idProjectFirst=   warehouseRepository
+                    .getIdProject(warehouse.getId());
+
             warehouseRepository
-                    .findById(warehouse.getId())
-                    .ifPresent(warehouse1 -> {
-                        warehouse1.setIdProject(warehouse.getIdProject());
-                        warehouse1.setIdElement(warehouse.getIdElement());
-                        warehouse1.setNumber(warehouse.getNumber());
-                        warehouse1.setDataStart(warehouse.getDataStart());
-                        warehouse1.setIdUser(warehouse.getIdUser());
-                        warehouse1.setWarehouseName(warehouse.getWarehouseName());
-                    });
+                    .updateProject(warehouse.getIdProject(),idProjectFirst);
+            warehouseWorkRepository
+                    .updateProject(warehouse.getIdProject(),idProjectFirst);
+            
+//            warehouseRepository
+//                    .findById(warehouse.getId())
+//                    .ifPresent(warehouse1 -> {
+//                        warehouse1.setIdProject(warehouse.getIdProject());
+//                        warehouse1.setIdElement(warehouse.getIdElement());
+//                        warehouse1.setNumber(warehouse.getNumber());
+//                        warehouse1.setDataStart(warehouse.getDataStart());
+//                        warehouse1.setIdUser(warehouse.getIdUser());
+//                        warehouse1.setWarehouseName(warehouse.getWarehouseName());
+//                    });
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

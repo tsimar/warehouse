@@ -16,21 +16,22 @@ const ReadItemProjectWarehouse = ({
 }) => {
   // const [nameFile, setNameFile] = useState("");
   // const [propsElement, setPropsElement] = useState([]);
+console.log("allWarehouse line 19: ", allWarehouse);
+const addProject = (itemsWarehouse, project) => {
+  return project.map((item, index) => {
+    return itemsWarehouse.idProject === item.id ? (
+      <span key={index}>{item.nameProject}</span>
+    ) : null;
+  });
+};
 
-  const addProject = (itemsWarehouse, project) => {
-    return project.map((item, index) => {
-      return itemsWarehouse.idProject === item.id ? (
-        <span key={index}>{item.nameProject}</span>
-      ) : null;
-    });
-  };
+const handleGetModule = (data, moduleData, checkModule, idProject) => {
+  let count = 0;
+  let sortData = []
+    .concat(data)
+    .sort((a, b) => (a.idModule < b.idModule ? -1 : 1));
 
-  const handleGetModule = (data, moduleData, checkModule, idProject) => {
-    let count = 0;
-    let sortData = []
-      .concat(data)
-      .sort((a, b) => (a.idModule < b.idModule ? -1 : 1));
-
+  if (data !== undefined) {
     return sortData.map((items, key) => {
       if (items.idModule !== checkModule) {
         checkModule = items.idModule;
@@ -56,7 +57,8 @@ const ReadItemProjectWarehouse = ({
         );
       }
     });
-  };
+  }
+};
 
   return (
     <div

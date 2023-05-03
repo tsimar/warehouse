@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { apiProject } from "../../url/URL";
 
-export const NameOfIdProject = async (id) => {
+export const NameOfIdProject = ({ id }) => {
   const [project, setProject] = useState([]);
-  const [nameProject, setNameProject] = useState("");
 
   const fetchGETProject = async () => {
     try {
@@ -18,11 +17,15 @@ export const NameOfIdProject = async (id) => {
   useEffect(() => {
     fetchGETProject();
   }, []);
-  const addProject = (id, project) => {
-    return project.map((item) => {
-      return id === item.id ? console.log("sdfsdf") : null;
+
+  const addProject = (id) => {
+    // e.preventDefault();
+    return project.map((item, index) => {
+      return id === item.id ? (
+        <span key={index}>{item.nameProject}</span>
+      ) : null;
     });
   };
-  addProject(id, project);
-  return "{ nameProject }";
+
+  return <>{addProject(id)}</>;
 };

@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import DatePicker from "react-date-picker";
 import { motion } from "framer-motion";
 
-import { EditItemWarehouse } from "./EditItemWarehouse";
+import { EditItemProjectWarehouse } from "./EditItemProjectWarehouse";
 import ReadItemProjectWarehouse from "./ReadItemProjectWarehouse";
 import "./styleWarehouse/warehouse.css";
 import {
@@ -86,7 +86,7 @@ const Warehouse = () => {
       idUser: editSelectPutUser,
       warehouseName: name,
     };
-    console.log(newWarehouse);
+
     await apiWarehouse
       .post("", newWarehouse)
       .then((response) => {
@@ -200,52 +200,48 @@ const Warehouse = () => {
     setAddWarehouse(newFormData);
   };
 
-  // const handleEditFormSubmit = (event) => {
-  //   event.preventDefault();
-  //   let data;
-  //   changeNameProjectById(editSelect.project);
-  //   changeNameModuleById(editSelect.module);
-  //   changeNameUserById(editSelect.user);
-  //   changeNameElementById(editSelect.element);
-  //   if (editSelect.dataStart === "") {
-  //     data = editValue.dataStart;
-  //   } else {
-  //     data = editSelect.dataStart;
-  //   }
-  //   const editedContact = {
-  //     id: editValue.id,
-  //     idProject: editSelectPutProject,
-  //     idModule: editSelectPutModule,
-  //     idElement: editSelectPutElement,
-  //     number: editValue.number,
-  //     dataStart: data,
-  //     idUser: editSelectPutUser,
-  //     warehouseName: editValue.warehouseName,
-  //   };
+  const handleEditFormSubmit = (event) => {
+    event.preventDefault();
+    // let data;
+    changeNameProjectById(editSelect.project);
+    // changeNameModuleById(editSelect.module);
+    // changeNameUserById(editSelect.user);
+    // changeNameElementById(editSelect.element);
+    // if (editSelect.dataStart === "") {
+    //   data = editValue.dataStart;
+    // } else {
+    //   data = editSelect.dataStart;
+    // }
+    const editedContact = {
+      id: editValue.id,
+      idProject: editSelectPutProject,
+      idElement: editSelectPutElement,
+      warehouseName: editValue.warehouseName,
+    };
 
-  //   apiWarehouse
-  //     .put("", editedContact)
-  //     .then((response) => {
-  //       fetchGetWarehouse();
-  //       handleCancelClick();
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // };
+    apiWarehouse
+      .put("/editProject", editedContact)
+      .then((response) => {
+        fetchGetWarehouse();
+        handleCancelClick();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
-  // const handleEditFormChange = (event) => {
-  //   event.preventDefault();
+  const handleEditFormChange = (event) => {
+    event.preventDefault();
 
-  //   const fieldName = event.target.name;
+    const fieldName = event.target.name;
 
-  //   const fieldValue = event.target.value;
+    const fieldValue = event.target.value;
 
-  //   const newFormData = { ...editValue };
-  //   newFormData[fieldName] = fieldValue;
+    const newFormData = { ...editValue };
+    newFormData[fieldName] = fieldValue;
 
-  //   setEditValue(newFormData);
-  // };
+    setEditValue(newFormData);
+  };
 
   const handleEditClick = (event, edit) => {
     event.preventDefault();
@@ -274,9 +270,9 @@ const Warehouse = () => {
     changeIdByNameElement(edit.idElement);
   };
 
-  // const handleCancelClick = () => {
-  //   setEditValue("");
-  // };
+  const handleCancelClick = () => {
+    setEditValue("");
+  };
 
   const handleDeleteClick = (idProps) => {
     if (window.confirm("Do you really deleting?")) {
@@ -382,24 +378,34 @@ const Warehouse = () => {
     fetchGetWarehouse();
   }, [location]);
 
-  // const handleEditSelect = (name, value) => {
-  //   const newFormData = { ...editSelect };
-  //   newFormData[name] = value;
+  const handleEditSelect = (name, value) => {
+    const newFormData = { ...editSelect };
+    newFormData[name] = value;
 
-  //   setEditSelect(newFormData);
-  // };
+    setEditSelect(newFormData);
+  };
 
   const getProject = (index, data, count) => {
     return data[count[index]].map((item, countItems) => {
       return (
         <Fragment key={item.id}>
           {editValue.id === item.id ? (
-            <EditItemWarehouse />
+            <EditItemProjectWarehouse
+              project={project}
+              editValue={editValue}
+              handleAddSubmit={handleAddSubmit}
+              handleEditFormSubmit={handleEditFormSubmit}
+              handleEditFormChange={handleEditFormChange}
+              handleCancelClick={handleCancelClick}
+              handleDeleteClick={handleDeleteClick}
+              editSelectProjectById={editSelect.project}
+              handleEditSelect={handleEditSelect}
+            />
           ) : (
             <ReadItemProjectWarehouse
               boleanProject={countItems <= 0}
               warehouse={item}
-              allWarehouse={data[index + 1]}
+              allWarehouse={data[count[index]]}
               count={index}
               project={project}
               module={module}

@@ -15,15 +15,13 @@ public interface WarehouseWorkRepository extends JpaRepository<WarehouseWork, Lo
     @Query(value = "SELECT w FROM WarehouseWork w WHERE w.warehouseOpen=?1 ORDER BY idProject")
     List<WarehouseWork> findAllOpen(int number);
 
-    @Query(value = "SELECT dataFinish," +
-            "sum(latheTime),sum(heidenhainTime),sum(smallTime),sum(fanucTime)" +
-            "FROM WarehouseWork " +
-            "WHERE " +
-            "warehouseOpen=?1 and bacaFanuc=\"obróbka\" or heidenhain=\"obróbka\" " +
-            "or lathe=\"obróbka\" or millingMachineSmall=\"obróbka\" " +
-            "ORDER BY dataFinish, idProject, idModule, id" )
+    @Query(value = "SELECT w FROM WarehouseWork w WHERE w.warehouseOpen=?1 "+
+            " and w.bacaFanuc=\"obróbka\" or w.heidenhain=\"obróbka\" " +
+            "or w.lathe=\"obróbka\" or w.millingMachineSmall=\"obróbka\" " +
+            "ORDER BY w.dataFinish, w.idProject, w.idModule")
     List sortTimeMachineOfData(int number);
 
+    //            )
     @Transactional
     @Modifying(clearAutomatically = true)
     @Query(value = "UPDATE WarehouseWork w SET " +
@@ -51,6 +49,12 @@ public interface WarehouseWorkRepository extends JpaRepository<WarehouseWork, Lo
             long id
 
     );
-
+    @Query(value = "UPDATE WarehouseWork w SET " +
+            " w.idProject=?1 WHERE w.idProject=?2"
+    )
+    Long updateProject(
+            long projectSecond,
+            long projectFirst
+    );
 
 }

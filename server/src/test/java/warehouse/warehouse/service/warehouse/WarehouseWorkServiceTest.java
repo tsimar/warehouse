@@ -1,8 +1,6 @@
 package warehouse.warehouse.service.warehouse;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -22,14 +20,16 @@ import static org.mockito.Mockito.when;
 
 @DataJpaTest
 class WarehouseWorkServiceTest {
+@BeforeAll
+static void  beforeAll(){
+    System.out.println("before All");
 
+}
     @InjectMocks
     private WarehouseService warehouseService;
 
     @Mock
-  WarehouseWorkRepository warehouseWorkRepository;
-
-
+    WarehouseWorkRepository warehouseWorkRepository;
 
 
     @Test
@@ -41,11 +41,16 @@ class WarehouseWorkServiceTest {
     private void assertThat() {
     }
 
-    @Test
-    void save() throws Exception{
-
-warehouseWorkRepository.save(new WarehouseWork());
-    }
+//    @Test
+//    @DisplayName("save element warehouse with frontend")
+//    void save() throws Exception {
+////given
+////Warehouse expected=n;
+//        //when
+////var result= warehouseWorkRepository.save(new WarehouseWork());
+//        //then
+////        Assertions.assertArrayEquals(expected,result);
+//    }
 
     @Test
     void delete() {

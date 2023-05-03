@@ -196,7 +196,7 @@ const WarehouseWork = () => {
             <ReadItemProjectWarehouseWork
               boleanProject={countItems <= 0}
               item={item}
-              allWarehouse={data[index + 1]}
+              allWarehouse={data[count[index]]}
               index={index}
               project={project}
               module={module}
