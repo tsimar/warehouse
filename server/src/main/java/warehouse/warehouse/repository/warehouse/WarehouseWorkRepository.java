@@ -11,6 +11,7 @@ import java.util.List;
 
 
 @Repository
+//@Slf4j
 public interface WarehouseWorkRepository extends JpaRepository<WarehouseWork, Long> {
     @Query(value = "SELECT w FROM WarehouseWork w WHERE w.warehouseOpen=?1 ORDER BY idProject")
     List<WarehouseWork> findAllOpen(int number);
@@ -49,12 +50,24 @@ public interface WarehouseWorkRepository extends JpaRepository<WarehouseWork, Lo
             long id
 
     );
+
+    @Transactional
+    @Modifying(clearAutomatically = true,flushAutomatically = true)
     @Query(value = "UPDATE WarehouseWork w SET " +
             " w.idProject=?1 WHERE w.idProject=?2"
     )
-    Long updateProject(
+    Integer updateProject(
             long projectSecond,
             long projectFirst
     );
 
+    @Transactional
+    @Modifying(clearAutomatically = true,flushAutomatically = true)
+    @Query(value = "UPDATE WarehouseWork w SET " +
+            " w.idModule=?2 WHERE w.idProject=?1 AND w.idModule=?3"
+    )
+    Integer updateModule(
+            long idProject,
+            long idModule, long oldIdModule
+    );
 }

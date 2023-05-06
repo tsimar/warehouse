@@ -9,6 +9,7 @@ const ReadItemModuleWarehouse = ({
   user,
   element,
   showPdfFile,
+  handleEditModuleClick,
 }) => {
   const addElement = (idModule, warehouse, idProject) => {
     let count = -1;
@@ -31,9 +32,17 @@ const ReadItemModuleWarehouse = ({
   };
 
   const addModule = (idModule, module) => {
+    console.log(warehouse[0].idProject);
     return module.map((item, index) => {
       return idModule === item.id ? (
-        <span key={index}>{item.nameModule}</span>
+        <span
+          key={index}
+          onDoubleClick={(e) =>
+            handleEditModuleClick(e, idModule, warehouse[0].idProject)
+          }
+        >
+          {item.nameModule}
+        </span>
       ) : null;
     });
   };

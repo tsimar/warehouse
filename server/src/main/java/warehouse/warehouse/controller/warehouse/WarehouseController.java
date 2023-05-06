@@ -51,9 +51,14 @@ public class WarehouseController {
             warehouseService.delete(id);
         }
     }
+
     @PutMapping("/editProject")
     public void edit(@RequestBody Warehouse warehouse) {
         warehouseService.editProject(warehouse);
     }
 
+    @PutMapping("/editModule")
+    public void editModule(@RequestBody Warehouse warehouse) {
+        warehouseService.editModule(warehouse);
+    }
 }

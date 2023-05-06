@@ -22,16 +22,25 @@ public interface WarehouseRepository extends JpaRepository<Warehouse,Long> {
     @Query(value = "SELECT w FROM Warehouse w WHERE w.warehouseName=?1 ")
     List<Warehouse> getOut(String out);
 
-    @Transactional
-    @Modifying(clearAutomatically = true)
+     @Transactional
+    @Modifying(clearAutomatically = true,flushAutomatically = true)
     @Query(value = "UPDATE Warehouse w SET " +
             " w.idProject=?1 WHERE w.idProject=?2"
     )
-    Long updateProject(
-            long projectSecond,
-            long projectFirst
+    Integer updateProject(
+            long setProject,
+            long selectProject
        );
 
+    @Transactional
+    @Modifying(clearAutomatically = true,flushAutomatically = true)
+    @Query(value = "UPDATE Warehouse w SET " +
+            " w.idModule=?2 WHERE w.idProject=?1 AND w.idModule=?3"
+    )
+    Integer updateModule(
+            long idProject,
+            long idModule, long oldIdModule
+    );
     @Query(value = "SELECT w.idProject FROM Warehouse w WHERE w.id=?1 ")
     long getIdProject(long id);
 }

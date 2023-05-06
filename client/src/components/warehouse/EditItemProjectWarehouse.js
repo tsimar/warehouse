@@ -8,8 +8,8 @@ export const EditItemProjectWarehouse = ({
   handleEditFormChange,
   handleEditFormSubmit,
   handleDeleteClick,
+  module,
   project,
-
   handleEditSelect,
   editSelectProjectById,
   // editSelectUserById,

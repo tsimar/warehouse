@@ -153,15 +153,7 @@ const Warehouse = () => {
     }
   };
 
-  const changeIdByNameModule = (data) => {
-    for (let index = 0; index < module.length; index++) {
-      if (module[index].id === data) {
-        return (editSelect.module = module[index].nameModule);
-      } else {
-        editSelect.module = module[0].nameModule;
-      }
-    }
-  };
+  
 
   const changeIdByNameUser = (data) => {
     for (let index = 0; index < project.length; index++) {
@@ -213,7 +205,7 @@ const Warehouse = () => {
     //   data = editSelect.dataStart;
     // }
     const editedContact = {
-      id: editValue.id,
+      id: editValue.editId,
       idProject: editSelectPutProject,
       idElement: editSelectPutElement,
       warehouseName: editValue.warehouseName,
@@ -265,7 +257,7 @@ const Warehouse = () => {
 
     setEditValue(formValues);
     changeIdByNameProject(edit.idProject);
-    changeIdByNameModule(edit.idModule);
+    // changeIdByNameModule(edit.idModule);
     changeIdByNameUser(edit.idUser);
     changeIdByNameElement(edit.idElement);
   };

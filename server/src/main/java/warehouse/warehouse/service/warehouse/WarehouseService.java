@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class WarehouseService {
 
-private final WarehouseWorkRepository warehouseWorkRepository;
+    private final WarehouseWorkRepository warehouseWorkRepository;
     private final WarehouseRepository warehouseRepository;
 
 
@@ -35,14 +35,15 @@ private final WarehouseWorkRepository warehouseWorkRepository;
     @Transactional
     public void editProject(Warehouse warehouse) {
         try {
-        var idProjectFirst=   warehouseRepository
+            var idProjectFirst = warehouseRepository
                     .getIdProject(warehouse.getId());
 
             warehouseRepository
-                    .updateProject(warehouse.getIdProject(),idProjectFirst);
+                    .updateProject(warehouse.getIdProject(), idProjectFirst);
+
             warehouseWorkRepository
-                    .updateProject(warehouse.getIdProject(),idProjectFirst);
-            
+                    .updateProject(warehouse.getIdProject(), idProjectFirst);
+
 //            warehouseRepository
 //                    .findById(warehouse.getId())
 //                    .ifPresent(warehouse1 -> {
@@ -58,6 +59,18 @@ private final WarehouseWorkRepository warehouseWorkRepository;
         }
     }
 
+    @Transactional
+    public void editModule(Warehouse warehouse) {
+        try {
+            warehouseRepository
+                    .updateModule(warehouse.getIdProject(), warehouse.getIdModule(), warehouse.getIdElement());
+
+            warehouseWorkRepository
+                    .updateModule(warehouse.getIdProject(), warehouse.getIdModule(), warehouse.getIdElement());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
 
     public void editWarehouseName(Long idProject, Long idElement) {
 
