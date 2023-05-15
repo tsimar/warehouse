@@ -2,14 +2,14 @@ import React, { useState } from "react";
 // import DatePicker from "react-date-picker";
 // import "./styleWarehouseWork/warehouse.css";
 import { apiWarehouse } from "../../url/URL";
-export const EditItemModuleWarehouse = ({
-  editValue,
+export const EditItemElementWarehouse = ({
+  editValueElement,
   handleCancelClick,
   handleEditFormChange,
   handleEditFormSubmit,
   handleDeleteClick,
   module,
-
+  element,
   editSelectProjectById,
   // editSelectUserById,
   // editSelectElementById,
@@ -24,16 +24,15 @@ export const EditItemModuleWarehouse = ({
 
     setEditSelect(newFormData);
   };
-  const objName = Object.keys(editValue);
-
+  const objName = Object.keys(editValueElement);
 
   const changeNameModuleById = (data) => {
     setEditSelect("");
-    for (let index = 0; index < module.length; index++) {
-      if (module[index].nameModule === data) {
-        return (editSelectPutModule = module[index].id);
+    for (let index = 0; index < element.length; index++) {
+      if (element[index].nameElement === data) {
+        return (editSelectPutModule = element[index].id);
       } else {
-        editSelectPutModule = module[0].id;
+        editSelectPutModule = element[0].id;
       }
     }
   };
@@ -42,9 +41,9 @@ export const EditItemModuleWarehouse = ({
     event.preventDefault();
     changeNameModuleById(editSelect);
     const editedContact = {
-      idProject: editValue.idProject,
+      idProject: editValueElement.idProject,
       idModule: editSelectPutModule,
-      idElement: editValue.oldIdModule,
+      idElement: editValueElement.oldIdElement,
     };
 
     apiWarehouse
@@ -60,14 +59,14 @@ export const EditItemModuleWarehouse = ({
   const handleEditComboBox = (data) => {
     return (
       <div className="container--project">
-        <label htmlFor="project">module</label>
+        <label htmlFor="project">element</label>
         <select
-          value={editSelect.editSelectModule}
+          value={editSelect}
           onChange={(e) => setEditSelect(e.target.value)}
         >
           {data.map((item, index) => (
-            <option key={index} value={item.nameModule}>
-              {item.nameModule}
+            <option key={index} value={item.nameElement}>
+              {item.nameElement}
             </option>
           ))}
         </select>
@@ -78,7 +77,7 @@ export const EditItemModuleWarehouse = ({
   return (
     <form onSubmit={handleEditFormSubmit}>
       <div className="div__div-get">
-        {handleEditComboBox(module)}
+        {handleEditComboBox(element)}
 
         <button className="size" name="save" onClick={handleSavelClick}>
           save
@@ -94,7 +93,7 @@ export const EditItemModuleWarehouse = ({
         <button
           className="size"
           type="button"
-          onClick={() => handleDeleteClick(editValue.id)}
+          onClick={() => handleDeleteClick(editValueElement.id)}
         >
           Delete
         </button>

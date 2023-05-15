@@ -39,6 +39,7 @@ const Warehouse = () => {
   const [selectProject, setSelectProject] = useState("");
   const [selectUser, setSelectUser] = useState("");
   const [selectModule, setSelectModule] = useState("");
+
   const [editSelect, setEditSelect] = useState({
     project: "",
     module: "",
@@ -152,8 +153,6 @@ const Warehouse = () => {
       }
     }
   };
-
-  
 
   const changeIdByNameUser = (data) => {
     for (let index = 0; index < project.length; index++) {

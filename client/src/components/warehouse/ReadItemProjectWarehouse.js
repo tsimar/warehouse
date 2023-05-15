@@ -15,7 +15,7 @@ const ReadItemProjectWarehouse = ({
   element,
   showPdfFile,
 }) => {
-  let editSelectPutModule = "";
+  // let editSelectPutModule = "";
   const [editValue, setEditValue] = useState({
     editId: "",
 
@@ -56,6 +56,7 @@ const ReadItemProjectWarehouse = ({
   const handleCancelClick = () => {
     setEditValue("");
   };
+
   const handleEditModuleClick = (event, idModule, idProject) => {
     event.preventDefault();
     const formValues = {
@@ -103,6 +104,7 @@ const ReadItemProjectWarehouse = ({
                   idProject={idProject}
                   user={user}
                   element={element}
+                  project={project}
                   handleEditModuleClick={handleEditModuleClick}
                   handleDeleteClick={handleDeleteClick}
                   showPdfFile={showPdfFile}

@@ -7,7 +7,7 @@ const ReadItemElementWarehouse = ({
 
   element,
   user,
-  // handleEditClick,
+  handleEditElementClick,
   // handleDeleteClick,
   showPdfFile,
 }) => {
@@ -54,7 +54,9 @@ const ReadItemElementWarehouse = ({
   return (
     <div
       key={warehouse.id}
-      // onDoubleClick={(e) => handleEditClick(e, warehouse)}
+      onDoubleClick={(e) =>
+        handleEditElementClick(e, warehouse, warehouse.idElement)
+      }
       // onDrag={() => handleDeleteClick(warehouse.id)}
       draggable
     >

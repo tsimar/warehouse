@@ -141,30 +141,7 @@ export const EditItemProjectWarehouse = ({
 {
   /* <form onSubmit={handleEditFormSubmit}>
   <div className="div__div-get">
-    {handleEditComboBox(project)}
-    {handleEditComboBoxEl(element)}
-    <DatePicker
-      className="dateWarehouse"
-      // defaultValue={new Date()}
-      onChange={(e) => handleEditChangeSelectDate(e, "dataStart")}
-      // onChange={(value) => OnChange(value)}
-      value={editSelect.dataStart}
-      dateFormat="dd-MM-yyyy"
-    />
-    <input
-      key={editValue.id}
-      className="div__div__get--namber"
-      name="number"
-      type="text"
-      // placeholder={data[index]}
-      required
-      min="1"
-      value={editValue.number}
-      onChange={handleEditFormChange}
-    />
-    {/* {handleAddInput(objName, editValue)} */
-}
-//     {handleEditComboBoxUser(user)}
+ 
 //     <button className="size" name="save" type="submit">
 //       save
 //     </button>
@@ -184,4 +161,5 @@ export const EditItemProjectWarehouse = ({
 //       Delete
 //     </button>
 //   </div>
-// </form>; */}
+// </form>; */
+}
