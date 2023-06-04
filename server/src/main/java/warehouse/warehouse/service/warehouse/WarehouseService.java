@@ -1,8 +1,10 @@
 package warehouse.warehouse.service.warehouse;
 
 import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import warehouse.warehouse.DTO.EditElementDTO;
 import warehouse.warehouse.entity.warehouse.Warehouse;
 import warehouse.warehouse.repository.warehouse.WarehouseRepository;
 import warehouse.warehouse.repository.warehouse.WarehouseWorkRepository;
@@ -13,16 +15,19 @@ import java.util.stream.Collectors;
 
 @Service
 @Slf4j
+@AllArgsConstructor
+
 public class WarehouseService {
+
+//    private static final Logger log= LoggerFactory.getLogger(WarehouseService.class);
 
     private final WarehouseWorkRepository warehouseWorkRepository;
     private final WarehouseRepository warehouseRepository;
 
 
-    public WarehouseService(WarehouseWorkRepository warehouseWorkRepository, WarehouseRepository warehouseRepository) {
-        this.warehouseWorkRepository = warehouseWorkRepository;
-        this.warehouseRepository = warehouseRepository;
-    }
+
+
+
 
     public Warehouse save(Warehouse warehouse) {
         return warehouseRepository.save(warehouse);
@@ -41,8 +46,7 @@ public class WarehouseService {
             warehouseRepository
                     .updateProject(warehouse.getIdProject(), idProjectFirst);
 
-            warehouseWorkRepository
-                    .updateProject(warehouse.getIdProject(), idProjectFirst);
+
 
 //            warehouseRepository
 //                    .findById(warehouse.getId())
@@ -65,8 +69,20 @@ public class WarehouseService {
             warehouseRepository
                     .updateModule(warehouse.getIdProject(), warehouse.getIdModule(), warehouse.getIdElement());
 
-            warehouseWorkRepository
-                    .updateModule(warehouse.getIdProject(), warehouse.getIdModule(), warehouse.getIdElement());
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    @Transactional
+    public void editElement(EditElementDTO editElementDTO) {
+        try {
+         warehouseRepository
+                    .updateElement(editElementDTO.getId(),
+
+                            editElementDTO.getIdElement());
+
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -95,15 +111,10 @@ public class WarehouseService {
         for (Warehouse item : warehouses) {
 
             projectMap.put(item.getIdProject(), warehouses.stream()
-//                    .sort(Comparator.comparing((a, b) -> a.getIdModule().compareTo(b.getIdModule()))
                     .filter(id -> Objects.equals(id.getIdProject(), item.getIdProject()))
-
-
                     .collect(Collectors.toList()));
         }
-
         return projectMap;
-
     }
 
 
@@ -113,7 +124,6 @@ public class WarehouseService {
         for (Warehouse item : warehouses) {
             warehouseMap.put(item.getIdProject(), warehouses);
         }
-
         return null;
     }
 

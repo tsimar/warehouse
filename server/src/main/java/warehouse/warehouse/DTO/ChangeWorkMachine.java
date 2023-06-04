@@ -1,8 +1,10 @@
 package warehouse.warehouse.DTO;
 
 import lombok.Data;
+import org.springframework.stereotype.Component;
 
 @Data
+@Component
 public class ChangeWorkMachine {
     long id;
     private String bacaFanuc;

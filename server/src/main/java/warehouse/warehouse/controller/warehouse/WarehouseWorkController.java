@@ -1,5 +1,6 @@
 package warehouse.warehouse.controller.warehouse;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import warehouse.warehouse.DTO.ChangeWorkMachine;
@@ -16,6 +17,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/warehouseWork")
 @CrossOrigin
+@Slf4j
 public class WarehouseWorkController {
     private final WarehouseWorkService warehouseWorkService;
 

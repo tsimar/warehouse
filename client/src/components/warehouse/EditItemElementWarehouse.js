@@ -41,13 +41,15 @@ export const EditItemElementWarehouse = ({
     event.preventDefault();
     changeNameModuleById(editSelect);
     const editedContact = {
-      idProject: editValueElement.idProject,
-      idModule: editSelectPutModule,
-      idElement: editValueElement.oldIdElement,
+      id: editValueElement.id,
+      idProject: editValueElement.id,
+      idModule: editValueElement.idModule,
+      idOldElement: editValueElement.oldIdElement,
+      idElement: editSelectPutModule,
     };
 
     apiWarehouse
-      .put("/editModule", editedContact)
+      .put("/editElement", editedContact)
       .then((response) => {
         // fetchGetWarehouse();
         handleCancelClick();
@@ -56,10 +58,12 @@ export const EditItemElementWarehouse = ({
         console.log(error);
       });
   };
+
   const handleEditComboBox = (data) => {
     return (
       <div className="container--project">
         <label htmlFor="project">element</label>
+        <label>{editValueElement.id}</label>
         <select
           value={editSelect}
           onChange={(e) => setEditSelect(e.target.value)}

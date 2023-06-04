@@ -3,7 +3,6 @@ package warehouse.warehouse.service.warehouse;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import warehouse.warehouse.DTO.ChangeWorkMachine;
 import warehouse.warehouse.entity.warehouse.Warehouse;
 import warehouse.warehouse.entity.warehouse.WarehouseWork;
@@ -11,7 +10,10 @@ import warehouse.warehouse.repository.warehouse.WarehouseWorkRepository;
 
 import java.sql.Date;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,22 +28,19 @@ public class WarehouseWorkService {
         try {
             warehouseWorkRepository
                     .findById(warehouseWork.getId())
-                    .ifPresent(warehouse1 -> {
-                        warehouse1.setDataFinish(warehouseWork.getDataFinish());
-
-                    });
+                    .ifPresent(warehouse1 -> warehouse1.setDataFinish(warehouseWork.getDataFinish()));
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
 
+
     public Map<Long, List<WarehouseWork>> getSelectWarehouseWork() {
 
 
         List<WarehouseWork> warehouseWorks = warehouseWorkRepository.findAllOpen(1);
-        Map<Long, List<WarehouseWork>> result = resultWarehouseWork(warehouseWorks);
 
-        return result;
+        return resultWarehouseWork(warehouseWorks);
 
     }
 
@@ -112,16 +111,14 @@ public class WarehouseWorkService {
 
 
     public HashMap<Date, ArrayList<WarehouseWork>> getTimeMachine() {
-        List<WarehouseWork> timeMachineOfData = new ArrayList<>(warehouseWorkRepository.sortTimeMachineOfData(1));
+        List<WarehouseWork> timeMachineOfData = warehouseWorkRepository.sortTimeMachineOfData(1);
 
 
-     var  keyDateFinishMap = timeMachineOfData.stream()
-
+        return timeMachineOfData.stream()
                 .collect(Collectors.groupingBy(
                         WarehouseWork::getDataFinish,
                         HashMap::new, Collectors.toCollection(ArrayList::new))
                 );
-        return keyDateFinishMap;
     }
 
 

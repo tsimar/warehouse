@@ -41,6 +41,18 @@ public interface WarehouseRepository extends JpaRepository<Warehouse,Long> {
             long idProject,
             long idModule, long oldIdModule
     );
+
+
+    @Modifying(clearAutomatically = true,flushAutomatically = true)
+    @Query(value = "UPDATE Warehouse w SET " +
+            " w.idElement=?2 WHERE w.id=?1 "
+    )
+    Integer updateElement(
+            long id,
+
+            long idElement
+    );
+
     @Query(value = "SELECT w.idProject FROM Warehouse w WHERE w.id=?1 ")
     long getIdProject(long id);
 }

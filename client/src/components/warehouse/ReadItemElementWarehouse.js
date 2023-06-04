@@ -54,14 +54,19 @@ const ReadItemElementWarehouse = ({
   return (
     <div
       key={warehouse.id}
-      onDoubleClick={(e) =>
-        handleEditElementClick(e, warehouse, warehouse.idElement)
-      }
       // onDrag={() => handleDeleteClick(warehouse.id)}
       draggable
     >
       <span>{count + 1}</span>
-      {addElement(warehouse, element)}
+      <span
+        onDoubleClick={(e) =>
+          handleEditElementClick(e, warehouse, warehouse.idElement)
+        }
+      >
+  
+        {addElement(warehouse, element)}
+      </span>
+
       <span>{warehouse.number}</span>
       {handleChangeDate(warehouse.dataStart)}
       {addUser(warehouse, user)}

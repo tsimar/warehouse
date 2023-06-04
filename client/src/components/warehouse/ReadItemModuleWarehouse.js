@@ -33,6 +33,7 @@ const ReadItemModuleWarehouse = ({
   };
   const handleEditElementClick = (event, edit, idElement) => {
     event.preventDefault();
+    console.log("edidt id=", edit);
     console.log(idElement);
     let dateLocal = new Date();
 
@@ -86,7 +87,8 @@ const ReadItemModuleWarehouse = ({
         count++;
         return (
           <Fragment key={items.id}>
-            {editValueElement.idElement === items.idElement ? (
+            {editValueElement.idElement === items.idElement &&
+            editValueElement.id === items.id ? (
               <EditItemElementWarehouse
                 editValueElement={editValueElement}
                 // module={moduleData}
