@@ -63,7 +63,6 @@ const ReadItemElementWarehouse = ({
           handleEditElementClick(e, warehouse, warehouse.idElement)
         }
       >
-  
         {addElement(warehouse, element)}
       </span>
 

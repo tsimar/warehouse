@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import { useEffect } from "react";
 import DatePicker from "react-date-picker";
 
-export const EditItemWarehouseWork = ({
+export const EditItemProjectWarehouseWork = ({
   editValue,
   handleCancelClick,
   handleDeleteClick,

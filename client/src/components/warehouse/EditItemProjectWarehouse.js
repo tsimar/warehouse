@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-// import DatePicker from "react-date-picker";
-// import "./styleWarehouseWork/warehouse.css";
+
 
 export const EditItemProjectWarehouse = ({
   editValue,
@@ -12,40 +11,13 @@ export const EditItemProjectWarehouse = ({
   project,
   handleEditSelect,
   editSelectProjectById,
-  // editSelectUserById,
-  // editSelectElementById,
-  // editSelectDateById,
 }) => {
-  // const [valueDate, OnChange] = useState(editValue.dateStart);
-  // if (editSelectDateById === "") {
-  //   editSelectDateById = editValue.dataStart;
-  // }
   const [editSelect, setEditSelect] = useState({
     project: editSelectProjectById,
   });
 
   const objName = Object.keys(editValue);
 
-  // const handleAddInput = (data, obj) => {
-  //   return data.map((_, index) => {
-  //     return (index > 0) &
-  //       (data[index] !== "idProject") &
-  //       (data[index] !== "idUser") &
-  //       (data[index] !== "idElement") &
-  //       (data[index] !== "dataStart") ? (
-  //       <input
-  //         key={index}
-  //         id={data[index]}
-  //         name={data[index]}
-  //         type="text"
-  //         placeholder={data[index]}
-  //         required
-  //         value={obj[data[index]]}
-  //         onChange={handleEditFormChange}
-  //       />
-  //     ) : null;
-  //   });
-  // };
   const handleEditChangeSelect = (e, name) => {
     const nameValue = e.target.value;
     const newFormData = { ...editSelect };
@@ -53,13 +25,7 @@ export const EditItemProjectWarehouse = ({
     setEditSelect(newFormData);
     handleEditSelect(name, nameValue);
   };
-  // const handleEditChangeSelectDate = (value, name) => {
-  //   console.log(value, name);
-  //   const newFormData = { ...editSelect };
-  //   newFormData[name] = value;
-  //   setEditSelect(newFormData);
-  //   handleEditSelect(name, value);
-  // };
+
   const handleEditComboBox = (data) => {
     return (
       <div className="container--project">
@@ -77,40 +43,7 @@ export const EditItemProjectWarehouse = ({
       </div>
     );
   };
-  // const handleEditComboBoxEl = (data) => {
-  //   return (
-  //     <div className="container--element">
-  //       <label htmlFor="element">element</label>
-  //       <select
-  //         value={editSelect.editSelectElement}
-  //         onChange={(value) => handleEditChangeSelect(value, "element")}
-  //       >
-  //         {data.map((item, index) => (
-  //           <option key={index} value={item.nameElement}>
-  //             {item.nameElement}
-  //           </option>
-  //         ))}
-  //       </select>
-  //     </div>
-  //   );
-  // };
-  // const handleEditComboBoxUser = (data) => {
-  //   return (
-  //     <div className="container--user">
-  //       <label htmlFor="user">pracownic</label>
-  //       <select
-  //         value={editSelect.editSelectUser}
-  //         onChange={(e) => handleEditChangeSelect(e, "user")}
-  //       >
-  //         {data.map((item, index) => (
-  //           <option key={index} value={item.nameUser}>
-  //             {item.nameUser} {item.lastName}
-  //           </option>
-  //         ))}
-  //       </select>
-  //     </div>
-  //   );
-  // };
+
   return (
     <form onSubmit={handleEditFormSubmit}>
       <div className="div__div-get">

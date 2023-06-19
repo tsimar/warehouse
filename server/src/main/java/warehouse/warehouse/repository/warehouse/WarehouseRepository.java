@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import warehouse.warehouse.entity.warehouse.Warehouse;
 
+import java.sql.Date;
 import java.util.List;
 
 @Repository
@@ -45,11 +46,12 @@ public interface WarehouseRepository extends JpaRepository<Warehouse,Long> {
 
     @Modifying(clearAutomatically = true,flushAutomatically = true)
     @Query(value = "UPDATE Warehouse w SET " +
-            " w.idElement=?2 WHERE w.id=?1 "
+            "w.number=?2,w.dataStart=?3, w.idElement=?4 WHERE w.id=?1 "
     )
-    Integer updateElement(
+    void  updateElement(
             long id,
-
+            int number,
+            Date dataStart,
             long idElement
     );
 

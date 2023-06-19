@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from "react";
 import ReadItemElementWarehouse from "./ReadItemElementWarehouse";
 import { EditItemElementWarehouse } from "./EditItemElementWarehouse";
-
+import { apiWarehouse } from "../../url/URL";
 const ReadItemModuleWarehouse = ({
   idModule,
   warehouse,
@@ -13,6 +13,8 @@ const ReadItemModuleWarehouse = ({
   showPdfFile,
   handleEditModuleClick,
 }) => {
+  const [dataWarehouse, setDataWarehouse] = useState(warehouse);
+
   const [editValueElement, setEditValueElement] = useState({
     editId: "",
 
@@ -31,6 +33,7 @@ const ReadItemModuleWarehouse = ({
   const handleCancelClick = () => {
     setEditValueElement("");
   };
+
   const handleEditElementClick = (event, edit, idElement) => {
     event.preventDefault();
     console.log("edidt id=", edit);
@@ -70,7 +73,18 @@ const ReadItemModuleWarehouse = ({
       }
     }
   };
-
+  const handleDeleteClick = (idProps) => {
+    if (window.confirm("Do you really deleting?")) {
+      // window.open("exit.html", "I hope you know what you're doing!");
+      const newContacts = [...dataWarehouse];
+      const index = dataWarehouse.findIndex(
+        (contact) => contact.id === idProps
+      );
+      newContacts.splice(index, 1);
+      setDataWarehouse(newContacts);
+      apiWarehouse.delete(`/${idProps}`);
+    }
+  };
   const changeIdByNameElement = (data) => {
     for (let index = 0; index < element.length; index++) {
       if (element[index].id === data) {
@@ -82,7 +96,7 @@ const ReadItemModuleWarehouse = ({
   };
   const addElement = (idModule, warehouse, idProject) => {
     let count = -1;
-    return warehouse.map((items, index) => {
+    return dataWarehouse.map((items, index) => {
       if (items.idModule === idModule && items.idProject === idProject) {
         count++;
         return (
@@ -91,12 +105,9 @@ const ReadItemModuleWarehouse = ({
             editValueElement.id === items.id ? (
               <EditItemElementWarehouse
                 editValueElement={editValueElement}
-                // module={moduleData}
-                // idModule={checkModule}
                 element={element}
                 handleCancelClick={handleCancelClick}
-                // handleEditModuleClick={handleEditModuleClick}
-                // let editSelectPutModule = {let editSelectPutModule = "";}
+                handleDeleteClick={handleDeleteClick}
               />
             ) : (
               <ReadItemElementWarehouse
@@ -115,13 +126,13 @@ const ReadItemModuleWarehouse = ({
   };
 
   const addModule = (idModule, module) => {
-    console.log(warehouse[0].idProject);
+    console.log(dataWarehouse[0].idProject);
     return module.map((item, index) => {
       return idModule === item.id ? (
         <span
           key={index}
           onDoubleClick={(e) =>
-            handleEditModuleClick(e, idModule, warehouse[0].idProject)
+            handleEditModuleClick(e, idModule, dataWarehouse[0].idProject)
           }
         >
           {item.nameModule}
@@ -131,9 +142,11 @@ const ReadItemModuleWarehouse = ({
   };
 
   return (
-    <Fragment key={warehouse.id}>
+    <Fragment key={dataWarehouse.id}>
       {addModule(idModule, module)}
-      <div className="elem">{addElement(idModule, warehouse, idProject)}</div>
+      <div className="elem">
+        {addElement(idModule, dataWarehouse, idProject)}
+      </div>
     </Fragment>
   );
 };

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-// import DatePicker from "react-date-picker";
+import DatePicker from "react-date-picker";
 // import "./styleWarehouseWork/warehouse.css";
 import { apiWarehouse } from "../../url/URL";
 export const EditItemElementWarehouse = ({
@@ -17,14 +17,18 @@ export const EditItemElementWarehouse = ({
 }) => {
   let editSelectPutModule = "";
   const [editSelect, setEditSelect] = useState("");
+  const [valueDate, OnChange] = useState(editValueElement.dataStart);
+  const [elementNumber, setElementNumber] = useState(editValueElement.number);
+  const [elementDate, setElementDate] = useState(editValueElement.dataStart);
 
-  const handleEditModuleSelect = (name, value) => {
-    const newFormData = { ...editSelect };
-    newFormData[name] = value;
+  // console.log("editValueElement.number", editValueElement.number);
+  // const handleEditModuleSelect = (name, value) => {
+  //   const newFormData = { ...editSelect };
+  //   newFormData[name] = value;
 
-    setEditSelect(newFormData);
-  };
-  const objName = Object.keys(editValueElement);
+  //   setEditSelect(newFormData);
+  // };
+  // const objName = Object.keys(editValueElement);
 
   const changeNameModuleById = (data) => {
     setEditSelect("");
@@ -43,7 +47,8 @@ export const EditItemElementWarehouse = ({
     const editedContact = {
       id: editValueElement.id,
       idProject: editValueElement.id,
-      idModule: editValueElement.idModule,
+      dataStart: valueDate,
+      number: elementNumber,
       idOldElement: editValueElement.oldIdElement,
       idElement: editSelectPutModule,
     };
@@ -59,11 +64,32 @@ export const EditItemElementWarehouse = ({
       });
   };
 
+  const handleChangeDate = (data) => {
+    let date;
+    let d;
+    let m;
+    let y;
+    if (data === null) {
+      date = new Date();
+      d = date.getDate();
+      m = date.getMonth() + 1;
+      y = date.getFullYear();
+    } else {
+      date = data.split("-");
+      d = date[2];
+      m = date[1];
+      y = date[0];
+    }
+
+    date = d + "-" + m + "-" + y;
+    OnChange(date);
+  };
+
   const handleEditComboBox = (data) => {
     return (
       <div className="container--project">
         <label htmlFor="project">element</label>
-        <label>{editValueElement.id}</label>
+
         <select
           value={editSelect}
           onChange={(e) => setEditSelect(e.target.value)}
@@ -82,7 +108,21 @@ export const EditItemElementWarehouse = ({
     <form onSubmit={handleEditFormSubmit}>
       <div className="div__div-get">
         {handleEditComboBox(element)}
+        <input
+          type="number"
+          onChange={(e) => setElementNumber(e.target.value)}
+          value={elementNumber}
+        />
 
+        <section>
+          <label htmlFor="data">date</label>
+          <DatePicker
+            dateFormat="dd-MM-yyyy"
+            id="data"
+            onChange={OnChange}
+            value={valueDate}
+          />
+        </section>
         <button className="size" name="save" onClick={handleSavelClick}>
           save
         </button>

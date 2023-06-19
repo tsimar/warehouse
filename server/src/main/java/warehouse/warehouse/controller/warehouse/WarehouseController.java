@@ -63,7 +63,7 @@ public class WarehouseController {
         warehouseService.editModule(warehouse);
     }
     @PutMapping("/editElement")
-    public void editElement(@RequestBody EditElementDTO editElementDTO) {
-        warehouseService.editElement(editElementDTO);
+    public void editElement(@RequestBody Warehouse warehouse) {
+        warehouseService.editElement(warehouse);
     }
 }

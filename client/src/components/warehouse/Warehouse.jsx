@@ -193,16 +193,9 @@ const Warehouse = () => {
 
   const handleEditFormSubmit = (event) => {
     event.preventDefault();
-    // let data;
+
     changeNameProjectById(editSelect.project);
-    // changeNameModuleById(editSelect.module);
-    // changeNameUserById(editSelect.user);
-    // changeNameElementById(editSelect.element);
-    // if (editSelect.dataStart === "") {
-    //   data = editValue.dataStart;
-    // } else {
-    //   data = editSelect.dataStart;
-    // }
+
     const editedContact = {
       id: editValue.editId,
       idProject: editSelectPutProject,

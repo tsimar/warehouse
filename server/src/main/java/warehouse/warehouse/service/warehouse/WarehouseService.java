@@ -75,12 +75,13 @@ public class WarehouseService {
         }
     }
     @Transactional
-    public void editElement(EditElementDTO editElementDTO) {
+    public void editElement(Warehouse warehouse) {
         try {
          warehouseRepository
-                    .updateElement(editElementDTO.getId(),
-
-                            editElementDTO.getIdElement());
+                    .updateElement(warehouse.getId(),
+                            warehouse.getNumber(),
+                            warehouse.getDataStart(),
+                            warehouse.getIdElement());
 
 
         } catch (Exception e) {

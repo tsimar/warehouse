@@ -1,7 +1,8 @@
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useState, useEffect, Fragment, useRef } from "react";
 // import DatePicker from "react-date-picker";
-import { EditItemWarehouseWork } from "./EditItemWarehouseWork";
+import { EditItemProjectWarehouseWork } from "./EditItemProjectWarehouseWork";
 import ReadItemProjectWarehouseWork from "./ReadItemProjectWarehouseWork";
+
 import {
   apiProject,
   apiElement,
@@ -13,29 +14,51 @@ import "./styleWarehouseWork/warehouseWork.css";
 import { motion } from "framer-motion";
 
 const WarehouseWork = () => {
+  let editSelectPutProject = "";
+  let editSelectPutUser = "";
+  let editSelectPutElement = "";
+  let editSelectPutModule = "";
   const [nameLabelFile, setNameLabelFile] = useState("");
   // const [valueDateFinish, OnChangeFinish] = useState(new Date());
   const [element, setElement] = useState([]);
   const [project, setProject] = useState([]);
   const [module, setModule] = useState([]);
+  const numberRef = useRef(null);
 
+  // const [valueDate, OnChange] = useState(new Date());
   const [warehouseWork, setWarehouseWork] = useState([]);
+  const [selectElement, setSelectElement] = useState("");
 
-  // const [addWarehouseWork, setAddWarehouseWork] = useReducer({
-  //   idProject: "",
-  //   idModule: "",
-  //   idElement: "",
-  //   number: "",
-  //   dateStart: "",
-  //   dateFinish: "",
-  //   bacaFanuc: "",
-  //   lathe: "",
-  //   heidenhain: "",
-  //   millingMachineSmall: "",
-  // });
+  const [selectProject, setSelectProject] = useState("");
+  const [selectUser, setSelectUser] = useState("");
+  const [selectModule, setSelectModule] = useState("");
+
+  const [editSelect, setEditSelect] = useState({
+    project: "",
+    module: "",
+    element: "",
+    user: "",
+    dataStart: "",
+  });
+  const [addWarehouseWork, setAddWarehouseWork] = useState({
+    number: "",
+    dataStart: "",
+    idProject: "",
+    idModule: "",
+    idElement: "",
+
+    warehouseName: "",
+  });
 
   const [editValue, setEditValue] = useState({
     editId: "",
+    number: "",
+    dataStart: "",
+    idProject: "",
+    idModule: "",
+    idElement: "",
+    idUser: "",
+    warehouseName: "",
 
     dateFinish: "",
   });
@@ -59,23 +82,73 @@ const WarehouseWork = () => {
       });
   };
 
-  // const handleChange = (e) => {
-  //   e.preventDefault();
-
-  //   const fieldName = e.target.name;
-
-  //   const fieldValue = e.target.value;
-
-  //   const newFormData = { ...addWarehouseWork };
-  //   newFormData[fieldName] = fieldValue;
-
-  //   setAddWarehouseWork(newFormData);
-  // };
-
+  const changeNameProjectById = (data) => {
+    editSelect.project = "";
+    for (let index = 0; index < project.length; index++) {
+      if (project[index].nameProject === data) {
+        return (editSelectPutProject = project[index].id);
+      } else {
+        editSelectPutProject = project[0].id;
+      }
+    }
+  };
+  const changeNameModuleById = (data) => {
+    editSelect.module = "";
+    for (let index = 0; index < module.length; index++) {
+      if (module[index].nameModule === data) {
+        return (editSelectPutModule = module[index].id);
+      } else {
+        editSelectPutModule = module[0].id;
+      }
+    }
+  };
+  const changeNameElementById = (data) => {
+    editSelect.element = "";
+    for (let index = 0; index < element.length; index++) {
+      if (element[index].nameElement === data) {
+        return (editSelectPutElement = element[index].id);
+      } else {
+        editSelectPutElement = element[0].id;
+      }
+    }
+  };
   const handleCancelClick = () => {
     setEditValue("");
   };
+  const handleAddSubmit = async (e) => {
+    e.preventDefault();
+    changeNameProjectById(selectProject);
+    changeNameModuleById(selectModule);
+    changeNameElementById(selectElement);
+    // changeNameUserById(selectUser);
+    // wareName = location.pathname.split("/");
 
+    // wareName = wareName[1];
+    let name = "in";
+    const newWarehouse = {
+      number: addWarehouseWork.number,
+      // dataStart: valueDate,
+      idProject: editSelectPutProject,
+      idModule: editSelectPutModule,
+      idElement: editSelectPutElement,
+      idUser: editSelectPutUser,
+      warehouseName: name,
+    };
+
+    await apiWarehouseWork
+      .post("", newWarehouse)
+      .then((response) => {
+        fetchGetWarehouseWork();
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    setAddWarehouseWork("");
+
+    numberRef.current.value = "";
+  };
   const handleDeleteClick = (idProps) => {
     if (window.confirm("Do you really deleting?")) {
       const newContacts = [...warehouseWork];
@@ -134,7 +207,41 @@ const WarehouseWork = () => {
       console.log(error);
     }
   };
+  const handleEditFormSubmit = (event) => {
+    event.preventDefault();
 
+    changeNameProjectById(editSelect.project);
+
+    const editedContact = {
+      id: editValue.editId,
+      idProject: editSelectPutProject,
+      idElement: editSelectPutElement,
+      warehouseName: editValue.warehouseName,
+    };
+
+    apiWarehouseWork
+      .put("/editProject", editedContact)
+      .then((response) => {
+        fetchGetWarehouseWork();
+        handleCancelClick();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const handleEditFormChange = (event) => {
+    event.preventDefault();
+
+    const fieldName = event.target.name;
+
+    const fieldValue = event.target.value;
+
+    const newFormData = { ...editValue };
+    newFormData[fieldName] = fieldValue;
+
+    setEditValue(newFormData);
+  };
   const showPdfFile = async (nameFile) => {
     try {
       let url = "";
@@ -185,13 +292,28 @@ const WarehouseWork = () => {
 
     setEditValue(formValues);
   };
+  const handleEditSelect = (name, value) => {
+    const newFormData = { ...editSelect };
+    newFormData[name] = value;
 
+    setEditSelect(newFormData);
+  };
   const getProject = (index, data, count) => {
     return data[count[index]].map((item, countItems) => {
       return (
         <Fragment key={countItems}>
           {editValue.id === item.id ? (
-            <EditItemWarehouseWork />
+            <EditItemProjectWarehouseWork
+              project={project}
+              editValue={editValue}
+              handleAddSubmit={handleAddSubmit}
+              handleEditFormSubmit={handleEditFormSubmit}
+              handleEditFormChange={handleEditFormChange}
+              handleCancelClick={handleCancelClick}
+              handleDeleteClick={handleDeleteClick}
+              editSelectProjectById={editSelect.project}
+              handleEditSelect={handleEditSelect}
+            />
           ) : (
             <ReadItemProjectWarehouseWork
               boleanProject={countItems <= 0}
