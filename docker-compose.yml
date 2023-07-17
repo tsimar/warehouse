@@ -1,0 +1,20 @@
+version: '3'
+services:
+  api:
+    build: ./server
+    ports:
+    - "8000:8080"
+    depends_on:
+    - database
+  database:
+    container_name: 'localhost'
+    image: docker 
+    ports: 
+    - "3300:3306"
+    environment:
+      MYSQL_PASSWORD: docker
+      MYSQL_USER: docker
+      MYSQL_DATABASE: warehouse
+
+
+

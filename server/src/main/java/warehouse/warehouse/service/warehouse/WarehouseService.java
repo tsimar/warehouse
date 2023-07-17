@@ -4,7 +4,6 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import warehouse.warehouse.DTO.EditElementDTO;
 import warehouse.warehouse.entity.warehouse.Warehouse;
 import warehouse.warehouse.repository.warehouse.WarehouseRepository;
 import warehouse.warehouse.repository.warehouse.WarehouseWorkRepository;

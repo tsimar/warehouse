@@ -147,6 +147,7 @@
                 <artifactId>maven-surefire-report-plugin</artifactId>
                 <version>${maven-surefire-plugin.version}</version>
                 <configuration>
+
                     <outputDirectory>target/surefire-reports</outputDirectory>
                     <linkXRef>false</linkXRef>
                 </configuration>

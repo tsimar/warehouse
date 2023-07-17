@@ -3,6 +3,8 @@ import { useLocation } from "react-router-dom";
 import DatePicker from "react-date-picker";
 import { motion } from "framer-motion";
 
+
+
 import { EditItemProjectWarehouse } from "./EditItemProjectWarehouse";
 import ReadItemProjectWarehouse from "./ReadItemProjectWarehouse";
 import "./styleWarehouse/warehouse.css";
@@ -14,7 +16,10 @@ import {
   apiWarehouse,
   apiModuleOfProject,
 } from "../../url/URL";
-// import { GetUseFetch } from "../../url/GetUseFetch";
+
+import { useSelector, useDispatch } from "react-redux";
+
+import { getProjectList } from "../../redux/slice/getActions/actions";
 
 let wareName;
 
@@ -24,13 +29,15 @@ const Warehouse = () => {
   let editSelectPutElement = "";
   let editSelectPutModule = "";
   const location = useLocation();
+  const { postProject, isLoading } = useSelector((state) => state.getProject);
+  const dispatch = useDispatch();
   const [warehouseName, setWarehouseName] = useState("in");
   const numberRef = useRef(null);
 
   const [valueDate, OnChange] = useState(new Date());
 
   const [element, setElement] = useState([]);
-  const [project, setProject] = useState([]);
+  const [project, setProject] = useState([postProject]);
   const [module, setModule] = useState([]);
   const [user, setUser] = useState([]);
   const [warehouse, setWarehouse] = useState([]);
@@ -68,6 +75,12 @@ const Warehouse = () => {
     warehouseName: "",
   });
 
+  // const [page, setPage] = useState([]);
+  // console.log("postProject", postProject);
+  useEffect(() => {
+    dispatch(getProjectList());
+  }, [project]);
+
   const handleAddSubmit = async (e) => {
     e.preventDefault();
     changeNameProjectById(selectProject);
@@ -91,13 +104,14 @@ const Warehouse = () => {
     await apiWarehouse
       .post("", newWarehouse)
       .then((response) => {
-        fetchGetWarehouse();
+        // fetchGetWarehouse();
+
         console.log(response);
       })
       .catch((error) => {
         console.log(error);
       });
-
+    dispatch(getProjectList());
     setAddWarehouse("");
 
     numberRef.current.value = "";
@@ -105,11 +119,11 @@ const Warehouse = () => {
 
   const changeNameProjectById = (data) => {
     editSelect.project = "";
-    for (let index = 0; index < project.length; index++) {
-      if (project[index].nameProject === data) {
-        return (editSelectPutProject = project[index].id);
+    for (let index = 0; index < postProject.length; index++) {
+      if (postProject[index].nameProject === data) {
+        return (editSelectPutProject = postProject[index].id);
       } else {
-        editSelectPutProject = project[0].id;
+        editSelectPutProject = postProject[0].id;
       }
     }
   };
@@ -145,11 +159,11 @@ const Warehouse = () => {
   };
 
   const changeIdByNameProject = (data) => {
-    for (let index = 0; index < project.length; index++) {
-      if (project[index].id === data) {
-        return (editSelect.project = project[index].nameProject);
+    for (let index = 0; index < postProject.length; index++) {
+      if (postProject[index].id === data) {
+        return (editSelect.project = postProject[index].nameProject);
       } else {
-        editSelect.project = project[0].nameProject;
+        editSelect.project = postProject[0].nameProject;
       }
     }
   };
@@ -177,7 +191,7 @@ const Warehouse = () => {
   const handleChange = (e) => {
     e.preventDefault();
     setSelectUser(user[0].nameUser);
-    setSelectProject(project[0].nameProject);
+    setSelectProject(postProject[0].nameProject);
     setSelectProject(module[0].nameModule);
     setSelectElement(element[0].nameElement);
 
@@ -353,7 +367,7 @@ const Warehouse = () => {
 
   useEffect(() => {
     fetchGetElement();
-    fetchGETProject();
+    // fetchGETProject();
     fetchGetUser();
     fetchGETModule();
   }, []);
@@ -375,7 +389,7 @@ const Warehouse = () => {
         <Fragment key={item.id}>
           {editValue.id === item.id ? (
             <EditItemProjectWarehouse
-              project={project}
+              project={postProject}
               editValue={editValue}
               handleAddSubmit={handleAddSubmit}
               handleEditFormSubmit={handleEditFormSubmit}
@@ -391,7 +405,7 @@ const Warehouse = () => {
               warehouse={item}
               allWarehouse={data[count[index]]}
               count={index}
-              project={project}
+              project={postProject}
               module={module}
               user={user}
               element={element}
@@ -420,7 +434,7 @@ const Warehouse = () => {
             value={selectProject}
             onChange={(e) => setSelectProject(e.target.value)}
           >
-            {project.map((item, index) => (
+            {postProject.map((item, index) => (
               <option key={index} value={item.nameProject}>
                 {item.nameProject}
               </option>
@@ -505,6 +519,12 @@ const Warehouse = () => {
           ></iframe>
         </motion.div>
       </section>
+      <div>
+        <h2>Hello</h2>
+        {project.map((item) => (
+          <h2>{item.nameProject}hello</h2>
+        ))}
+      </div>
     </div>
   );
 };

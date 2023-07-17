@@ -4,6 +4,24 @@ export const menuItems = [
     Link: "/",
     // icon: "home",
   },
+
+  {
+    value: "obróbka",
+    Link: "/wareWork",
+  },
+  {
+    value: "odbiór",
+    Link: "/goodElement",
+  },
+  {
+    value: "tygodniowa praca",
+    Link: "/timeMachine",
+  },
+  {
+    value: "harmonogram",
+    Link: "/timeMachine",
+  },
+
   {
     value: "dodać",
 
@@ -29,18 +47,5 @@ export const menuItems = [
         Link: "/module",
       },
     ],
-  },
-
-  {
-    value: "obróbka",
-    Link: "/wareWork",
-  },
-  {
-    value: "odbiór",
-    Link: "/goodElement",
-  },
-  {
-    value: "harmonogram",
-    Link: "/timeMachine",
   },
 ];
