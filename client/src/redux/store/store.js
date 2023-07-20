@@ -31,12 +31,12 @@ import {
 
 export default configureStore({
   reducer: {
-    getProject: projectSlice,
-    getElementPdf: elementPDFSlice,
-    getElement: elementSlice,
-    getModuleOfProject: moduleOfProjectSlice,
-    getUser: userSlice,
-    getWarehouse: warehouseSlice,
+    storeProject: projectSlice,
+    storeElementPdf: elementPDFSlice,
+    storeElement: elementSlice,
+    storeModuleOfProject: moduleOfProjectSlice,
+    storeUser: userSlice,
+    storeWarehouse: warehouseSlice,
     // getWarehouseWork: warehouseWorkSlice,
   },
   middleware: (getDefaultMiddleware) =>

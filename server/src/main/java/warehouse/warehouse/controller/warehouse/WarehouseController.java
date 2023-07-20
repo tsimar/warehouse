@@ -7,6 +7,8 @@ import warehouse.warehouse.entity.warehouse.Warehouse;
 import warehouse.warehouse.service.warehouse.WarehouseService;
 import warehouse.warehouse.service.warehouse.WarehouseWorkService;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -23,22 +25,25 @@ public class WarehouseController {
     }
 
     @GetMapping("/{warehouseName}")
-    public ResponseEntity<Map<Long,List<Warehouse>>> getAll(@PathVariable String warehouseName){
+    public ResponseEntity<Map<Long, List<Warehouse>>> getAll(@PathVariable String warehouseName) {
         return ResponseEntity.ok(warehouseService.getTypeWarehouse(warehouseName));
     }
 
     @GetMapping
-    public ResponseEntity<List<Warehouse>> getAll(){
+    public ResponseEntity<List<Warehouse>> getAll() {
         return ResponseEntity.ok(warehouseService.getAll());
     }
 
     @PostMapping
-    public ResponseEntity<Warehouse> save(@RequestBody Warehouse warehouse){
+    public ResponseEntity<Warehouse> save(@RequestBody Warehouse warehouse) {
+        if (warehouse.getIdProject() != null) {
+            if (warehouse.getWarehouseName().equals("in")) {
+                warehouseServiceWork.saveWork(warehouse);
+            }
 
-        if (warehouse.getWarehouseName().equals("in")){
-            warehouseServiceWork.saveWork(warehouse);
+        } else {
+            warehouse.setIdProject(-1L);
         }
-
         return ResponseEntity.ok(warehouseService.save(warehouse));
     }
 
@@ -61,6 +66,7 @@ public class WarehouseController {
     public void editModule(@RequestBody Warehouse warehouse) {
         warehouseService.editModule(warehouse);
     }
+
     @PutMapping("/editElement")
     public void editElement(@RequestBody Warehouse warehouse) {
         warehouseService.editElement(warehouse);

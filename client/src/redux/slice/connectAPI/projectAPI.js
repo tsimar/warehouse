@@ -16,26 +16,17 @@ export const getProjectList = createAsyncThunk("post/getProject", async () => {
     return error.message;
   }
 });
-export const adddProject = createAsyncThunk(
+export const addProject = createAsyncThunk(
   "project/addProject",
   async (value) => {
-    return await apiWarehouse
-      .post("", {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          number: value.number,
-          dataStart: value.dataStart,
-          idProject: value.idProject,
-          idModule: value.idModule,
-          idElement: value.idElement,
-          idUser: value.idUser,
-          warehouseName: value.name,
-        }),
-      })
+    return await apiProject.post("", value).then((res) => res.json());
+  }
+);
+export const putProject = createAsyncThunk(
+  "project/editProject",
+  async (value) => {
+    return await apiProject
+      .put("/editProject", value)
       .then((res) => res.json());
   }
 );

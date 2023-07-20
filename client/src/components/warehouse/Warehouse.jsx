@@ -19,7 +19,14 @@ import {
 
 import { useSelector, useDispatch } from "react-redux";
 
-import { getProjectList } from "../../redux/slice/getActions/actions";
+import {
+  addProject,
+  getProjectList,
+} from "../../redux/slice/connectAPI/projectAPI";
+import {
+  addWarehouse,
+  getWarehouseList,
+} from "../../redux/slice/connectAPI/warehouseAPI";
 
 let wareName;
 
@@ -29,7 +36,8 @@ const Warehouse = () => {
   let editSelectPutElement = "";
   let editSelectPutModule = "";
   const location = useLocation();
-  const { postProject, isLoading } = useSelector((state) => state.getProject);
+  const stProject = useSelector((state) => state.storeProject);
+  const stWarehouse = useSelector((state) => state.storeWarehouse);
   const dispatch = useDispatch();
   const [warehouseName, setWarehouseName] = useState("in");
   const numberRef = useRef(null);
@@ -37,10 +45,10 @@ const Warehouse = () => {
   const [valueDate, OnChange] = useState(new Date());
 
   const [element, setElement] = useState([]);
-  const [project, setProject] = useState([postProject]);
+  const [project, setProject] = useState(stProject.postProject);
   const [module, setModule] = useState([]);
   const [user, setUser] = useState([]);
-  const [warehouse, setWarehouse] = useState([]);
+  const [warehouse, setWarehouse] = useState(stWarehouse.postWarehouse);
   const [selectElement, setSelectElement] = useState("");
   const [nameLabelFile, setNameLabelFile] = useState("");
   const [selectProject, setSelectProject] = useState("");
@@ -54,7 +62,7 @@ const Warehouse = () => {
     user: "",
     dataStart: "",
   });
-  const [addWarehouse, setAddWarehouse] = useState({
+  const [changeWarehouse, setAddWarehouse] = useState({
     number: "",
     dataStart: "",
     idProject: "",
@@ -75,11 +83,10 @@ const Warehouse = () => {
     warehouseName: "",
   });
 
-  // const [page, setPage] = useState([]);
-  // console.log("postProject", postProject);
   useEffect(() => {
     dispatch(getProjectList());
-  }, [project]);
+    dispatch(getWarehouseList("in"));
+  }, []);
 
   const handleAddSubmit = async (e) => {
     e.preventDefault();
@@ -91,8 +98,8 @@ const Warehouse = () => {
 
     wareName = wareName[1];
     let name = "in";
-    const newWarehouse = {
-      number: addWarehouse.number,
+    const newValues = {
+      number: changeWarehouse.number,
       dataStart: valueDate,
       idProject: editSelectPutProject,
       idModule: editSelectPutModule,
@@ -101,17 +108,11 @@ const Warehouse = () => {
       warehouseName: name,
     };
 
-    await apiWarehouse
-      .post("", newWarehouse)
-      .then((response) => {
-        // fetchGetWarehouse();
-
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    dispatch(getProjectList());
+    console.log(warehouse);
+    dispatch(addWarehouse(newValues));
+    // // const { name1, value } = newValues;
+    // // setWarehouse((prev) => ({ ...prev, [name1]: value }));
+    dispatch(getWarehouseList("in"));
     setAddWarehouse("");
 
     numberRef.current.value = "";
@@ -119,11 +120,11 @@ const Warehouse = () => {
 
   const changeNameProjectById = (data) => {
     editSelect.project = "";
-    for (let index = 0; index < postProject.length; index++) {
-      if (postProject[index].nameProject === data) {
-        return (editSelectPutProject = postProject[index].id);
+    for (let index = 0; index < stProject.postProject.length; index++) {
+      if (stProject.postProject[index].nameProject === data) {
+        return (editSelectPutProject = stProject.postProject[index].id);
       } else {
-        editSelectPutProject = postProject[0].id;
+        editSelectPutProject = stProject.postProject[0].id;
       }
     }
   };
@@ -159,11 +160,11 @@ const Warehouse = () => {
   };
 
   const changeIdByNameProject = (data) => {
-    for (let index = 0; index < postProject.length; index++) {
-      if (postProject[index].id === data) {
-        return (editSelect.project = postProject[index].nameProject);
+    for (let index = 0; index < stProject.postProject.length; index++) {
+      if (stProject.postProject[index].id === data) {
+        return (editSelect.project = stProject.postProject[index].nameProject);
       } else {
-        editSelect.project = postProject[0].nameProject;
+        editSelect.project = stProject.postProject[0].nameProject;
       }
     }
   };
@@ -191,7 +192,7 @@ const Warehouse = () => {
   const handleChange = (e) => {
     e.preventDefault();
     setSelectUser(user[0].nameUser);
-    setSelectProject(postProject[0].nameProject);
+    setSelectProject(stProject.postProject[0].nameProject);
     setSelectProject(module[0].nameModule);
     setSelectElement(element[0].nameElement);
 
@@ -389,7 +390,7 @@ const Warehouse = () => {
         <Fragment key={item.id}>
           {editValue.id === item.id ? (
             <EditItemProjectWarehouse
-              project={postProject}
+              project={stProject.postProject}
               editValue={editValue}
               handleAddSubmit={handleAddSubmit}
               handleEditFormSubmit={handleEditFormSubmit}
@@ -405,7 +406,7 @@ const Warehouse = () => {
               warehouse={item}
               allWarehouse={data[count[index]]}
               count={index}
-              project={postProject}
+              project={stProject.postProject}
               module={module}
               user={user}
               element={element}
@@ -419,6 +420,7 @@ const Warehouse = () => {
     });
   };
   const handlGetProject = (data) => {
+    console.log("data-425", data);
     let count = Object.keys(data);
     return Object.keys(data).map((_, index) => {
       return getProject(index, data, count);
@@ -434,7 +436,7 @@ const Warehouse = () => {
             value={selectProject}
             onChange={(e) => setSelectProject(e.target.value)}
           >
-            {postProject.map((item, index) => (
+            {stProject.postProject.map((item, index) => (
               <option key={index} value={item.nameProject}>
                 {item.nameProject}
               </option>
@@ -520,9 +522,11 @@ const Warehouse = () => {
         </motion.div>
       </section>
       <div>
-        <h2>Hello</h2>
-        {project.map((item) => (
-          <h2>{item.nameProject}hello</h2>
+        {stWarehouse.isSuccess.length > 0 && (
+          <p>{stWarehouse.isSuccess.success}</p>
+        )}
+        {project.map((item, number) => (
+          <h2 key={number}>{item.nameProject}hello</h2>
         ))}
       </div>
     </div>
