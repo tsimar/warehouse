@@ -4,21 +4,14 @@ import { apiWarehouse } from "../../../url/URL";
 export const getWarehouseList = createAsyncThunk(
   "warehouse/getWarehouseList",
   async (name) => {
-    try {
-      const res = await apiWarehouse.get(`/${name}`);
-      return res.data;
-    } catch (error) {
-      return error.message;
-    }
+    const res = await apiWarehouse.get(`/${name}`);
+    return res.data;
   }
 );
 export const addWarehouse = createAsyncThunk(
   "warehouse/addWarehouse",
   async (value) => {
-    return await apiWarehouse
-      .post("", value)
-      .then((res) => res.json())
-      .then((res) => console.log(res.data));
+    return await apiWarehouse.post("", value).then((res) => res.data);
   }
 );
 

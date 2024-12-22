@@ -9,7 +9,7 @@ import { EditItemProjectWarehouse } from "./EditItemProjectWarehouse";
 import ReadItemProjectWarehouse from "./ReadItemProjectWarehouse";
 import "./styleWarehouse/warehouse.css";
 import {
-  apiProject,
+  // apiProject,
   apiElementPDF,
   apiElement,
   apiUser,
@@ -19,10 +19,8 @@ import {
 
 import { useSelector, useDispatch } from "react-redux";
 
-import {
-  addProject,
-  getProjectList,
-} from "../../redux/slice/connectAPI/projectAPI";
+import { getProjectList } from "../../redux/slice/connectAPI/projectAPI";
+
 import {
   addWarehouse,
   getWarehouseList,
@@ -45,10 +43,10 @@ const Warehouse = () => {
   const [valueDate, OnChange] = useState(new Date());
 
   const [element, setElement] = useState([]);
-  const [project, setProject] = useState(stProject.postProject);
+  const [project, setProject] = useState({ ...stProject.postProject });
   const [module, setModule] = useState([]);
   const [user, setUser] = useState([]);
-  const [warehouse, setWarehouse] = useState(stWarehouse.postWarehouse);
+  // const [warehouse, setWarehouse] = useState({ ...stWarehouse.postWarehouse });
   const [selectElement, setSelectElement] = useState("");
   const [nameLabelFile, setNameLabelFile] = useState("");
   const [selectProject, setSelectProject] = useState("");
@@ -86,8 +84,8 @@ const Warehouse = () => {
   useEffect(() => {
     dispatch(getProjectList());
     dispatch(getWarehouseList("in"));
-  }, []);
-
+  }, [dispatch]);
+  console.log("test", stWarehouse.postWarehouse);
   const handleAddSubmit = async (e) => {
     e.preventDefault();
     changeNameProjectById(selectProject);
@@ -108,11 +106,11 @@ const Warehouse = () => {
       warehouseName: name,
     };
 
-    console.log(warehouse);
+    // console.log(warehouse);
     dispatch(addWarehouse(newValues));
     // // const { name1, value } = newValues;
     // // setWarehouse((prev) => ({ ...prev, [name1]: value }));
-    dispatch(getWarehouseList("in"));
+    // dispatch(getWarehouseList("in"));
     setAddWarehouse("");
 
     numberRef.current.value = "";
@@ -221,7 +219,7 @@ const Warehouse = () => {
     apiWarehouse
       .put("/editProject", editedContact)
       .then((response) => {
-        fetchGetWarehouse();
+        // fetchGetWarehouse();
         handleCancelClick();
       })
       .catch((error) => {
@@ -274,27 +272,27 @@ const Warehouse = () => {
   };
 
   const handleDeleteClick = (idProps) => {
-    if (window.confirm("Do you really deleting?")) {
-      window.open("exit.html", "I hope you know what you're doing!");
-      const newContacts = [...warehouse];
-      const index = warehouse.findIndex((contact) => contact.id === idProps);
-      newContacts.splice(index, 1);
-      setWarehouse(newContacts);
-      apiWarehouse.delete(`/${idProps}`);
-    }
+    // if (window.confirm("Do you really deleting?")) {
+    //   window.open( "I hope you know what you're doing!");
+    //   const newContacts = [...warehouse];
+    //   const index = warehouse.findIndex((contact) => contact.id === idProps);
+    //   newContacts.splice(index, 1);
+    //   setWarehouse(newContacts);
+    //   apiWarehouse.delete(`/${idProps}`);
+    // }
   };
 
-  const fetchGETProject = async () => {
-    try {
-      // setLoading(true);
-      const res = await apiProject.get();
-      setProject(res.data);
-      console.log("project", res.data);
-      // setLoading(false);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const fetchGETProject = async () => {
+  //   try {
+  //     // setLoading(true);
+  //     const res = await apiProject.get();
+  //     setProject(res.data);
+  //     console.log("project", res.data);
+  //     // setLoading(false);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
   const fetchGETModule = async () => {
     try {
       // setLoading(true);
@@ -353,18 +351,18 @@ const Warehouse = () => {
     }
   };
 
-  const fetchGetWarehouse = async () => {
-    let name = "in";
-    try {
-      // setLoading(true);
-      const res = await apiWarehouse.get(`/${name}`);
-      setWarehouse(res.data);
-      console.log("warehouse", res.data);
-      // setLoading(false);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const fetchGetWarehouse = async () => {
+  //   let name = "in";
+  //   try {
+  //     // setLoading(true);
+  //     const res = await apiWarehouse.get(`/${name}`);
+  //     setWarehouse(res.data);
+  //     console.log("warehouse", res.data);
+  //     // setLoading(false);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   useEffect(() => {
     fetchGetElement();
@@ -373,9 +371,9 @@ const Warehouse = () => {
     fetchGETModule();
   }, []);
 
-  useEffect(() => {
-    fetchGetWarehouse();
-  }, [location]);
+  // useEffect(() => {
+  // fetchGetWarehouse();
+  // }, [location]);
 
   const handleEditSelect = (name, value) => {
     const newFormData = { ...editSelect };
@@ -385,39 +383,41 @@ const Warehouse = () => {
   };
 
   const getProject = (index, data, count) => {
-    return data[count[index]].map((item, countItems) => {
-      return (
-        <Fragment key={item.id}>
-          {editValue.id === item.id ? (
-            <EditItemProjectWarehouse
-              project={stProject.postProject}
-              editValue={editValue}
-              handleAddSubmit={handleAddSubmit}
-              handleEditFormSubmit={handleEditFormSubmit}
-              handleEditFormChange={handleEditFormChange}
-              handleCancelClick={handleCancelClick}
-              handleDeleteClick={handleDeleteClick}
-              editSelectProjectById={editSelect.project}
-              handleEditSelect={handleEditSelect}
-            />
-          ) : (
-            <ReadItemProjectWarehouse
-              boleanProject={countItems <= 0}
-              warehouse={item}
-              allWarehouse={data[count[index]]}
-              count={index}
-              project={stProject.postProject}
-              module={module}
-              user={user}
-              element={element}
-              handleEditClick={handleEditClick}
-              handleDeleteClick={handleDeleteClick}
-              showPdfFile={showPdfFile}
-            />
-          )}
-        </Fragment>
-      );
-    });
+    if (count.length <= 1) {
+      return data[count[index]].map((item, countItems) => {
+        return (
+          <Fragment key={item.id}>
+            {editValue.id === item.id ? (
+              <EditItemProjectWarehouse
+                project={stProject.postProject}
+                editValue={editValue}
+                handleAddSubmit={handleAddSubmit}
+                handleEditFormSubmit={handleEditFormSubmit}
+                handleEditFormChange={handleEditFormChange}
+                handleCancelClick={handleCancelClick}
+                handleDeleteClick={handleDeleteClick}
+                editSelectProjectById={editSelect.project}
+                handleEditSelect={handleEditSelect}
+              />
+            ) : (
+              <ReadItemProjectWarehouse
+                boleanProject={countItems <= 0}
+                warehouse={item}
+                allWarehouse={data[count[index]]}
+                count={index}
+                project={stProject.postProject}
+                module={module}
+                user={user}
+                element={element}
+                handleEditClick={handleEditClick}
+                handleDeleteClick={handleDeleteClick}
+                showPdfFile={showPdfFile}
+              />
+            )}
+          </Fragment>
+        );
+      });
+    }
   };
   const handlGetProject = (data) => {
     console.log("data-425", data);
@@ -508,7 +508,9 @@ const Warehouse = () => {
         <button type="submit">add</button>
       </form>
       <section className="conteiner--warehouse">
-        <div className="div-getWorhouse">{handlGetProject(warehouse)}</div>
+        <div className="div-getWorhouse">
+          {handlGetProject(stWarehouse.postWarehouse)}
+        </div>
         <motion.div drag className="conteiner-showPdfFile-warehouse">
           <label htmlFor="iframe">część: {nameLabelFile}</label>
           <iframe
@@ -525,7 +527,7 @@ const Warehouse = () => {
         {stWarehouse.isSuccess.length > 0 && (
           <p>{stWarehouse.isSuccess.success}</p>
         )}
-        {project.map((item, number) => (
+        {stProject.postProject.map((item, number) => (
           <h2 key={number}>{item.nameProject}hello</h2>
         ))}
       </div>
