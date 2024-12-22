@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import warehouse.warehouse.entity.add.Element;
+import warehouse.warehouse.entity.add.ElementName;
 
 import warehouse.warehouse.service.add.ElementService;
 
@@ -28,7 +28,7 @@ public class ElementController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Element>> getElement() {
+    public ResponseEntity<List<ElementName>> getElement() {
         return ResponseEntity.ok(elementService.getAll());
     }
 
@@ -57,7 +57,7 @@ public class ElementController {
     }
 //  .contentType(MediaType.parseMediaType(contentType))
     @PostMapping
-    public ResponseEntity<Element> save(@RequestBody Element element) throws Exception {
+    public ResponseEntity<ElementName> save(@RequestBody ElementName element) throws Exception {
 
         return ResponseEntity.ok(elementService.save(element));
     }
@@ -79,7 +79,7 @@ public class ElementController {
     }
 
     @PutMapping()
-    public void editElement(@RequestBody Element element) {
+    public void editElement(@RequestBody ElementName element) {
         elementService.editElement(element);
     }
 }

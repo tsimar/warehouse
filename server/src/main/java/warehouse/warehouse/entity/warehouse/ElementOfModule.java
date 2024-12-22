@@ -1,26 +1,25 @@
-package warehouse.warehouse.entity.add;
-
+package warehouse.warehouse.entity.warehouse;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import lombok.*;
+import lombok.Data;
 
+import java.sql.Date;
 
 @Data
 @Entity
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class Element {
 
+public class ElementOfModule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String nameElement;
-    private String urlPicture;
+
+    private int number;
+    private Long idModuleOfProject;
+    private Long idElementName;
 
 
 }

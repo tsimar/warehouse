@@ -6,7 +6,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import warehouse.warehouse.entity.add.Element;
+import warehouse.warehouse.entity.add.ElementName;
 import warehouse.warehouse.repository.add.ElementRepository;
 
 import java.io.BufferedOutputStream;
@@ -90,34 +90,25 @@ public class ElementService {
     }
 
 
-    public File getListOfFiles(String nameFile) throws Exception {
-
-//        List<String> list = new ArrayList<>();
-//        File files = new File(path);
-//        String[] fileList = ((File) files).list();
-//        for (String name : fileList) {
-//            if (nameFile!="" || nameFile==name)
-//            list.add(name);
-//        }
+//    public File getListOfFiles(String nameFile) throws Exception {
 //
-//        return list;
-        File resourceFile = new File(path + "/TapScanner 20-12-2022-20꞉55.pdf");
-        return resourceFile;
-    }
+//        File resourceFile = new File(path + "/TapScanner 20-12-2022-20꞉55.pdf");
+//        return resourceFile;
+//    }
 
 
-    public List<Element> getAll() {
+    public List<ElementName> getAll() {
         return elementRepository.findAll();
     }
 
-    public Element save(Element element) {
+    public ElementName save(ElementName element) {
         return elementRepository.save(element);
     }
 
 
     //    @Autowired
     @Transactional
-    public void editElement(Element element) {
+    public void editElement(ElementName element) {
         try {
             elementRepository.update
                     (

@@ -20,8 +20,8 @@ public class WarehouseWork {
     private Date dataStart;
     private Date dataFinish;
     private Long idProject;
-    private Long idModule;
-    private Long idElement;
+    private Long idModuleOfProject;
+    private Long idElementOfModule;
     private String bacaFanuc;
     private String lathe;
     private String heidenhain;

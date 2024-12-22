@@ -20,11 +20,11 @@ public class Warehouse {
     private Long id;
 
 
-    private int number;
+
     private Date dataStart;
     private Long idProject;
-    private Long idModule;
-    private Long idElement;
+    private Long idModuleOfProject;
+    private Long idElementOfModule;
     private Long idUser;
     private String warehouseName;
 

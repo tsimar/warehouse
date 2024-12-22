@@ -19,38 +19,38 @@ import java.util.Map;
 @CrossOrigin
 @Slf4j
 public class WarehouseWorkController {
-    private final WarehouseWorkService warehouseWorkService;
+//    private final WarehouseWorkService warehouseWorkService;
+//
+//    public WarehouseWorkController(WarehouseWorkService warehouseWorkService) {
+//        this.warehouseWorkService = warehouseWorkService;
+//    }
+//
+//    @GetMapping
+//    public ResponseEntity<Map<Long, List<WarehouseWork>>> getSelectOpen() {
+//
+//        return ResponseEntity.ok(warehouseWorkService.getSelectWarehouseWork());
+//    }
+//
+//    @GetMapping("/all")
+//    public ResponseEntity<List<WarehouseWork>> getAll() {
+//
+//        return ResponseEntity.ok(warehouseWorkService.getAll());
+//    }
+//
+//    @PutMapping("/changeWorkMachine")
+//    public void changeMachine(@RequestBody ChangeWorkMachine changeWorkMachine) {
+//
+//        warehouseWorkService.changeMachine(changeWorkMachine);
+//    }
 
-    public WarehouseWorkController(WarehouseWorkService warehouseWorkService) {
-        this.warehouseWorkService = warehouseWorkService;
-    }
 
-    @GetMapping
-    public ResponseEntity<Map<Long, List<WarehouseWork>>> getSelectOpen() {
-
-        return ResponseEntity.ok(warehouseWorkService.getSelectWarehouseWork());
-    }
-
-    @GetMapping("/all")
-    public ResponseEntity<List<WarehouseWork>> getAll() {
-
-        return ResponseEntity.ok(warehouseWorkService.getAll());
-    }
-
-    @PutMapping("/changeWorkMachine")
-    public void changeMachine(@RequestBody ChangeWorkMachine changeWorkMachine) {
-
-        warehouseWorkService.changeMachine(changeWorkMachine);
-    }
-
-
-    @PutMapping
-    public void edit(@RequestBody WarehouseWork warehouseWork) {
-        warehouseWorkService.edit(warehouseWork);
-    }
-
-    @GetMapping("/timeMachine")
-    public ResponseEntity<HashMap<Date, ArrayList<WarehouseWork>>> getTimeMachine(){
-        return ResponseEntity.ok(warehouseWorkService.getTimeMachine());
-    }
+//    @PutMapping
+//    public void edit(@RequestBody WarehouseWork warehouseWork) {
+//        warehouseWorkService.edit(warehouseWork);
+//    }
+//
+//    @GetMapping("/timeMachine")
+//    public ResponseEntity<HashMap<Date, ArrayList<WarehouseWork>>> getTimeMachine(){
+//        return ResponseEntity.ok(warehouseWorkService.getTimeMachine());
+//    }
 }

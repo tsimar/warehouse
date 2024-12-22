@@ -38,7 +38,7 @@ public class WarehouseController {
     public ResponseEntity<Warehouse> save(@RequestBody Warehouse warehouse) {
         if (warehouse.getIdProject() != null) {
             if (warehouse.getWarehouseName().equals("in")) {
-                warehouseServiceWork.saveWork(warehouse);
+//                warehouseServiceWork.saveWork(warehouse);
             }
 
         } else {
@@ -56,19 +56,19 @@ public class WarehouseController {
             warehouseService.delete(id);
         }
     }
-
-    @PutMapping("/editProject")
-    public void edit(@RequestBody Warehouse warehouse) {
-        warehouseService.editProject(warehouse);
-    }
-
-    @PutMapping("/editModule")
-    public void editModule(@RequestBody Warehouse warehouse) {
-        warehouseService.editModule(warehouse);
-    }
-
-    @PutMapping("/editElement")
-    public void editElement(@RequestBody Warehouse warehouse) {
-        warehouseService.editElement(warehouse);
-    }
+//
+//    @PutMapping("/editProject")
+//    public void edit(@RequestBody Warehouse warehouse) {
+//        warehouseService.editProject(warehouse);
+//    }
+//
+//    @PutMapping("/editModule")
+//    public void editModule(@RequestBody Warehouse warehouse) {
+//        warehouseService.editModule(warehouse);
+//    }
+//
+//    @PutMapping("/editElement")
+//    public void editElement(@RequestBody Warehouse warehouse) {
+//        warehouseService.editElement(warehouse);
+//    }
 }

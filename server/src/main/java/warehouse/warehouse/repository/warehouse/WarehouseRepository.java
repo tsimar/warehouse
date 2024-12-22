@@ -23,37 +23,37 @@ public interface WarehouseRepository extends JpaRepository<Warehouse,Long> {
     @Query(value = "SELECT w FROM Warehouse w WHERE w.warehouseName=?1 ")
     List<Warehouse> getOut(String out);
 
-     @Transactional
-    @Modifying(clearAutomatically = true,flushAutomatically = true)
-    @Query(value = "UPDATE Warehouse w SET " +
-            " w.idProject=?1 WHERE w.idProject=?2"
-    )
-    Integer updateProject(
-            long setProject,
-            long selectProject
-       );
+//     @Transactional
+//    @Modifying(clearAutomatically = true,flushAutomatically = true)
+//    @Query(value = "UPDATE Warehouse w SET " +
+//            " w.idProject=?1 WHERE w.idProject=?2"
+//    )
+//    Integer updateProject(
+//            long setProject,
+//            long selectProject
+//       );
 
-    @Transactional
-    @Modifying(clearAutomatically = true,flushAutomatically = true)
-    @Query(value = "UPDATE Warehouse w SET " +
-            " w.idModule=?2 WHERE w.idProject=?1 AND w.idModule=?3"
-    )
-    Integer updateModule(
-            long idProject,
-            long idModule, long oldIdModule
-    );
+//    @Transactional
+//    @Modifying(clearAutomatically = true,flushAutomatically = true)
+//    @Query(value = "UPDATE Warehouse w SET " +
+//            " w.idModule=?2 WHERE w.idProject=?1 AND w.idModule=?3"
+//    )
+//    Integer updateModule(
+//            long idProject,
+//            long idModule, long oldIdModule
+//    );
 
 
-    @Modifying(clearAutomatically = true,flushAutomatically = true)
-    @Query(value = "UPDATE Warehouse w SET " +
-            "w.number=?2,w.dataStart=?3, w.idElement=?4 WHERE w.id=?1 "
-    )
-    void  updateElement(
-            long id,
-            int number,
-            Date dataStart,
-            long idElement
-    );
+//    @Modifying(clearAutomatically = true,flushAutomatically = true)
+//    @Query(value = "UPDATE Warehouse w SET " +
+//            "w.number=?2,w.dataStart=?3, w.idElement=?4 WHERE w.id=?1 "
+//    )
+//    void  updateElement(
+//            long id,
+//            int number,
+//            Date dataStart,
+//            long idElement
+//    );
 
     @Query(value = "SELECT w.idProject FROM Warehouse w WHERE w.id=?1 ")
     long getIdProject(long id);

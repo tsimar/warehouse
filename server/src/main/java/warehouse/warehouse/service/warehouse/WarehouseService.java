@@ -36,14 +36,14 @@ public class WarehouseService {
         warehouseRepository.deleteById(id);
     }
 
-    @Transactional
-    public void editProject(Warehouse warehouse) {
-        try {
-            var idProjectFirst = warehouseRepository
-                    .getIdProject(warehouse.getId());
-
-            warehouseRepository
-                    .updateProject(warehouse.getIdProject(), idProjectFirst);
+//    @Transactional
+//    public void editProject(Warehouse warehouse) {
+//        try {
+//            var idProjectFirst = warehouseRepository
+//                    .getIdProject(warehouse.getId());
+//
+//            warehouseRepository
+//                    .updateProject(warehouse.getIdProject(), idProjectFirst);
 
 
 
@@ -57,42 +57,42 @@ public class WarehouseService {
 //                        warehouse1.setIdUser(warehouse.getIdUser());
 //                        warehouse1.setWarehouseName(warehouse.getWarehouseName());
 //                    });
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
+//        } catch (Exception e) {
+//            System.out.println(e.getMessage());
+//        }
+//    }
 
-    @Transactional
-    public void editModule(Warehouse warehouse) {
-        try {
-            warehouseRepository
-                    .updateModule(warehouse.getIdProject(), warehouse.getIdModule(), warehouse.getIdElement());
-
-
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
-    @Transactional
-    public void editElement(Warehouse warehouse) {
-        try {
-         warehouseRepository
-                    .updateElement(warehouse.getId(),
-                            warehouse.getNumber(),
-                            warehouse.getDataStart(),
-                            warehouse.getIdElement());
-
-
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
+//    @Transactional
+//    public void editModule(Warehouse warehouse) {
+//        try {
+//            warehouseRepository
+//                    .updateModule(warehouse.getIdProject(), warehouse.getIdModuleOfProject(), warehouse.getIdElementOfModule());
+//
+//
+//        } catch (Exception e) {
+//            System.out.println(e.getMessage());
+//        }
+//    }
+//    @Transactional
+//    public void editElement(Warehouse warehouse) {
+//        try {
+//         warehouseRepository
+//                    .updateElement(warehouse.getId(),
+//                            warehouse.getNumber(),
+//                            warehouse.getDataStart(),
+//                            warehouse.getIdElementOfModule());
+//
+//
+//        } catch (Exception e) {
+//            System.out.println(e.getMessage());
+//        }
+//    }
 
     public void editWarehouseName(Long idProject, Long idElement) {
 
         warehouseRepository.findAll()
                 .stream()
-                .filter(warehouse -> idProject == warehouse.getIdProject() && idElement == warehouse.getIdElement())
+                .filter(warehouse -> idProject == warehouse.getIdProject() && idElement == warehouse.getIdElementOfModule())
                 .map(i -> {
                     i.setWarehouseName("out");
                     return i;
@@ -138,7 +138,7 @@ public class WarehouseService {
             int number = 0;
 
             for (Warehouse itemIterator : list) {
-                if (item.getIdElement() == itemIterator.getIdElement()
+                if (item.getIdElementOfModule() == itemIterator.getIdElementOfModule()
                         && item.getIdProject() == itemIterator.getIdProject()
 
                 ) {
@@ -150,30 +150,18 @@ public class WarehouseService {
                         }
                     }
                     for (Long id : idModuleList) {
-                        if (itemIterator.getIdModule() == id) {
+                        if (itemIterator.getIdModuleOfProject() == id) {
                             selectIdModule++;
                         }
                     }
-                    if (selectIdModule == 0 || selectIdProject == 0) {
-                        number += itemIterator.getNumber();
-                    }
+
 
                 }
 
             }
             idProjectList.add(item.getIdProject());
-            idModuleList.add(item.getIdModule());
-            if (number > 0) {
-                warehouse.setId(item.getId());
-                warehouse.setDataStart(item.getDataStart());
-                warehouse.setIdUser(item.getIdUser());
-                warehouse.setIdProject(item.getIdProject());
-                warehouse.setIdModule(item.getIdModule());
-                warehouse.setIdElement(item.getIdElement());
-                warehouse.setNumber(number);
-                warehouse.setWarehouseName(item.getWarehouseName());
-                totalElements.add(warehouse);
-            }
+            idModuleList.add(item.getIdModuleOfProject());
+
 
         }
         return totalElements;
@@ -190,20 +178,20 @@ public class WarehouseService {
         List<Warehouse> warehouseJoin = new ArrayList<>();
         for (Warehouse itemIn : warehouseIn) {
             Warehouse warehouse = new Warehouse();
-            int numbers = itemIn.getNumber();
+
             for (Warehouse itemOut : warehouseOut) {
-                if (itemIn.getIdElement() == itemOut.getIdElement()
+                if (itemIn.getIdElementOfModule() == itemOut.getIdElementOfModule()
                         && itemIn.getIdProject() == itemOut.getIdProject()) {
 
-                    numbers -= itemOut.getNumber();
+
                 }
             }
             warehouse.setId(itemIn.getId());
             warehouse.setIdProject(itemIn.getIdProject());
-            warehouse.setIdModule(itemIn.getIdModule());
-            warehouse.setIdElement(itemIn.getIdElement());
+            warehouse.setIdModuleOfProject(itemIn.getIdModuleOfProject());
+            warehouse.setIdElementOfModule(itemIn.getIdElementOfModule());
             warehouse.setDataStart(itemIn.getDataStart());
-            warehouse.setNumber(numbers);
+
             warehouseJoin.add(warehouse);
         }
 

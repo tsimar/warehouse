@@ -10,14 +10,13 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class ModuleOfProject {
+public class ModuleName {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
     private String nameModule;
 
 
-    private Long idProject;
+
 }

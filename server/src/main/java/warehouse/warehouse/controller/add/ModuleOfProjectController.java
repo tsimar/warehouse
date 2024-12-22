@@ -3,8 +3,8 @@ package warehouse.warehouse.controller.add;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import warehouse.warehouse.entity.add.ModuleOfProject;
-import warehouse.warehouse.service.add.ModuleOfProjectService;
+import warehouse.warehouse.entity.add.ModuleName;
+import warehouse.warehouse.service.add.ModuleNameService;
 
 import java.util.List;
 
@@ -12,21 +12,21 @@ import java.util.List;
 @RequestMapping("/module")
 @CrossOrigin
 public class ModuleOfProjectController {
-    private final ModuleOfProjectService moduleOfProjectService;
+    private final ModuleNameService moduleNameService;
 
-    public ModuleOfProjectController(ModuleOfProjectService moduleOfProjectService) {
-        this.moduleOfProjectService = moduleOfProjectService;
+    public ModuleOfProjectController(ModuleNameService moduleNameService) {
+        this.moduleNameService = moduleNameService;
     }
 
     @GetMapping
-    public ResponseEntity<List<ModuleOfProject>> getAll() {
-        return ResponseEntity.ok(moduleOfProjectService.getAll());
+    public ResponseEntity<List<ModuleName>> getAll() {
+        return ResponseEntity.ok(moduleNameService.getAll());
     }
 
     @PostMapping
-    public ResponseEntity<ModuleOfProject> save(@RequestBody ModuleOfProject moduleOfProject) {
+    public ResponseEntity<ModuleName> save(@RequestBody ModuleName moduleOfProject) {
         System.out.println(moduleOfProject);
-        return ResponseEntity.ok(moduleOfProjectService.save(moduleOfProject));
+        return ResponseEntity.ok(moduleNameService.save(moduleOfProject));
     }
 
     @DeleteMapping("/{id}")
@@ -35,12 +35,12 @@ public class ModuleOfProjectController {
         if (id == null) {
             throw new RuntimeException("You must define new user");
         } else {
-            moduleOfProjectService.deleteModule(id);
+            moduleNameService.deleteModule(id);
         }
     }
 
     @PutMapping()
-    public void editUser(@RequestBody ModuleOfProject moduleOfProject) {
-        moduleOfProjectService.editModule(moduleOfProject);
+    public void editUser(@RequestBody ModuleName moduleOfProject) {
+        moduleNameService.editModule(moduleOfProject);
     }
 }
